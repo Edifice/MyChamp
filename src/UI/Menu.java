@@ -13,8 +13,10 @@ import java.util.concurrent.Callable;
  */
 public abstract class Menu {
 
-    private ArrayList<MenuItem> items;
+    protected ArrayList<MenuItem> items;
     private String parent;
+    
+    protected abstract void addItem(MenuItem item);
 
     /**
      * constructor It gets the MenuItems, adds a back option to it and calls the
@@ -24,8 +26,7 @@ public abstract class Menu {
      * @param parent If it's a submenu, we want to write the parent
      * @throws Exception
      */
-    public Menu(ArrayList<MenuItem> items, String parent) throws Exception {
-        //adding back
+    public Menu(/*ArrayList<MenuItem> items,*/ String parent) {
         ArrayList<MenuItem> list = new ArrayList<>();
         if (parent == null) {
             list.add(new MenuItem("Quit", "q", new Callable<Menu>() {
@@ -43,12 +44,16 @@ public abstract class Menu {
                 }
             }));
         }
-        list.addAll(items);
+        //list.addAll(items);
         this.items = list;
         this.parent = parent;
+    }
+    
+    public void start() throws Exception{
         draw();
         listen();
     }
+    
 
     /**
      * Draws the header of the menu
