@@ -15,13 +15,13 @@ public class TeamDBManager extends DBManager {
 
     public void addTeam(Team team) throws SQLException {
         Connection con = dS.getConnection();
-        PreparedStatement qTeam = con.prepareStatement("INSERT INTO Team VALUES (?, ?, ?, ?, ?)");
+        PreparedStatement qTeam = con.prepareStatement("INSERT INTO Team VALUES (?, ?, ?, ?)");
 
-        qTeam.setInt(1, team.getID());
-        qTeam.setString(2, team.getSchool());
-        qTeam.setString(3, team.getTeamCaptain());
-        qTeam.setString(4, team.getEmail());
-        qTeam.setInt(5, team.getGroupID());
+        
+        qTeam.setString(1, team.getSchool());
+        qTeam.setString(2, team.getTeamCaptain());
+        qTeam.setString(3, team.getEmail());
+        qTeam.setNull(4, java.sql.Types.INTEGER);
 
         qTeam.executeUpdate();
 
@@ -89,5 +89,17 @@ public class TeamDBManager extends DBManager {
                 team.getString("TeamCaptain"),
                 team.getString("Email"),
                 team.getInt("GroupID"));
+    }
+    
+    public void assignToGroup(Team team) throws SQLException {
+        Connection con = dS.getConnection();
+
+        PreparedStatement qTeam = con.prepareStatement("UPDATE Team SET GroupID = ?");
+
+        qTeam.setInt(1, team.getGroupID());
+
+        qTeam.executeUpdate();
+
+        con.close();
     }
 }

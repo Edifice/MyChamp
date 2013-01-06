@@ -31,6 +31,22 @@ public class Team {
     public String getEmail() {
         return email;
     }
+
+    public void setGroupID(int groupID) {
+        this.groupID = groupID;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public void setTeamCaptain(String teamCaptain) {
+        this.teamCaptain = teamCaptain;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
     
     
 
