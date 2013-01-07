@@ -1,6 +1,8 @@
 MyChamp
 =======
 
-Our groups assignment at the end of the first semester @ EASV, Denmark
+Our groups assignment at the end of the first semester @ EASV, Denmark.
+The group consists of: Alpár, Anthony, Daniel and Martin.
 
-Awesome
+To-Do list:
+-------------

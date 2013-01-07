@@ -48,6 +48,13 @@ public class Team {
         this.email = email;
     }
     
-    
+    /**
+     * Prints out the entity in a nicer way.
+     * @return a string, in the format: ID. Name of the school | Team captain: Name of the team captain.
+     */
+    @Override
+    public String toString() {
+        return getID() + ". " + getSchool() + " | Team captain: " + getTeamCaptain();
+    }
 
 }

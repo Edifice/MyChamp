@@ -1,9 +1,9 @@
 package DAL;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public abstract class DBManager {
     protected Connection con;
@@ -19,5 +19,9 @@ public abstract class DBManager {
         con = dS.getConnection();
         con.close();
     }
+    
+    public abstract void removeById(int iden) throws SQLException;
+    
+    public abstract ArrayList getAll() throws SQLException;
 
 }

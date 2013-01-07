@@ -44,7 +44,8 @@ public class TeamDBManager extends DBManager {
         con.close();
     }
 
-    public void removeTeam(int id) throws SQLException {
+    @Override
+    public void removeById(int id) throws SQLException {
         Connection con = dS.getConnection();
         PreparedStatement qTeam = con.prepareStatement("DELETE FROM Team WHERE ID = ?");
         qTeam.setInt(1, id);
@@ -56,7 +57,8 @@ public class TeamDBManager extends DBManager {
 
     ;
     
-    public ArrayList<Team> getAllTeams() throws SQLException {
+    @Override
+    public ArrayList<Team> getAll() throws SQLException {
         Connection con = dS.getConnection();
         ArrayList<Team> teams = new ArrayList<>();
 
@@ -79,7 +81,7 @@ public class TeamDBManager extends DBManager {
 
     }
 
-    public Team getTeamById(int id) throws SQLException {
+    public Team getById(int id) throws SQLException {
         Connection con = dS.getConnection();
         PreparedStatement qTeam = con.prepareStatement("SELECT * FROM Team WHERE ID = ?");
         ResultSet team = qTeam.executeQuery();
