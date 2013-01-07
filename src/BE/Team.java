@@ -1,17 +1,22 @@
 package BE;
 
 public class Team {
-    protected int ID, groupID;
+    protected int ID, groupID, points;
     protected String school, teamCaptain, email;
 
-    public Team(int ID, String school, String teamCaptain, String email, int groupID) {
+    public Team(int ID, String school, String teamCaptain, String email, int groupID, int points) {
         this.ID = ID;        
         this.school = school;
         this.teamCaptain = teamCaptain;
         this.email = email;
         this.groupID = groupID;
+        this.points = points;
+        
     }
-
+    
+    public int getPoints() {
+        return points;
+    }
     public int getID() {
         return ID;
     }

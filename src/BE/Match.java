@@ -13,9 +13,9 @@ public class Match {
     public boolean isPlayed;
     public int homeGoals;
     public int guestGoals;
-    public Date date = new Date();
+   // public Date date = new Date();
 
-    public Match(int ID, int round, int homeTeamID, int guestTeamID, boolean isPlayed, int homeGoals, int guestGoals, long date) {
+    public Match(int ID, int round, int homeTeamID, int guestTeamID, boolean isPlayed, int homeGoals, int guestGoals) {
         this.ID = ID;
         this.round = round;
         this.homeTeamID = homeTeamID;
@@ -23,7 +23,7 @@ public class Match {
         this.isPlayed = isPlayed;
         this.homeGoals = homeGoals;
         this.guestGoals = guestGoals;
-        this.date.setTime(date);
+      //  this.date.setTime(date);
     }
 
     /**
@@ -124,24 +124,24 @@ public class Match {
         this.guestGoals = guestGoals;
     }
 
-    /**
-     * @return the date
-     */
-    public Date getDate() {
-        return date;
-    }
-
-    /**
-     * Formats the Date into a format like it's stored in the DB.
-     *
-     * @param date the date that will be formatted
-     * @return reportDate, the formatted date, which can be printed out.
-     */
-    public String formatDateToString(Date date) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String reportDate = df.format(date);
-        return reportDate;
-    }
+//    /**
+//     * @return the date
+//     */
+//    public Date getDate() {
+//        return date;
+//    }
+//
+//    /**
+//     * Formats the Date into a format like it's stored in the DB.
+//     *
+//     * @param date the date that will be formatted
+//     * @return reportDate, the formatted date, which can be printed out.
+//     */
+//    public String formatDateToString(Date date) {
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String reportDate = df.format(date);
+//        return reportDate;
+//    }
 
     /**
      * Prints out the entity in a nicer way.
@@ -151,6 +151,6 @@ public class Match {
      */
     @Override
     public String toString() {
-        return getID() + ". " + getHomeTeamID() + " - " + getGuestTeamID() + " | Score: " + getHomeGoals() + " - " + getGuestGoals() + " | " + formatDateToString(getDate());
+        return getID() + ". " + getHomeTeamID() + " - " + getGuestTeamID() + " | Score: " + getHomeGoals() + " - " + getGuestGoals() + " | ";
     }
 }

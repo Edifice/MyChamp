@@ -36,5 +36,11 @@ public class Group {
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
+
+    @Override
+    public String toString() {
+        return getID() + " - " + getGroupName();
+    }
+    
     
 }
