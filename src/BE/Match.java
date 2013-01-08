@@ -150,6 +150,22 @@ public class Match {
         this.guestGoals = guestGoals;
     }
 
+    public String getHomeTeamName() {
+        return homeTeamName;
+    }
+
+    public String getGuestTeamName() {
+        return guestTeamName;
+    }
+
+    public void setHomeTeamName(String homeTeamName) {
+        this.homeTeamName = homeTeamName;
+    }
+
+    public void setGuestTeamName(String guestTeamName) {
+        this.guestTeamName = guestTeamName;
+    }
+    
 //    /**
 //     * @return the date
 //     */

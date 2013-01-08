@@ -34,15 +34,15 @@ public class Menu_Match extends Menu {
                 String[][] tableData = new String[data.size()][7];
 
 
-                int[] tableLayout = {4, 4, 10,10,10,10,10};
-                String[] tableHeader = {"ID", "round", "homeTeamID", "guestTeamID", "isPlayed", "homeGoals", "guestGoals"};
+                int[] tableLayout = {4, 4, 15,15,10,10,10};
+                String[] tableHeader = {"ID", "round", "homeTeamName", "guestTeamName", "isPlayed", "homeGoals", "guestGoals"};
 
                 for (int i = 0; i < data.size(); i++) {
                     Match match = data.get(i);
                     tableData[i][0] = Integer.toString(match.getID());
                     tableData[i][1] = Integer.toString(match.getRound());
-                    tableData[i][2] = Integer.toString(match.getHomeTeamID());
-                    tableData[i][3] = Integer.toString(match.getGuestTeamID());
+                    tableData[i][2] = match.getHomeTeamName();
+                    tableData[i][3] = match.getGuestTeamName();
                     tableData[i][4] = Integer.toString(match.getIsPlayed());
                     tableData[i][5] = Integer.toString(match.getHomeGoals());
                     tableData[i][6] = Integer.toString(match.getGuestGoals());
