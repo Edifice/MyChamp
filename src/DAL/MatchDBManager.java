@@ -76,7 +76,7 @@ public class MatchDBManager extends DBManager {
         Connection con = dS.getConnection();
         ArrayList<Match> matches = new ArrayList<>();
 
-        PreparedStatement qAllMatches = con.prepareStatement("SELECT * FROM Match");
+        PreparedStatement qAllMatches = con.prepareStatement("SELECT Match.ID, Match.MatchRound, Match.HomeTeamID, Match.GuestTeamID, Match.IsPlayed, Match.HomeGoals, Match.GuestGoals, t1.School as HomeTeamName, t2.School as GuestTeamName FROM Match INNER JOIN Team as t1 ON t1.ID = Match.HomeTeamID INNER JOIN Team as t2 ON t2.ID = Match.GuestTeamID;");
         ResultSet allMatches = qAllMatches.executeQuery();
 
         while (allMatches.next()) {
@@ -85,10 +85,12 @@ public class MatchDBManager extends DBManager {
                     allMatches.getInt("ID"),
                     allMatches.getInt("MatchRound"),
                     allMatches.getInt("HomeTeamID"),
-                    allMatches.getInt("GuesTeamID"),
+                    allMatches.getInt("GuestTeamID"),
                     allMatches.getInt("IsPlayed"),
                     allMatches.getInt("HomeGoals"),
-                    allMatches.getInt("GuestGoals")));
+                    allMatches.getInt("GuestGoals"),
+                    allMatches.getString("HomeTeamName"),
+                    allMatches.getString("GuestTeamName")));
         }
 
         con.close();

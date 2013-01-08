@@ -9,9 +9,7 @@ import java.util.ArrayList;
 public class GroupManager {
 
     private GroupDBManager DBM;
-    public static void main(String[] args) throws SQLException {
-        groupTeams();
-    }
+
     public GroupManager() throws SQLException {
         DBM = new GroupDBManager();
     }
@@ -20,11 +18,19 @@ public class GroupManager {
         return DBM.getAll();
     }
 
+    public void addGroup(Group group) throws SQLException {
+        DBM.addGroup(group);
+    }
+    
+    public void updateGroup(Group group) throws SQLException {
+        DBM.updateGroup(group);
+    }
+    
     public void removeById(int iden) throws SQLException {
         DBM.removeById(iden);
     }
 
-    public static void groupTeams() throws SQLException {
+    public void groupTeams() throws SQLException {
         TeamManager TM = new TeamManager();
         ArrayList<Team> allTeams = TM.getAll();
         int i = 1;

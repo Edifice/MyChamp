@@ -18,10 +18,18 @@ public class MatchManager {
         DBM = new MatchDBManager();
     }
     
+    public void startTournament() throws SQLException {
+        GroupManager GM = new GroupManager();
+        GM.groupTeams();
+        ArrayList<Group> groups = GM.getAll();
+        for (Group group : groups) {
+            generateMatchesByGroup(group);
+        }
+    }
+    
     public void createNewMatch(int round, Team homeTeam, Team guestTeam) throws SQLException{
         Match newMatch = new Match(round, homeTeam.getID(), guestTeam.getID());
         DBM.addMatch(newMatch);
-        
     }
     
     public ArrayList<Match> getAll() throws SQLException {

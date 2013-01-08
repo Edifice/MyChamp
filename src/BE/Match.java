@@ -3,7 +3,6 @@ package BE;
 //import java.text.DateFormat;
 //import java.text.SimpleDateFormat;
 //import java.util.Date;
-
 public class Match {
 
     public int ID;
@@ -13,14 +12,16 @@ public class Match {
     public int isPlayed;
     public int homeGoals;
     public int guestGoals;
-   // public Date date = new Date();
-    
+    public String homeTeamName;
+    public String guestTeamName;
+    // public Date date = new Date();
+
     public Match(int round, int homeTeamID, int guestTeamID) {
         this.round = round;
         this.homeTeamID = homeTeamID;
         this.guestTeamID = guestTeamID;
         this.isPlayed = 0;
-        
+
     }
 
     public Match(int ID, int round, int homeTeamID, int guestTeamID, int isPlayed, int homeGoals, int guestGoals) {
@@ -31,7 +32,20 @@ public class Match {
         this.isPlayed = isPlayed;
         this.homeGoals = homeGoals;
         this.guestGoals = guestGoals;
-      //  this.date.setTime(date);
+        //  this.date.setTime(date);
+    }
+
+    public Match(int ID, int round, int homeTeamID, int guestTeamID, int isPlayed, int homeGoals, int guestGoals, String homeTeamName, String guestTeamName) {
+        this.ID = ID;
+        this.round = round;
+        this.homeTeamID = homeTeamID;
+        this.guestTeamID = guestTeamID;
+        this.isPlayed = isPlayed;
+        this.homeGoals = homeGoals;
+        this.guestGoals = guestGoals;
+        this.homeTeamName = homeTeamName;
+        this.guestTeamName = guestTeamName;
+        //  this.date.setTime(date);
     }
 
     /**
@@ -154,7 +168,6 @@ public class Match {
 //        String reportDate = df.format(date);
 //        return reportDate;
 //    }
-
     /**
      * Prints out the entity in a nicer way.
      *
