@@ -22,8 +22,8 @@ public class Menu_Team extends Menu {
                 String[][] tableData = new String[data.size()][6];
 
 
-                int[] tableLayout = {4, 4, 20, 20, 20, 4};
-                String[] tableHeader = {"ID", "group", "School", "Team Captain", "Contact E-mail", "Points"};
+                int[] tableLayout = {2, 7, 20, 20, 20, 6};
+                String[] tableHeader = {"ID", "Group", "School", "Team Captain", "Contact E-mail", "Points"};
 
                 for (int i = 0; i < data.size(); i++) {
                     Team team = data.get(i);
