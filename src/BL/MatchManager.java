@@ -24,6 +24,10 @@ public class MatchManager {
         
     }
     
+    public ArrayList<Match> getAll() throws SQLException {
+        return DBM.getAll();
+    }
+    
     public void generateMatchesByGroup(Group group) throws SQLException {
         TMC = new TeamDBManager();
         ArrayList<Team> teams = TMC.getTeamsByGroup(group.getID());

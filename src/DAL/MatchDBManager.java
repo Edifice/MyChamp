@@ -72,7 +72,7 @@ public class MatchDBManager extends DBManager {
     }
 
     @Override
-    public ArrayList getAll() throws SQLException {
+    public ArrayList<Match> getAll() throws SQLException {
         Connection con = dS.getConnection();
         ArrayList<Match> matches = new ArrayList<>();
 
