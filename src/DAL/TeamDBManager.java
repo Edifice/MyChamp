@@ -76,7 +76,7 @@ public class TeamDBManager extends DBManager {
         Connection con = dS.getConnection();
         ArrayList<Team> teams = new ArrayList<>();
 
-        PreparedStatement qAllTeams = con.prepareStatement("SELECT t.ID, t.School, t.TeamCaptain, t.Email, t.Points, t.GroupID, g.GroupName FROM Team as t INNER JOIN Group as g");
+        PreparedStatement qAllTeams = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team INNER JOIN Groups ON Team.GroupID = Groups.ID");
 
         ResultSet allTeams = qAllTeams.executeQuery();
 
@@ -106,7 +106,7 @@ public class TeamDBManager extends DBManager {
      */
     public Team getById(int id) throws SQLException {
         Connection con = dS.getConnection();
-        PreparedStatement qTeam = con.prepareStatement("SELECT t.ID, t.School, t.TeamCaptain, t.Email, t.Points, t.GroupID, g.GroupName FROM Team as t INNER JOIN Group as gWHERE ID = ?");
+        PreparedStatement qTeam = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team INNER JOIN Groups ON Team.GroupID = Groups.ID WHERE Team.ID = ?");
         ResultSet team = qTeam.executeQuery();
 
         return new Team(team.getInt("ID"),
@@ -160,7 +160,7 @@ public class TeamDBManager extends DBManager {
         Connection con = dS.getConnection();
         ArrayList<Team> teams = new ArrayList<>();
 
-        PreparedStatement qAllTeams = con.prepareStatement("SELECT t.ID, t.School, t.TeamCaptain, t.Email, t.Points, t.GroupID, g.GroupName FROM Team as t INNER JOIN Group as g WHERE GroupID = ?");
+        PreparedStatement qAllTeams = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team INNER JOIN Groups ON Team.GroupID = Groups.ID WHERE Team.GroupID = ?");
         qAllTeams.setInt(1, groupID);
 
         ResultSet allTeams = qAllTeams.executeQuery();

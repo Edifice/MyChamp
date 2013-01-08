@@ -16,7 +16,7 @@ public class GroupDBManager extends DBManager {
 
     public void addGroup(Group group) throws SQLException {
         Connection con = dS.getConnection();
-        PreparedStatement qGroup = con.prepareStatement("INSERT INTO Group VALUES (?)");
+        PreparedStatement qGroup = con.prepareStatement("INSERT INTO Groups VALUES (?)");
 
         qGroup.setString(1, group.getGroupName());
         qGroup.executeUpdate();
@@ -27,7 +27,7 @@ public class GroupDBManager extends DBManager {
     public void updateGroup(Group group) throws SQLException {
         Connection con = dS.getConnection();
 
-        PreparedStatement qGroup = con.prepareStatement("UPDATE Group SET GroupName = ? WHERE ID = ?");
+        PreparedStatement qGroup = con.prepareStatement("UPDATE Groups SET GroupName = ? WHERE ID = ?");
 
         qGroup.setString(1, group.getGroupName());
 
@@ -41,7 +41,7 @@ public class GroupDBManager extends DBManager {
     @Override
     public void removeById(int iden) throws SQLException {
         Connection con = dS.getConnection();
-        PreparedStatement qTeam = con.prepareStatement("DELETE FROM Group WHERE ID = ?");
+        PreparedStatement qTeam = con.prepareStatement("DELETE FROM Groups WHERE ID = ?");
         qTeam.setInt(1, iden);
 
         qTeam.executeUpdate();
@@ -54,7 +54,7 @@ public class GroupDBManager extends DBManager {
         Connection con = dS.getConnection();
         ArrayList<Group> groups = new ArrayList<>();
 
-        PreparedStatement qAllGroups = con.prepareStatement("SELECT * FROM Group");
+        PreparedStatement qAllGroups = con.prepareStatement("SELECT * FROM Groups");
 
         ResultSet allTeams = qAllGroups.executeQuery();
 
