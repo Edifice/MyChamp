@@ -66,8 +66,4 @@ public class Menu_View extends Menu {
     protected void addItem(MenuItem item) {
         this.items.add(item);
     }
-    
-    protected static void viewAllMatches(){
-        Menu.Message("All matches");
-    }
 }
