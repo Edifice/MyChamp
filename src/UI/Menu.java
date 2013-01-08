@@ -1,6 +1,6 @@
 package UI;
 
-import UI.MenuStructure.Menu_main;
+import UI.MenuStructure.Menu_Main;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
@@ -40,7 +40,7 @@ public abstract class Menu {
             list.add(new MenuItem("<- Back", "b", new Callable<Menu>() {
                 @Override
                 public Menu call() throws Exception {
-                    return new Menu_main();
+                    return new Menu_Main();
                 }
             }));
         }
@@ -184,6 +184,39 @@ public abstract class Menu {
             throw e;
         }
         return ret;
+    }
+
+    /**
+     * Waits for the user to input a boolean value (1/0, true/false, t/f, yes/no, y/n)
+     *
+     * @param label Message to the user before the he/she inputs something.
+     * @return Returns what the user wrote.
+     */
+    public static Boolean getInputBoolean(String label) {
+        Scanner in = new Scanner(System.in);
+        String userInput;
+        System.out.print(" │ " + label + " [y/n] (back: empty string) > ");
+        try {
+            userInput = in.nextLine();
+        } catch (Error e) {
+            throw e;
+        }
+
+        if( userInput.equalsIgnoreCase("1") ||
+            userInput.equalsIgnoreCase("true") ||
+            userInput.equalsIgnoreCase("t") ||
+            userInput.equalsIgnoreCase("yes") ||
+            userInput.equalsIgnoreCase("y")){
+            return true;
+        } else
+        /*if( userInput.equalsIgnoreCase("0") ||
+            userInput.equalsIgnoreCase("false") ||
+            userInput.equalsIgnoreCase("f") ||
+            userInput.equalsIgnoreCase("no") ||
+            userInput.equalsIgnoreCase("n")){
+            return false;
+        }*/
+        return false;
     }
 
     /**
