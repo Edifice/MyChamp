@@ -4,6 +4,10 @@ public class Team {
     protected int ID, groupID, points;
     protected String school, teamCaptain, email;
 
+    public Team(){
+        // Dummy team.
+    };
+    
     public Team(int ID, String school, String teamCaptain, String email, int groupID, int points) {
         this.ID = ID;        
         this.school = school;

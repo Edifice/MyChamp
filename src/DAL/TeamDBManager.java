@@ -123,9 +123,10 @@ public class TeamDBManager extends DBManager {
     public void assignToGroup(Team team, int groupId) throws SQLException {
         Connection con = dS.getConnection();
 
-        PreparedStatement qTeam = con.prepareStatement("UPDATE Team SET GroupID = ?");
+        PreparedStatement qTeam = con.prepareStatement("UPDATE Team SET GroupID = ? WHERE ID = ?");
 
         qTeam.setInt(1, groupId);
+        qTeam.setInt(2, team.getID());
         qTeam.executeUpdate();
 
         con.close();
@@ -138,9 +139,10 @@ public class TeamDBManager extends DBManager {
     public void assignPoints(Team team) throws SQLException {
        Connection con = dS.getConnection();
 
-        PreparedStatement qTeam = con.prepareStatement("UPDATE Team SET Points = ?");
+        PreparedStatement qTeam = con.prepareStatement("UPDATE Team SET Points = ? WHERE ID = ?");
 
         qTeam.setInt(1, team.getPoints());
+        qTeam.setInt(2, team.getID());
 
         qTeam.executeUpdate();
 

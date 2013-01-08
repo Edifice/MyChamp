@@ -10,12 +10,20 @@ public class Match {
     public int round;
     public int homeTeamID;
     public int guestTeamID;
-    public boolean isPlayed;
+    public int isPlayed;
     public int homeGoals;
     public int guestGoals;
    // public Date date = new Date();
+    
+    public Match(int round, int homeTeamID, int guestTeamID) {
+        this.round = round;
+        this.homeTeamID = homeTeamID;
+        this.guestTeamID = guestTeamID;
+        this.isPlayed = 0;
+        
+    }
 
-    public Match(int ID, int round, int homeTeamID, int guestTeamID, boolean isPlayed, int homeGoals, int guestGoals) {
+    public Match(int ID, int round, int homeTeamID, int guestTeamID, int isPlayed, int homeGoals, int guestGoals) {
         this.ID = ID;
         this.round = round;
         this.homeTeamID = homeTeamID;
@@ -86,13 +94,17 @@ public class Match {
      * @return the isPlayed
      */
     public boolean isIsPlayed() {
+        return isPlayed == 0 ? false : true;
+    }
+
+    public int getIsPlayed() {
         return isPlayed;
     }
 
     /**
      * @param isPlayed the isPlayed to set
      */
-    public void setIsPlayed(boolean isPlayed) {
+    public void setIsPlayed(int isPlayed) {
         this.isPlayed = isPlayed;
     }
 

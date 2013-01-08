@@ -36,4 +36,8 @@ public class TeamManager {
     public void assignToGroup(Team team, int groupId) throws SQLException {
         DBM.assignToGroup(team, groupId);
     }
+    
+    public ArrayList<Team> getTeamsByGroup(int groupID) throws SQLException {
+        return DBM.getTeamsByGroup(groupID);
+    }
 }

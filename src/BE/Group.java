@@ -3,6 +3,8 @@ package BE;
 public class Group {
     public int ID;
     public String groupName;
+    private final int MAXCAPACITY = 4;
+    private final int MINCAPACITY = 3;
     
     public Group(int ID, String groupName) {
         this.ID = ID;

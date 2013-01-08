@@ -19,7 +19,7 @@ public class MatchDBManager extends DBManager {
         qMatch.setInt(1, match.getRound());
         qMatch.setInt(2, match.getHomeTeamID());
         qMatch.setInt(3, match.getGuestTeamID());
-        qMatch.setBoolean(4, match.isIsPlayed());
+        qMatch.setInt(4, match.getIsPlayed());
         qMatch.setNull(5, java.sql.Types.INTEGER);
         qMatch.setNull(6, java.sql.Types.INTEGER);
                 
@@ -86,7 +86,7 @@ public class MatchDBManager extends DBManager {
                     allMatches.getInt("MatchRound"),
                     allMatches.getInt("HomeTeamID"),
                     allMatches.getInt("GuesTeamID"),
-                    allMatches.getBoolean("IsPlayed"),
+                    allMatches.getInt("IsPlayed"),
                     allMatches.getInt("HomeGoals"),
                     allMatches.getInt("GuestGoals")));
         }
