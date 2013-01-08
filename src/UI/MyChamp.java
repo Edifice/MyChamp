@@ -3,14 +3,14 @@ package UI;
 
 //import BE.Team;
 //import DAL.TeamDBManager;
-import UI.MenuStructure.Menu_main;
+import UI.MenuStructure.Menu_Main;
 
 public class MyChamp {
     public static void main(String[] args) throws Exception {
         System.out.println(" ┌──── ── ── ─ ─ - -");
         System.out.println(" │ Welcome to MyChamp");
         System.out.println(" ├──── ── ── ─ ─ - -");
-        Menu_main menu_main = new Menu_main();
+        Menu_Main menu_main = new Menu_Main();
         System.out.println(" ├──── ── ── ─ ─ - -");
         System.out.println(" │");
         System.out.println(" │ See you later!");
