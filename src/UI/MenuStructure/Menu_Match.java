@@ -20,7 +20,7 @@ public class Menu_Match extends Menu {
             @Override
             public Menu_Match call() throws Exception {
                 if (Menu.getInputBoolean("Are you sure?")) {
-                    //TODO: Start tournament
+                    mm.startTournament();
                     Menu.Message("Tournament started!");
                 };
                 return new Menu_Match();
