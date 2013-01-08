@@ -4,6 +4,8 @@ import UI.Menu;
 import UI.MenuItem;
 import java.util.concurrent.Callable;
 
+//FUCK VERSION CONTROLL BUGS!
+
 public class Menu_Main extends Menu {
 
     public Menu_Main() throws Exception {
