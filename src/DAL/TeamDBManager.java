@@ -76,7 +76,7 @@ public class TeamDBManager extends DBManager {
         Connection con = dS.getConnection();
         ArrayList<Team> teams = new ArrayList<>();
 
-        PreparedStatement qAllTeams = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team INNER JOIN Groups ON Team.GroupID = Groups.ID");
+        PreparedStatement qAllTeams = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team INNER JOIN Groups ON Team.GroupID = Groups.ID ORDER BY Groups.ID ASC");
 
         ResultSet allTeams = qAllTeams.executeQuery();
 
