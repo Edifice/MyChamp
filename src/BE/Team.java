@@ -1,20 +1,22 @@
 package BE;
 
 public class Team {
+    
     protected int ID, groupID, points;
-    protected String school, teamCaptain, email;
+    protected String school, teamCaptain, email, groupName;
 
     public Team(){
         // Dummy team.
     };
     
-    public Team(int ID, String school, String teamCaptain, String email, int groupID, int points) {
+    public Team(int ID, String school, String teamCaptain, String email, int groupID, int points, String groupName) {
         this.ID = ID;        
         this.school = school;
         this.teamCaptain = teamCaptain;
         this.email = email;
         this.groupID = groupID;
         this.points = points;
+        this.groupName = groupName;
         
     }
     
@@ -56,6 +58,20 @@ public class Team {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+    
+    
     
     /**
      * Prints out the entity in a nicer way.

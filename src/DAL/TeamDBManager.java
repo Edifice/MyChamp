@@ -76,7 +76,7 @@ public class TeamDBManager extends DBManager {
         Connection con = dS.getConnection();
         ArrayList<Team> teams = new ArrayList<>();
 
-        PreparedStatement qAllTeams = con.prepareStatement("SELECT * FROM Team");
+        PreparedStatement qAllTeams = con.prepareStatement("SELECT t.ID, t.School, t.TeamCaptain, t.Email, t.Points, t.GroupID, g.GroupName FROM Team as t INNER JOIN Group as g");
 
         ResultSet allTeams = qAllTeams.executeQuery();
 
@@ -88,7 +88,8 @@ public class TeamDBManager extends DBManager {
                     allTeams.getString("TeamCaptain"),
                     allTeams.getString("Email"),
                     allTeams.getInt("GroupID"),
-                    allTeams.getInt("Points")));
+                    allTeams.getInt("Points"),
+                    allTeams.getString("GroupName")));
         }
 
         con.close();
@@ -105,7 +106,7 @@ public class TeamDBManager extends DBManager {
      */
     public Team getById(int id) throws SQLException {
         Connection con = dS.getConnection();
-        PreparedStatement qTeam = con.prepareStatement("SELECT * FROM Team WHERE ID = ?");
+        PreparedStatement qTeam = con.prepareStatement("SELECT t.ID, t.School, t.TeamCaptain, t.Email, t.Points, t.GroupID, g.GroupName FROM Team as t INNER JOIN Group as gWHERE ID = ?");
         ResultSet team = qTeam.executeQuery();
 
         return new Team(team.getInt("ID"),
@@ -113,7 +114,8 @@ public class TeamDBManager extends DBManager {
                 team.getString("TeamCaptain"),
                 team.getString("Email"),
                 team.getInt("GroupID"),
-                team.getInt("Points"));
+                team.getInt("Points"),
+                team.getString("GroupName"));
     }
     /**
      * Creates the relation between a team and a group within the database. 
@@ -158,7 +160,7 @@ public class TeamDBManager extends DBManager {
         Connection con = dS.getConnection();
         ArrayList<Team> teams = new ArrayList<>();
 
-        PreparedStatement qAllTeams = con.prepareStatement("SELECT * FROM Team WHERE GroupID = ?");
+        PreparedStatement qAllTeams = con.prepareStatement("SELECT t.ID, t.School, t.TeamCaptain, t.Email, t.Points, t.GroupID, g.GroupName FROM Team as t INNER JOIN Group as g WHERE GroupID = ?");
         qAllTeams.setInt(1, groupID);
 
         ResultSet allTeams = qAllTeams.executeQuery();
@@ -171,7 +173,8 @@ public class TeamDBManager extends DBManager {
                     allTeams.getString("TeamCaptain"),
                     allTeams.getString("Email"),
                     allTeams.getInt("GroupID"),
-                    allTeams.getInt("Points")));
+                    allTeams.getInt("Points"),
+                    allTeams.getString("GroupName")));
         }
 
         con.close();
