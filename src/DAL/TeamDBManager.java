@@ -120,13 +120,12 @@ public class TeamDBManager extends DBManager {
      * @param team
      * @throws SQLException 
      */
-    public void assignToGroup(Team team) throws SQLException {
+    public void assignToGroup(Team team, int groupId) throws SQLException {
         Connection con = dS.getConnection();
 
         PreparedStatement qTeam = con.prepareStatement("UPDATE Team SET GroupID = ?");
 
-        qTeam.setInt(1, team.getGroupID());
-
+        qTeam.setInt(1, groupId);
         qTeam.executeUpdate();
 
         con.close();

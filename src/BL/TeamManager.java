@@ -33,7 +33,7 @@ public class TeamManager {
         return DBM.getById(iden);
     }
     
-    public void assignToGroup(Team team) throws SQLException {
-        DBM.assignToGroup(team);
+    public void assignToGroup(Team team, int groupId) throws SQLException {
+        DBM.assignToGroup(team, groupId);
     }
 }

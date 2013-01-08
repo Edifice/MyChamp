@@ -1,14 +1,11 @@
 package DAL;
 
 import BE.Match;
-import BE.Team;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MatchDBManager extends DBManager {
     public MatchDBManager() throws SQLException {
