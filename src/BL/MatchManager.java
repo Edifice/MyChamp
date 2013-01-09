@@ -12,19 +12,24 @@ import java.util.Collections;
 public class MatchManager {
 
     private MatchDBManager DBM;
-    private TeamDBManager TMC;
+    private TeamDBManager TM;
+    private GroupManager GM;
 
     public MatchManager() throws SQLException {
         DBM = new MatchDBManager();
     }
     
     public void startTournament() throws SQLException {
-        GroupManager GM = new GroupManager();
+        GM = new GroupManager();
         GM.groupTeams();
         ArrayList<Group> groups = GM.getAll();
         for (Group group : groups) {
             generateMatchesByGroup(group);
         }
+    }
+    
+    public void endTournament() throws SQLException {
+        
     }
     
     public void createNewMatch(int round, Team homeTeam, Team guestTeam) throws SQLException{
@@ -37,8 +42,8 @@ public class MatchManager {
     }
     
     public void generateMatchesByGroup(Group group) throws SQLException {
-        TMC = new TeamDBManager();
-        ArrayList<Team> teams = TMC.getTeamsByGroup(group.getID());
+        TM = new TeamDBManager();
+        ArrayList<Team> teams = TM.getTeamsByGroup(group.getID());
         
         //Adds the dummy team.
         Team dummy = new Team();
