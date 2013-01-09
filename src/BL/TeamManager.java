@@ -8,9 +8,12 @@ import java.util.ArrayList;
 public class TeamManager {
 
     private TeamDBManager DBM;
-
+    
     public TeamManager() throws SQLException{
         DBM = new TeamDBManager();
+    }
+    public ArrayList<Team> getAllByGroups() throws SQLException {
+        return DBM.getAllByGroups();
     }
     
     public void addTeam(Team team) throws SQLException{

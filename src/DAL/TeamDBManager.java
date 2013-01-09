@@ -70,9 +70,7 @@ public class TeamDBManager extends DBManager {
     }
 
     ;
-    
-    @Override
-    public ArrayList<Team> getAll() throws SQLException {
+    public ArrayList<Team> getAllByGroups() throws SQLException {
         Connection con = dS.getConnection();
         ArrayList<Team> teams = new ArrayList<>();
 
@@ -96,6 +94,31 @@ public class TeamDBManager extends DBManager {
         return teams;
 
     }
+    @Override
+    public ArrayList<Team> getAll() throws SQLException {
+        Connection con = dS.getConnection();
+        ArrayList<Team> teams = new ArrayList<>();
+
+        PreparedStatement qAllTeams = con.prepareStatement("SELECT * FROM Team");
+
+        ResultSet allTeams = qAllTeams.executeQuery();
+
+        while (allTeams.next()) {
+            teams.add(
+                    new Team(
+                    allTeams.getInt("ID"),
+                    allTeams.getString("School"),
+                    allTeams.getString("TeamCaptain"),
+                    allTeams.getString("Email"),
+                    allTeams.getInt("GroupID"),
+                    allTeams.getInt("Points")));
+                    
+        }
+
+        con.close();
+        return teams;
+
+    }
     /**
      * Selects a specific team from the database where the ID is equal to the parameter
      * 
@@ -107,15 +130,23 @@ public class TeamDBManager extends DBManager {
     public Team getById(int id) throws SQLException {
         Connection con = dS.getConnection();
         PreparedStatement qTeam = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team INNER JOIN Groups ON Team.GroupID = Groups.ID WHERE Team.ID = ?");
+        qTeam.setInt(1, id);
         ResultSet team = qTeam.executeQuery();
-
-        return new Team(team.getInt("ID"),
+        team.next();
+        
+        Team newTeam = new Team(team.getInt("ID"),
                 team.getString("School"),
                 team.getString("TeamCaptain"),
                 team.getString("Email"),
                 team.getInt("GroupID"),
                 team.getInt("Points"),
                 team.getString("GroupName"));
+        
+        con.close();
+        
+        return newTeam;
+        
+       
     }
     /**
      * Creates the relation between a team and a group within the database. 

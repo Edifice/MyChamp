@@ -19,6 +19,15 @@ public class Team {
         this.groupName = groupName;
         
     }
+
+    public Team(int ID, String school, String teamCaptain, String email, int groupID, int points) {
+        this.groupID = groupID;
+        this.points = points;
+        this.school = school;
+        this.teamCaptain = teamCaptain;
+        this.email = email;
+        this.ID = ID;
+    }
     
     public int getPoints() {
         return points;
