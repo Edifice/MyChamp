@@ -2,11 +2,8 @@ package BE;
 
 public class Team {
 
-    public int ID;
-    public int groupID;
-    public int points;
-    protected String school, teamCaptain, email;
-    public String groupName;
+    private int ID, groupID, points;
+    private String school, teamCaptain, email, groupName;
 
     public Team() {
     }

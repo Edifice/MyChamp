@@ -1,8 +1,8 @@
 package BE;
 
 public class Group {
-    public int ID;
-    public String groupName;
+    private int ID;
+    private String groupName;
     
     public Group(int ID, String groupName) {
         this.ID = ID;

@@ -2,8 +2,8 @@ package BE;
 
 public class Match {
 
-    public int ID, round, homeTeamID, guestTeamID, isPlayed, homeGoals, guestGoals;
-    public String homeTeamName, guestTeamName;
+    private int ID, round, homeTeamID, guestTeamID, isPlayed, homeGoals, guestGoals;
+    private String homeTeamName, guestTeamName;
 
     public Match(int round, int homeTeamID, int guestTeamID) {
         this.round = round;
