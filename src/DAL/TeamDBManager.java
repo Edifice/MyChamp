@@ -211,4 +211,13 @@ public class TeamDBManager extends DBManager {
         con.close();
         return teams;
     }
+
+    @Override
+    public void removeAll() throws SQLException {
+        Connection con = dS.getConnection();
+        PreparedStatement qData = con.prepareStatement("DELETE FROM Team; DBCC CHECKIDENT (Team, RESEED, 0)");
+        qData.executeUpdate();
+                
+        con.close();
+    }
 }

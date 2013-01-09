@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MatchDBManager extends DBManager {
+    
+    
     public MatchDBManager() throws SQLException {
         super();
     }
@@ -96,6 +98,15 @@ public class MatchDBManager extends DBManager {
         con.close();
         return matches;
 
+    }
+
+    @Override
+    public void removeAll() throws SQLException {
+        Connection con = dS.getConnection();
+        PreparedStatement qData = con.prepareStatement("DELETE FROM Match; DBCC CHECKIDENT (Match, RESEED, 0)");
+        qData.executeUpdate();
+                
+        con.close();
     }
 
 }

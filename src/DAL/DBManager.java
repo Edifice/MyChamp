@@ -23,5 +23,7 @@ public abstract class DBManager {
     public abstract void removeById(int iden) throws SQLException;
     
     public abstract ArrayList getAll() throws SQLException;
+    
+    public abstract void removeAll() throws SQLException;
 
 }

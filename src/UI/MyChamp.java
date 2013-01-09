@@ -1,8 +1,7 @@
 package UI;
 
 
-//import BE.Team;
-//import DAL.TeamDBManager;
+
 import UI.MenuStructure.Menu_Main;
 
 public class MyChamp {
@@ -17,12 +16,7 @@ public class MyChamp {
         System.out.println(" └── ── ─ -");
         
         
-//        TeamDBManager tDBM = new TeamDBManager();
-//        Team myTeam = new Team(0, "Vestervang", "Martin", "martinrasmussen92@gmail.com", 0);
-//        tDBM.addTeam(myTeam);
-//        tDBM.removeTeam(1);
-//        myTeam.setGroupID(1);
-//        tDBM.assignToGroup(myTeam);
+
     }
     
 }

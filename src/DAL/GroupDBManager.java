@@ -69,4 +69,13 @@ public class GroupDBManager extends DBManager {
         con.close();
         return groups;
     }
+
+    @Override
+    public void removeAll() throws SQLException {
+        Connection con = dS.getConnection();
+        PreparedStatement qData = con.prepareStatement("DELETE FROM Groups; DBCC CHECKIDENT (Groups, RESEED, 0)");
+        qData.executeUpdate();
+                
+        con.close();
+    }
 }
