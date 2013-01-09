@@ -51,10 +51,10 @@ public class MatchDBManager extends DBManager {
         PreparedStatement qTeam = con.prepareStatement("UPDATE Match SET  HomeGoals = ?, GuestGoals = ? WHERE ID = ?");
 
         
-        qTeam.setInt(2, match.getHomeGoals());
-        qTeam.setInt(3, match.getGuestGoals());        
+        qTeam.setInt(1, match.getHomeGoals());
+        qTeam.setInt(2, match.getGuestGoals());        
 
-        qTeam.setInt(5, match.getID());
+        qTeam.setInt(3, match.getID());
 
         qTeam.executeUpdate();
 

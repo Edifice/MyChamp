@@ -28,10 +28,6 @@ public class MatchManager {
         }
     }
     
-    public void endTournament() throws SQLException {
-        
-    }
-    
     public void createNewMatch(int round, Team homeTeam, Team guestTeam) throws SQLException{
         Match newMatch = new Match(round, homeTeam.getID(), guestTeam.getID());
         DBM.addMatch(newMatch);
@@ -39,6 +35,14 @@ public class MatchManager {
     
     public ArrayList<Match> getAll() throws SQLException {
         return DBM.getAll();
+    }
+    
+    public void updateScore(Match match) throws SQLException{
+        DBM.updateScore(match);
+    }
+    
+    public void updateMatch(Match match) throws SQLException {
+        DBM.updateMatch(match);
     }
     
     public void generateMatchesByGroup(Group group) throws SQLException {

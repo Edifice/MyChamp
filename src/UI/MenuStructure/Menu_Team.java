@@ -18,7 +18,7 @@ public class Menu_Team extends Menu {
         this.addItem(new MenuItem("List all", "l", new Callable<Menu_Team>() {
             @Override
             public Menu_Team call() throws Exception {
-                ArrayList<Team> data = tm.getAll();
+                ArrayList<Team> data = tm.getAllByGroups();
                 String[][] tableData = new String[data.size()][6];
 
 
