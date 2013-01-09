@@ -3,8 +3,6 @@ package BE;
 public class Group {
     public int ID;
     public String groupName;
-    private final int MAXCAPACITY = 4;
-    private final int MINCAPACITY = 3;
     
     public Group(int ID, String groupName) {
         this.ID = ID;
@@ -38,7 +36,12 @@ public class Group {
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
-
+    
+    /**
+     * Prints out the entity in a nicer way.
+     *
+     * @return a string, in the format: ID - Group Name
+     */
     @Override
     public String toString() {
         return getID() + " - " + getGroupName();

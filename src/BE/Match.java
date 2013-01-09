@@ -1,27 +1,15 @@
 package BE;
 
-//import java.text.DateFormat;
-//import java.text.SimpleDateFormat;
-//import java.util.Date;
 public class Match {
 
-    public int ID;
-    public int round;
-    public int homeTeamID;
-    public int guestTeamID;
-    public int isPlayed;
-    public int homeGoals;
-    public int guestGoals;
-    public String homeTeamName;
-    public String guestTeamName;
-    // public Date date = new Date();
+    public int ID, round, homeTeamID, guestTeamID, isPlayed, homeGoals, guestGoals;
+    public String homeTeamName, guestTeamName;
 
     public Match(int round, int homeTeamID, int guestTeamID) {
         this.round = round;
         this.homeTeamID = homeTeamID;
         this.guestTeamID = guestTeamID;
         this.isPlayed = 0;
-
     }
 
     public Match(int ID, int round, int homeTeamID, int guestTeamID, int isPlayed, int homeGoals, int guestGoals) {
@@ -32,7 +20,6 @@ public class Match {
         this.isPlayed = isPlayed;
         this.homeGoals = homeGoals;
         this.guestGoals = guestGoals;
-        //  this.date.setTime(date);
     }
 
     public Match(int ID, int round, int homeTeamID, int guestTeamID, int isPlayed, int homeGoals, int guestGoals, String homeTeamName, String guestTeamName) {
@@ -45,7 +32,6 @@ public class Match {
         this.guestGoals = guestGoals;
         this.homeTeamName = homeTeamName;
         this.guestTeamName = guestTeamName;
-        //  this.date.setTime(date);
     }
 
     /**
@@ -105,12 +91,15 @@ public class Match {
     }
 
     /**
-     * @return the isPlayed
+     * @return the isPlayed in the form of a boolean
      */
     public boolean isIsPlayed() {
         return isPlayed == 0 ? false : true;
     }
 
+    /**
+     * @return the isPlayed in the form of an integer (0 = false, 1 = true)
+     */
     public int getIsPlayed() {
         return isPlayed;
     }
@@ -150,40 +139,34 @@ public class Match {
         this.guestGoals = guestGoals;
     }
 
+    /**
+     * @return the homeTeamName
+     */
     public String getHomeTeamName() {
         return homeTeamName;
     }
 
+    /**
+     * @return the guestTeamName
+     */
     public String getGuestTeamName() {
         return guestTeamName;
     }
 
+    /**
+     * @param homeTeamName sets the home team's name
+     */
     public void setHomeTeamName(String homeTeamName) {
         this.homeTeamName = homeTeamName;
     }
 
+    /**
+     * @param guestTeamName sets the away team's name
+     */
     public void setGuestTeamName(String guestTeamName) {
         this.guestTeamName = guestTeamName;
     }
-    
-//    /**
-//     * @return the date
-//     */
-//    public Date getDate() {
-//        return date;
-//    }
-//
-//    /**
-//     * Formats the Date into a format like it's stored in the DB.
-//     *
-//     * @param date the date that will be formatted
-//     * @return reportDate, the formatted date, which can be printed out.
-//     */
-//    public String formatDateToString(Date date) {
-//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String reportDate = df.format(date);
-//        return reportDate;
-//    }
+
     /**
      * Prints out the entity in a nicer way.
      *
