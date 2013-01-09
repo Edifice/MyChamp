@@ -12,6 +12,7 @@ public class TeamDBManager extends DBManager {
     public TeamDBManager() throws SQLException {
         super();
     }
+    
     /**
      * This method is used for adding a team to the database.
      * be aware that you won't be signing the id, groupID or the points. 
