@@ -5,6 +5,7 @@ import BL.TeamManager;
 import UI.Menu;
 import UI.MenuItem;
 import UI.Table;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
@@ -28,7 +29,7 @@ public class Menu_Team extends Menu {
                 for (int i = 0; i < data.size(); i++) {
                     Team team = data.get(i);
                     tableData[i][0] = Integer.toString(team.getID());
-                    tableData[i][1] = team.getGroupName() == null ? "" : team.getGroupName();
+                    tableData[i][1] = team.getGroupName() == null ? "?" : team.getGroupName();
                     tableData[i][2] = team.getSchool();
                     tableData[i][3] = team.getTeamCaptain();
                     tableData[i][4] = team.getEmail();
@@ -55,7 +56,17 @@ public class Menu_Team extends Menu {
         this.addItem(new MenuItem("Update team", "u", new Callable<Menu_Team>() {
             @Override
             public Menu_Team call() throws Exception {
-                Team update = tm.getById(Menu.getInputInt("Team ID to update"));
+                Team update = null;
+                try {
+                    int in = Menu.getInputInt("Team ID to update");
+                    if (in > 0) {
+                        update = tm.getById(in);
+                    }
+                } catch (SQLException e) {
+                    Menu.Message("Wrong ID!");
+                    return new Menu_Team();
+                }
+                
                 if (update == null) {
                     Menu.Message("Wrong ID!");
                     return new Menu_Team();
@@ -69,12 +80,12 @@ public class Menu_Team extends Menu {
                 int submenu;
                 do {
                     submenu = Menu.getInputInt("Please choose from above");
-                } while (submenu > -1 && submenu < 4);
-                
-                if(submenu == 0){
+                } while (!(submenu > -1 && submenu < 4));
+
+                if (submenu == 0) {
                     return new Menu_Team();
                 }
-                
+
                 String newValue = Menu.getInput("New value");
                 switch (submenu) {
                     case 1:
@@ -87,6 +98,7 @@ public class Menu_Team extends Menu {
                         update.setEmail(newValue);
                         break;
                 }
+                tm.updateTeam(update);
                 return new Menu_Team();
             }
         }));
