@@ -35,6 +35,11 @@ public class MatchManager {
             generateMatchesByGroup(group);
         }
     }
+    
+    public void endTournament() throws SQLException {
+        TM.removeAll();
+        DBM.removeAll();
+    }
 
     /**
      * Creates a match.
@@ -83,7 +88,7 @@ public class MatchManager {
      */
     public void generateMatchesByGroup(Group group) throws SQLException {
         TM = new TeamDBManager();
-        ArrayList<Team> teams = TM.getTeamsByGroup(group.getID());
+        ArrayList<Team> teams = TM.getTeamsByGroup(group);
 
         //Adds the dummy team.
         Team dummy = new Team();

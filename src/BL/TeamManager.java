@@ -1,5 +1,6 @@
 package BL;
 
+import BE.Group;
 import BE.Team;
 import DAL.TeamDBManager;
 import java.sql.SQLException;
@@ -40,7 +41,15 @@ public class TeamManager {
         DBM.assignToGroup(team, groupId);
     }
     
-    public ArrayList<Team> getTeamsByGroup(int groupID) throws SQLException {
-        return DBM.getTeamsByGroup(groupID);
+    public ArrayList<Team> getTeamsByGroup(Group group) throws SQLException {
+        return DBM.getTeamsByGroup(group);
+    }
+    
+    public void removeAll() throws SQLException {
+        DBM.removeAll();
+    }
+    
+    public void assignPoints(Team team) throws SQLException {
+        DBM.assignPoints(team);
     }
 }

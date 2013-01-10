@@ -1,6 +1,8 @@
 package DAL;
 
+import BE.Group;
 import BE.Team;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -188,12 +190,12 @@ public class TeamDBManager extends DBManager {
      * @return all teams within a specific group
      * @throws SQLException 
      */
-    public ArrayList<Team> getTeamsByGroup(int groupID) throws SQLException {
+    public ArrayList<Team> getTeamsByGroup(Group group) throws SQLException {
         Connection con = dS.getConnection();
         ArrayList<Team> teams = new ArrayList<>();
 
         PreparedStatement qAllTeams = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team INNER JOIN Groups ON Team.GroupID = Groups.ID WHERE Team.GroupID = ?");
-        qAllTeams.setInt(1, groupID);
+        qAllTeams.setInt(1, group.getID());
 
         ResultSet allTeams = qAllTeams.executeQuery();
 
@@ -220,5 +222,30 @@ public class TeamDBManager extends DBManager {
         qData.executeUpdate();
                 
         con.close();
+    }
+    
+    public ArrayList<Team> getTeamByPoints(Group group) throws SQLException {
+        Connection con = dS.getConnection();
+        ArrayList<Team> teams = new ArrayList<>();
+
+        PreparedStatement qAllTeams = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team INNER JOIN Groups ON Team.GroupID = Groups.ID WHERE Team.GroupID = ? ORDER BY Team.Points DESC");
+        qAllTeams.setInt(1, group.getID());
+
+        ResultSet allTeams = qAllTeams.executeQuery();
+
+        while (allTeams.next()) {
+            teams.add(
+                    new Team(
+                    allTeams.getInt("ID"),
+                    allTeams.getString("School"),
+                    allTeams.getString("TeamCaptain"),
+                    allTeams.getString("Email"),
+                    allTeams.getInt("GroupID"),
+                    allTeams.getInt("Points"),
+                    allTeams.getString("GroupName")));
+        }
+
+        con.close();
+        return teams;
     }
 }
