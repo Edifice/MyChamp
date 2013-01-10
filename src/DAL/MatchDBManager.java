@@ -29,7 +29,7 @@ public class MatchDBManager extends DBManager {
 
         con.close();
     }
-
+/*
     public void updateMatch(Match match) throws SQLException {
         Connection con = dS.getConnection();
 
@@ -38,14 +38,14 @@ public class MatchDBManager extends DBManager {
         qTeam.setInt(1, match.getRound());
         qTeam.setInt(2, match.getHomeTeamID());
         qTeam.setInt(3, match.getGuestTeamID());
-        qTeam.setBoolean(4, match.isIsPlayed());
+        qTeam.setInt(4, match.isIsPlayed());
 
         qTeam.setInt(5, match.getID());
 
         qTeam.executeUpdate();
 
         con.close();
-    }
+    }*/
     
     public void updateScore(Match match) throws SQLException{
         Connection con = dS.getConnection();
@@ -71,6 +71,29 @@ public class MatchDBManager extends DBManager {
         qMatch.executeUpdate();
 
         con.close();
+    }
+    
+    public Match getMatchById(int id) throws SQLException {
+        Connection con = dS.getConnection();
+        Match match;
+
+        PreparedStatement qAllMatches = con.prepareStatement("SELECT * FROM Match WHERE Match.ID = ?;");
+        qAllMatches.setInt(1, id);
+        ResultSet allMatches = qAllMatches.executeQuery();
+
+        allMatches.next();
+        match = new Match(
+                    allMatches.getInt("ID"),
+                    allMatches.getInt("MatchRound"),
+                    allMatches.getInt("HomeTeamID"),
+                    allMatches.getInt("GuestTeamID"),
+                    allMatches.getInt("IsPlayed"),
+                    allMatches.getInt("HomeGoals"),
+                    allMatches.getInt("GuestGoals"));
+        
+        con.close();
+        return match;
+
     }
 
     @Override

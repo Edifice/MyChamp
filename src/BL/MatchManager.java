@@ -55,17 +55,41 @@ public class MatchManager {
         Match newMatch = new Match(round, homeTeam.getID(), guestTeam.getID());
         DBM.addMatch(newMatch);
     }
+    
+    public Match getMatchById(int id) throws SQLException {
+        return DBM.getMatchById(id);
+    }
 
     public ArrayList<Match> getAll() throws SQLException {
         return DBM.getAll();
     }
 
-    public void updateScore(Match match) throws SQLException {
+    public void updateScore(Match match, int homeScore, int awayScore) throws SQLException {
+        match.setHomeGoals(homeScore);
+        match.setGuestGoals(awayScore);
+        match.setIsPlayed(1);
         DBM.updateScore(match);
     }
-
+/*
     public void updateMatch(Match match) throws SQLException {
         DBM.updateMatch(match);
+    }*/
+    
+    public void assignPoints(Match match) throws SQLException {
+        Team homeTeam = TM.getById(match.getHomeTeamID());
+        Team guestTeam = TM.getById(match.getGuestTeamID());
+        if (match.getHomeGoals() > match.getGuestGoals()) {
+            homeTeam.setPoints(3);
+            TM.assignPoints(homeTeam);
+        } else if (match.getHomeGoals() < match.getGuestGoals()) {
+            guestTeam.setPoints(3);
+            TM.assignPoints(guestTeam);
+        } else if (match.getHomeGoals() == match.getGuestGoals()) {
+            homeTeam.setPoints(1);
+            guestTeam.setPoints(1);
+            TM.assignPoints(homeTeam);
+            TM.assignPoints(guestTeam);
+        }
     }
 
     /**
