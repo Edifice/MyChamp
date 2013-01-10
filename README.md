@@ -6,8 +6,8 @@ The group consists of: Alpár, Anthony, Daniel and Martin.
 
 To-DO:
 -------------
-- Menu flaws:
-* List all teams without a group
-* Update teams doesnt work
-* Remove teams doesnt work
-* Add teams doesnt work
+- [ ] Listing teams in the menu requires a group assigned to it all the time.
+- [ ] Update team menu option doesn't work.
+- [ ] Remove team menu option doesn't work.
+- [ ] Add teams doesn't work for some reason.
+- [ ] Ranking system needs to be implemented.
