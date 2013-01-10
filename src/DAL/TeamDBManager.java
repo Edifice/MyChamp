@@ -132,7 +132,7 @@ public class TeamDBManager extends DBManager {
      */
     public Team getById(int id) throws SQLException {
         Connection con = dS.getConnection();
-        PreparedStatement qTeam = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team INNER JOIN Groups ON Team.GroupID = Groups.ID WHERE Team.ID = ?");
+        PreparedStatement qTeam = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team LEFT JOIN Groups ON Team.GroupID = Groups.ID WHERE Team.ID = ?");
         qTeam.setInt(1, id);
         ResultSet team = qTeam.executeQuery();
         team.next();
