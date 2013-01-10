@@ -31,6 +31,10 @@ public class GroupManager {
     public void removeById(int iden) throws SQLException {
         DBM.removeById(iden);
     }
+    
+    public Group getGroupById(int id) throws SQLException {
+        return DBM.getGroupById(id);
+    }
 
     /**
      * Groups the teams into four different groups assigning them the ID's from

@@ -1,7 +1,5 @@
 package UI;
 
-
-
 import UI.MenuStructure.Menu_Main;
 
 public class MyChamp {
@@ -14,9 +12,6 @@ public class MyChamp {
         System.out.println(" │");
         System.out.println(" │ See you later!");
         System.out.println(" └── ── ─ -");
-        
-        
-
     }
     
 }
