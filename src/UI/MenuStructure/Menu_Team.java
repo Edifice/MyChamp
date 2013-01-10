@@ -47,6 +47,7 @@ public class Menu_Team extends Menu {
                 add.setSchool(Menu.getInput("School name"));
                 add.setTeamCaptain(Menu.getInput("Team Captain's name"));
                 add.setEmail(Menu.getInput("Contact E-mail"));
+                tm.addTeam(add);
                 return new Menu_Team();
             }
         }));
