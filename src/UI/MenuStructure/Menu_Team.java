@@ -18,7 +18,7 @@ public class Menu_Team extends Menu {
         this.addItem(new MenuItem("List all", "l", new Callable<Menu_Team>() {
             @Override
             public Menu_Team call() throws Exception {
-                ArrayList<Team> data = tm.getAllByGroups();
+                ArrayList<Team> data = tm.getAllWithGroupNames();
                 String[][] tableData = new String[data.size()][6];
 
 
@@ -28,7 +28,7 @@ public class Menu_Team extends Menu {
                 for (int i = 0; i < data.size(); i++) {
                     Team team = data.get(i);
                     tableData[i][0] = Integer.toString(team.getID());
-                    tableData[i][1] = team.getGroupName();
+                    tableData[i][1] = team.getGroupName() == null ? "" : team.getGroupName();
                     tableData[i][2] = team.getSchool();
                     tableData[i][3] = team.getTeamCaptain();
                     tableData[i][4] = team.getEmail();

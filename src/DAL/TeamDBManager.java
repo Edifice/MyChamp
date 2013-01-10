@@ -73,11 +73,11 @@ public class TeamDBManager extends DBManager {
     }
 
     ;
-    public ArrayList<Team> getAllByGroups() throws SQLException {
+    public ArrayList<Team> getAllWithGroupNames() throws SQLException {
         Connection con = dS.getConnection();
         ArrayList<Team> teams = new ArrayList<>();
 
-        PreparedStatement qAllTeams = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team INNER JOIN Groups ON Team.GroupID = Groups.ID ORDER BY Groups.ID ASC");
+        PreparedStatement qAllTeams = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team LEFT JOIN Groups ON Team.GroupID = Groups.ID ORDER BY Groups.ID ASC");
 
         ResultSet allTeams = qAllTeams.executeQuery();
 
@@ -90,7 +90,7 @@ public class TeamDBManager extends DBManager {
                     allTeams.getString("Email"),
                     allTeams.getInt("GroupID"),
                     allTeams.getInt("Points"),
-                    allTeams.getString("GroupName")));
+                    allTeams.getNString("GroupName")));
         }
 
         con.close();

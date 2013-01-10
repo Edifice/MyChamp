@@ -13,8 +13,8 @@ public class TeamManager {
     public TeamManager() throws SQLException{
         DBM = new TeamDBManager();
     }
-    public ArrayList<Team> getAllByGroups() throws SQLException {
-        return DBM.getAllByGroups();
+    public ArrayList<Team> getAllWithGroupNames() throws SQLException {
+        return DBM.getAllWithGroupNames();
     }
     
     public void addTeam(Team team) throws SQLException{
