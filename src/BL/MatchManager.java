@@ -74,10 +74,6 @@ public class MatchManager {
         match.setIsPlayed(1);
         DBM.updateScore(match);
     }
-/*
-    public void updateMatch(Match match) throws SQLException {
-        DBM.updateMatch(match);
-    }*/
     
     public void assignPoints(Match match) throws SQLException {
         Team homeTeam = TM.getById(match.getHomeTeamID());

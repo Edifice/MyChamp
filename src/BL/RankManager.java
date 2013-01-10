@@ -4,21 +4,27 @@ import BE.Dummy;
 import BE.Group;
 import BE.Match;
 import BE.Team;
-import DAL.MatchDBManager;
-import DAL.TeamDBManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class RankManager {
 
-    private TeamDBManager TM;
-    private MatchDBManager MM;
-
+    private TeamManager TM;
+    private MatchManager MM;
+    private GroupManager GM;
+    
     public RankManager() throws SQLException {
-        TM = new TeamDBManager();
-        MM = new MatchDBManager();
-
+        TM = new TeamManager();
+        MM = new MatchManager();
+        GM = new GroupManager();
+    }
+    
+    public void rank() throws SQLException {
+        ArrayList<Group> groups = GM.getAll();
+        for (Group group : groups) {
+            getRankingByTotalGoals(group);
+        }
     }
 
     /**
@@ -39,7 +45,7 @@ public class RankManager {
      * @return the ArrayList full of teams in the right order.
      * @throws SQLException
      */
-    public ArrayList<Team> calculateTotalGoals(Group group) throws SQLException {
+    public ArrayList<Team> getRankingByTotalGoals(Group group) throws SQLException {
         ArrayList<Team> teams = TM.getTeamsByGroup(group);
         ArrayList<Match> matches = MM.getMatchesByGroup(group);
         ArrayList<Dummy> teamsWithGoals = new ArrayList<>();

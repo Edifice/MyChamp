@@ -52,4 +52,8 @@ public class TeamManager {
     public void assignPoints(Team team) throws SQLException {
         DBM.assignPoints(team);
     }
+
+    public ArrayList<Team> getTeamByPoints(Group group) throws SQLException {
+        return DBM.getTeamByPoints(group);
+    }
 }

@@ -30,23 +30,6 @@ public class MatchDBManager extends DBManager {
 
         con.close();
     }
-    /*
-     public void updateMatch(Match match) throws SQLException {
-     Connection con = dS.getConnection();
-
-     PreparedStatement qTeam = con.prepareStatement("UPDATE Match SET  Round = ?, HomeTeamID = ?, GuestTeamID = ?, isPlayed = ? WHERE ID = ?");
-
-     qTeam.setInt(1, match.getRound());
-     qTeam.setInt(2, match.getHomeTeamID());
-     qTeam.setInt(3, match.getGuestTeamID());
-     qTeam.setInt(4, match.isIsPlayed());
-
-     qTeam.setInt(5, match.getID());
-
-     qTeam.executeUpdate();
-
-     con.close();
-     }*/
 
     public void updateScore(Match match) throws SQLException {
         Connection con = dS.getConnection();
