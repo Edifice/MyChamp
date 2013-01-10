@@ -1,6 +1,7 @@
 package BL;
 
 import BE.Group;
+import BE.Match;
 import BE.Team;
 import DAL.MatchDBManager;
 import DAL.TeamDBManager;
