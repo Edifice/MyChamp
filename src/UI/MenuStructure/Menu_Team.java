@@ -66,7 +66,7 @@ public class Menu_Team extends Menu {
                     Menu.Message("Wrong ID!");
                     return new Menu_Team();
                 }
-                
+
                 if (update == null) {
                     Menu.Message("Wrong ID!");
                     return new Menu_Team();
@@ -107,12 +107,17 @@ public class Menu_Team extends Menu {
             @Override
             public Menu_Team call() throws Exception {
                 int remove = Menu.getInputInt("Team ID to remove");
-                if (tm.getById(remove) != null) {
+                try {
+                    tm.getById(remove);
+                } catch (SQLException e) {
+                    Menu.Message("Wrong ID!");
+                    return new Menu_Team();
+                }
+                if (remove > 0) {
                     tm.removeTeam(remove);
                     Menu.Message("Team removed from the database!");
-                } else {
-                    Menu.Message("Wrong ID!");
                 }
+
                 return new Menu_Team();
             }
         }));
