@@ -67,7 +67,7 @@ public class Menu_Match extends Menu {
             public Menu_Match call() throws Exception {
                 if (Menu.getInputBoolean("Are you sure? This will delete all of the match data!")) {
                     if (Menu.getInputBoolean("Are you really-really sure?")) {
-                        //TODO: Stop tournament
+                        mm.endTournament();
                         Menu.Message("Tournament ended!");
                     }
                 };

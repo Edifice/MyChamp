@@ -5,6 +5,7 @@ import BE.Team;
 import DAL.GroupDBManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class GroupManager {
 
@@ -42,6 +43,7 @@ public class GroupManager {
     public void groupTeams() throws SQLException {
         TM = new TeamManager();
         ArrayList<Team> allTeams = TM.getAll();
+        Collections.shuffle(allTeams);
         int i = 1;
         for (Team team : allTeams) {
             TM.assignToGroup(team, i);
