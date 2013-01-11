@@ -303,4 +303,29 @@ public class TeamDBManager extends DBManager {
         con.close();
         return teams;
     }
+
+    public void generateDefaultTeams() throws SQLException {
+        Connection con = dS.getConnection();
+
+        PreparedStatement qTeam = con.prepareStatement("INSERT INTO Team (School,TeamCaptain,Email,GroupID) VALUES"
+                + "('Bakkeskolen', 'Test Jensen', 'jens@example.com', NULL),"
+                + "('Bakkevejens skole', 'Test Jensen', 'jens@example.com', NULL),"
+                + "('Boldesager Skole', 'Test Jensen', 'jens@example.com', NULL),"
+                + "('Bryndum Skole', 'Test Jensen', 'jens@example.com', NULL),"
+                + "('Danmarksgades Skole', 'Test Jensen', 'jens@example.com', NULL),"
+                + "('Darum Skole', 'Test Jensen', 'jens@example.com', NULL),"
+                + "('Egekratskolen', 'Test Jensen', 'jens@example.com', NULL),"
+                + "('Fourfeldtskolen', 'Test Jensen', 'jens@example.com', NULL),"
+                + "('Gredstedbro Skole', 'Test Jensen', 'jens@example.com', NULL),"
+                + "('Hjerting Skole', 'Test Jensen', 'jens@example.com', NULL),"
+                + "('Kvaglundskolen', 'Test Jensen', 'jens@example.com', NULL),"
+                + "('Nordre skole', 'Test Jensen', 'jens@example.com', NULL),"
+                + "('Norremarkskolen', 'Test Jensen', 'jens@example.com', NULL),"
+                + "('Praestegaardeskolen', 'Test Jensen', 'jens@example.com', NULL),"
+                + "('Roerkjaer Skole', 'Test Jensen', 'jens@example.com', NULL),"
+                + "('Skads Skole', 'Test Jensen', 'jens@example.com', NULL)");
+        qTeam.executeUpdate();
+
+        con.close();
+    }
 }

@@ -21,7 +21,7 @@ public class Menu_View extends Menu {
     RankManager rm = new RankManager();
 
     public Menu_View() throws Exception {
-        super("Manage");
+        super("View statistics");
 
         this.addItem(new MenuItem("All teams", "a", new Callable<Menu_View>() {
             @Override
@@ -69,10 +69,7 @@ public class Menu_View extends Menu {
             public Menu_View call() throws Exception {
                 Menu.Message("Finals");
                 
-                
-                rm.constructFinalRankings(gm.getGroupById(1));
-                
-                
+                //rm.constructFinalRankings(gm.getGroupById(1));
                 
                 return new Menu_View();
             }

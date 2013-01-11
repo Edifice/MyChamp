@@ -4,10 +4,8 @@ import BE.Team;
 import BL.TeamManager;
 import UI.Menu;
 import UI.MenuItem;
-import UI.Table;
 import UI.Table_project;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 public class Menu_Team extends Menu {
@@ -15,7 +13,7 @@ public class Menu_Team extends Menu {
     TeamManager tm = new TeamManager();
 
     public Menu_Team() throws Exception {
-        super("Manage");
+        super("Team Management");
 
         this.addItem(new MenuItem("List all", "l", new Callable<Menu_Team>() {
             @Override
@@ -106,6 +104,16 @@ public class Menu_Team extends Menu {
                     tm.removeTeam(remove);
                     Menu.Message("Team removed from the database!");
                 }
+
+                return new Menu_Team();
+            }
+        }));
+
+        this.addItem(new MenuItem("Add defaut teams", "d", new Callable<Menu_Team>() {
+            @Override
+            public Menu_Team call() throws Exception {
+                tm.generateDefaultTeams();
+                Menu.Message("16 teams added!");
 
                 return new Menu_Team();
             }

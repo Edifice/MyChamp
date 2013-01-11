@@ -16,6 +16,10 @@ public class TeamManager {
     public TeamManager() throws SQLException {
         DBM = new TeamDBManager();
     }
+    
+    public void generateDefaultTeams() throws SQLException{
+        DBM.generateDefaultTeams();
+    }
 
     public ArrayList<Team> getAllWithGroupNames() throws SQLException {
         ArrayList<Team> teams = DBM.getAllWithGroupNames();
