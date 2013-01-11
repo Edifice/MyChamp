@@ -13,22 +13,32 @@ public class RankManager {
     private TeamManager TM;
     private MatchManager MM;
     private GroupManager GM;
-    private ArrayList<Team> finalRankings = new ArrayList<>();
-    private ArrayList<Team> tiedTeams = new ArrayList<>();
+    private ArrayList<Team> finalRankings;
+    private ArrayList<Team> tiedTeams;
+    private int index;
 
     public RankManager() throws SQLException {
         TM = new TeamManager();
         MM = new MatchManager();
         GM = new GroupManager();
+        finalRankings = new ArrayList<>();
+        tiedTeams = new ArrayList<>();
     }
 
     public ArrayList<Team> constructFinalRankings(Group group) throws SQLException {
+        clear();
         getRankingByPoints(group);
-
+        pointsTie();
         if (tiedTeams.size() > 0) {
             getRankingByTotalGoals();
         }
         return finalRankings;
+    }
+    
+    public void clear() {
+        finalRankings.clear();
+        tiedTeams.clear();
+        index = -1;
     }
 
     public ArrayList<Dummy> getTotalGoals(Group group) throws SQLException {
@@ -43,7 +53,7 @@ public class RankManager {
                     totalGoals += match.getGuestGoals();
                 }
             }
-            teamsWithGoals.add(new Dummy(team, totalGoals));
+            teamsWithGoals.add(new Dummy(team, totalGoals, team.getRanking()));
         }
         return teamsWithGoals;
     }
@@ -73,15 +83,10 @@ public class RankManager {
         teamsWithGoals = getTotalGoals(GM.getGroupById(tiedTeams.get(0).getGroupID()));
 
         Collections.sort(teamsWithGoals);
-        for (int i = 0; i < tiedTeams.size(); i++) {
-            if (tiedTeams.get(i).getID() != teamsWithGoals.get(i).getTeam().getID()) {
-                int oldRank = teamsWithGoals.get(i).getTeam().getRanking();
-                tiedTeams.get(i).setRanking(teamsWithGoals.get(i + 1).getTeam().getRanking());
-                tiedTeams.get(i + 1).setRanking(oldRank);
-            }
-        }
-        for (int i = 0; i < tiedTeams.size(); i++) {
-            finalRankings.add(tiedTeams.get(i).getRanking() - 1, tiedTeams.get(i));
+
+        for (int i = 0; i < teamsWithGoals.size(); i++) {
+            finalRankings.add(index, teamsWithGoals.get(i).getTeam());
+            index++;
         }
     }
 
@@ -100,15 +105,20 @@ public class RankManager {
     }
 
     private void pointsTie() {
-        for (int i = 0; i < finalRankings.size(); i++) {
-            for (int j = i + 1; j < finalRankings.size(); j++) {
-                if (finalRankings.get(i).getPoints() == finalRankings.get(j).getPoints()) {
+        boolean indexFound = false;
+        index = -1;
+        for (int i = 0; i < finalRankings.size() - 1; i++) {
+            if (finalRankings.get(i).getPoints() == finalRankings.get(i + 1).getPoints()) {
+                if(!indexFound) { index = i; indexFound = true; }
+                
+                if (!tiedTeams.contains(finalRankings.get(i))) {
                     tiedTeams.add(finalRankings.get(i));
-                    finalRankings.remove(i);
-                    tiedTeams.add(finalRankings.get(j));
-                    finalRankings.remove(j);
                 }
+                tiedTeams.add(finalRankings.get(i + 1));
             }
+        }
+        for (Team team : tiedTeams) {
+            finalRankings.remove(team);
         }
     }
 }

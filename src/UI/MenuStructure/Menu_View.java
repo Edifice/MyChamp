@@ -61,27 +61,27 @@ public class Menu_View extends Menu {
             }
         }));
         
-        this.addItem(new MenuItem("Group table2", "2", new Callable<Menu_View>() {
-            @Override
-            public Menu_View call() throws Exception {
-                int group = Menu.getInputInt("Group ID");
-                
-                ArrayList<ArrayList<Team>> a = new ArrayList<>();
-                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
-                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
-                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
-                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
-                
-                ArrayList<String> b = new ArrayList<>();
-                b.add("TEST");
-                b.add("TEST");
-                b.add("TEST");
-                b.add("TEST");
-                
-                Table_project.GroupTable(a, b);
-                return new Menu_View();
-            }
-        }));
+//        this.addItem(new MenuItem("Group table2", "2", new Callable<Menu_View>() {
+//            @Override
+//            public Menu_View call() throws Exception {
+//                int group = Menu.getInputInt("Group ID");
+//                
+//                ArrayList<ArrayList<Team>> a = new ArrayList<>();
+//                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
+//                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
+//                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
+//                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
+//                
+//                ArrayList<String> b = new ArrayList<>();
+//                b.add("TEST");
+//                b.add("TEST");
+//                b.add("TEST");
+//                b.add("TEST");
+//                
+//                Table_project.GroupTable(a, b);
+//                return new Menu_View();
+//            }
+//        }));
 
         this.addItem(new MenuItem("Team schedule", "t", new Callable<Menu_View>() {
             @Override

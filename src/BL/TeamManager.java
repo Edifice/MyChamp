@@ -1,11 +1,13 @@
 package BL;
 
+import BE.Dummy;
 import BE.Group;
 import BE.Match;
 import BE.Team;
 import DAL.TeamDBManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class TeamManager {
 
@@ -72,9 +74,17 @@ public class TeamManager {
     }
 
     public ArrayList<Team> getTeamByPoints(Group group) throws SQLException {
-        ArrayList<Team> teams = DBM.getTeamByPoints(group);
+        ArrayList<Team> teams = DBM.getTeamsByGroup(group);
+        ArrayList<Dummy> dumb = new ArrayList<>();
         for (Team team : teams) {
-            team.setPoints(calculatePoints(team));
+            int points = calculatePoints(team);
+            team.setPoints(points);
+            dumb.add(new Dummy(team, points));
+        }
+        teams.clear();
+        Collections.sort(dumb);
+        for (Dummy db : dumb) {
+            teams.add(db.getTeam());
         }
         return teams;
     }
