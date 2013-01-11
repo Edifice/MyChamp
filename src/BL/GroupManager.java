@@ -58,4 +58,8 @@ public class GroupManager {
             }
         }
     }
+
+    public ArrayList<String> getGroupNames() throws SQLException {
+        return DBM.getGroupNames();
+    }
 }

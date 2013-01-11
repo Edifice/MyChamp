@@ -1,6 +1,7 @@
 package UI;
 
 import UI.MenuStructure.Menu_Main;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
@@ -11,12 +12,14 @@ import java.util.concurrent.Callable;
  *
  * @author Daniel
  */
-public abstract class Menu {
+public class Menu {
 
     protected ArrayList<MenuItem> items;
     private String parent;
     
-    protected abstract void addItem(MenuItem item);
+    protected void addItem(MenuItem item) {
+        this.items.add(item);
+    }
 
     /**
      * constructor It gets the MenuItems, adds a back option to it and calls the
@@ -167,7 +170,7 @@ public abstract class Menu {
         Scanner in = new Scanner(System.in);
         String userInput;
         int ret = 0;
-        System.out.print(" │ " + label + " (Undo: 0) > ");
+        System.out.print(" │ " + label + " > ");
         try {
             userInput = in.nextLine();
         } catch (Error e) {
@@ -245,5 +248,13 @@ public abstract class Menu {
     public static void waitWithMessage(String message) {
         Message(message + ", press return to continue");
         waitForEnter();
+    }
+    
+    public static void Catch(Exception e){
+        Menu.Message("Error: " + e.getLocalizedMessage());
+    }
+    
+    public static void Catch(SQLException e){
+        Menu.Message("SQL Error: " + e.getLocalizedMessage());
     }
 }

@@ -79,7 +79,7 @@ public class Table {
      * @param length
      * @return
      */
-    private static String formatToLength(String base, int length) {
+    protected static String formatToLength(String base, int length) {
         if (base == null) {
             throw new NullPointerException();
         }
@@ -96,6 +96,4 @@ public class Table {
 
         return ret;
     }
-
-    
 }

@@ -5,6 +5,7 @@ import BL.TeamManager;
 import UI.Menu;
 import UI.MenuItem;
 import UI.Table;
+import UI.Table_project;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
@@ -19,24 +20,7 @@ public class Menu_Team extends Menu {
         this.addItem(new MenuItem("List all", "l", new Callable<Menu_Team>() {
             @Override
             public Menu_Team call() throws Exception {
-                ArrayList<Team> data = tm.getAllWithGroupNames();
-                String[][] tableData = new String[data.size()][6];
-
-
-                int[] tableLayout = {2, 7, 20, 20, 20, 6};
-                String[] tableHeader = {"ID", "Group", "School", "Team Captain", "Contact E-mail", "Points"};
-
-                for (int i = 0; i < data.size(); i++) {
-                    Team team = data.get(i);
-                    tableData[i][0] = Integer.toString(team.getID());
-                    tableData[i][1] = team.getGroupName() == null ? "?" : team.getGroupName();
-                    tableData[i][2] = team.getSchool();
-                    tableData[i][3] = team.getTeamCaptain();
-                    tableData[i][4] = team.getEmail();
-                    tableData[i][5] = Integer.toString(team.getPoints());
-
-                }
-                Table.draw(tableHeader, tableLayout, tableData);
+                Table_project.fromTeams(tm.getAllWithGroupNames());
                 return new Menu_Team();
             }
         }));
@@ -123,10 +107,5 @@ public class Menu_Team extends Menu {
         }));
 
         this.start();
-    }
-
-    @Override
-    protected void addItem(MenuItem item) {
-        this.items.add(item);
     }
 }
