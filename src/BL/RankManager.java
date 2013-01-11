@@ -97,6 +97,7 @@ public class RankManager {
                     totalGoals += match.getGuestGoals();
                 }
             }
+            team.setTotalGoals(totalGoals);
             teamsWithGoals.add(new Dummy(team, totalGoals));
         }
         return teamsWithGoals;
