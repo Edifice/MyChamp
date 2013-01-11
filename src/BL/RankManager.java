@@ -29,11 +29,10 @@ public class RankManager {
         clear();
         getRankingByPoints(group);
         pointsTie();
-        if (tiedTeams.size() > 0) {
+        if (tiedTeams.size() > 1) {
             getRankingByGoalDeficit();
-            
             goalsDefTie();
-            if (tiedTeams.size() > 0) {
+            if (tiedTeams.size() > 1) {
                 getRankingByTotalGoals();
             }
             
@@ -160,12 +159,16 @@ public class RankManager {
                     index = i;
                     indexFound = true;
                 }
-
+                
 //                if (!tiedTeams.contains(finalRankings.get(i))) {
 //                    tiedTeams.add(finalRankings.get(i));
 //                }
 //                tiedTeams.add(finalRankings.get(i + 1));
             }
+            else {
+                tiedTeams.remove(i+1);
+            }
+
         }
         for (Team team : tiedTeams) {
             finalRankings.remove(team);
