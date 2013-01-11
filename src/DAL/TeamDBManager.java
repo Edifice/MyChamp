@@ -14,19 +14,20 @@ public class TeamDBManager extends DBManager {
     public TeamDBManager() throws SQLException {
         super();
     }
-    
+
     /**
-     * This method is used for adding a team to the database.
-     * be aware that you won't be signing the id, groupID or the points. 
+     * This method is used for adding a team to the database. be aware that you
+     * won't be signing the id, groupID or the points.
+     *
      * @param team is an instance of the BE.Team.
-     * 
-     * @throws SQLException 
+     *
+     * @throws SQLException
      */
     public void addTeam(Team team) throws SQLException {
         Connection con = dS.getConnection();
         PreparedStatement qTeam = con.prepareStatement("INSERT INTO Team VALUES (?, ?, ?, ?, ?)");
 
-        
+
         qTeam.setString(1, team.getSchool());
         qTeam.setString(2, team.getTeamCaptain());
         qTeam.setString(3, team.getEmail());
@@ -37,13 +38,15 @@ public class TeamDBManager extends DBManager {
 
         con.close();
     }
+
     /**
-     * This method is used for updating several columns within the Team table of the database.
-     * Be aware this method can not be used for updating the id, group or points of the team.
-     * 
+     * This method is used for updating several columns within the Team table of
+     * the database. Be aware this method can not be used for updating the id,
+     * group or points of the team.
+     *
      * @param team is an instance of the BE.Team.
-     * 
-     * @throws SQLException 
+     *
+     * @throws SQLException
      */
     public void updateTeam(Team team) throws SQLException {
         Connection con = dS.getConnection();
@@ -77,7 +80,7 @@ public class TeamDBManager extends DBManager {
         Connection con = dS.getConnection();
         ArrayList<Team> teams = new ArrayList<>();
 
-        PreparedStatement qAllTeams = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team LEFT JOIN Groups ON Team.GroupID = Groups.ID ORDER BY Groups.ID ASC");
+        PreparedStatement qAllTeams = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team LEFT JOIN Groups ON Team.GroupID = Groups.ID ORDER BY Groups.ID ASC, Team.School ASC");
 
         ResultSet allTeams = qAllTeams.executeQuery();
 
@@ -97,6 +100,7 @@ public class TeamDBManager extends DBManager {
         return teams;
 
     }
+
     @Override
     public ArrayList<Team> getAll() throws SQLException {
         Connection con = dS.getConnection();
@@ -115,20 +119,22 @@ public class TeamDBManager extends DBManager {
                     allTeams.getString("Email"),
                     allTeams.getInt("GroupID"),
                     allTeams.getInt("Points")));
-                    
+
         }
 
         con.close();
         return teams;
 
     }
+
     /**
-     * Selects a specific team from the database where the ID is equal to the parameter
-     * 
-     * @param id is used to find a specific. 
-     * 
+     * Selects a specific team from the database where the ID is equal to the
+     * parameter
+     *
+     * @param id is used to find a specific.
+     *
      * @return an instance of Team
-     * @throws SQLException 
+     * @throws SQLException
      */
     public Team getById(int id) throws SQLException {
         Connection con = dS.getConnection();
@@ -136,7 +142,7 @@ public class TeamDBManager extends DBManager {
         qTeam.setInt(1, id);
         ResultSet team = qTeam.executeQuery();
         team.next();
-        
+
         Team newTeam = new Team(team.getInt("ID"),
                 team.getString("School"),
                 team.getString("TeamCaptain"),
@@ -144,17 +150,19 @@ public class TeamDBManager extends DBManager {
                 team.getInt("GroupID"),
                 team.getInt("Points"),
                 team.getString("GroupName"));
-        
+
         con.close();
-        
+
         return newTeam;
-        
-       
+
+
     }
+
     /**
-     * Creates the relation between a team and a group within the database. 
+     * Creates the relation between a team and a group within the database.
+     *
      * @param team
-     * @throws SQLException 
+     * @throws SQLException
      */
     public void assignToGroup(Team team, int groupId) throws SQLException {
         Connection con = dS.getConnection();
@@ -167,13 +175,16 @@ public class TeamDBManager extends DBManager {
 
         con.close();
     }
+
     /**
-     * Assigns points to the specific team into the Points column within the Team table of the database
+     * Assigns points to the specific team into the Points column within the
+     * Team table of the database
+     *
      * @param team
-     * @throws SQLException 
+     * @throws SQLException
      */
     public void assignPoints(Team team) throws SQLException {
-       Connection con = dS.getConnection();
+        Connection con = dS.getConnection();
 
         PreparedStatement qTeam = con.prepareStatement("UPDATE Team SET Points = ? WHERE ID = ?");
 
@@ -182,13 +193,16 @@ public class TeamDBManager extends DBManager {
 
         qTeam.executeUpdate();
 
-        con.close(); 
+        con.close();
     }
+
     /**
-     * Selects all teams within the database where the groupId matches the paramater. 
-     * @param groupID is the ID that is compared to teams. 
+     * Selects all teams within the database where the groupId matches the
+     * paramater.
+     *
+     * @param groupID is the ID that is compared to teams.
      * @return all teams within a specific group
-     * @throws SQLException 
+     * @throws SQLException
      */
     public ArrayList<Team> getTeamsByGroup(Group group) throws SQLException {
         Connection con = dS.getConnection();
@@ -220,10 +234,10 @@ public class TeamDBManager extends DBManager {
         Connection con = dS.getConnection();
         PreparedStatement qData = con.prepareStatement("DELETE FROM Team; DBCC CHECKIDENT (Team, RESEED, 0)");
         qData.executeUpdate();
-                
+
         con.close();
     }
-    
+
     public ArrayList<Team> getTeamByPoints(Group group) throws SQLException {
         Connection con = dS.getConnection();
         ArrayList<Team> teams = new ArrayList<>();
@@ -244,6 +258,45 @@ public class TeamDBManager extends DBManager {
                     allTeams.getInt("Points"),
                     allTeams.getString("GroupName")));
         }
+
+        con.close();
+        return teams;
+    }
+
+    public ArrayList<ArrayList<Team>> getAllByGroup() throws SQLException {
+        Connection con = dS.getConnection();
+        ArrayList<ArrayList<Team>> teams = new ArrayList<>();
+
+        ArrayList<Team> groupA = new ArrayList<>();
+        ArrayList<Team> groupB = new ArrayList<>();
+        ArrayList<Team> groupC = new ArrayList<>();
+        ArrayList<Team> groupD = new ArrayList<>();
+
+        PreparedStatement qAllTeams = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team INNER JOIN Groups ON Team.GroupID = Groups.ID ");
+
+        ResultSet allTeams = qAllTeams.executeQuery();
+
+        while (allTeams.next()) {
+            Team team = new Team(
+                    allTeams.getInt("ID"),
+                    allTeams.getString("School"),
+                    allTeams.getString("TeamCaptain"),
+                    allTeams.getString("Email"),
+                    allTeams.getInt("GroupID"),
+                    allTeams.getInt("Points"),
+                    allTeams.getString("GroupName"));
+            switch(team.getGroupID()){
+                case 1: groupA.add(team); break;
+                case 2: groupB.add(team); break;
+                case 3: groupC.add(team); break;
+                case 4: groupD.add(team); break;
+            }
+        }
+        
+        teams.add(groupA);
+        teams.add(groupB);
+        teams.add(groupC);
+        teams.add(groupD);
 
         con.close();
         return teams;

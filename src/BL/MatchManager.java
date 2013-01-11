@@ -67,6 +67,10 @@ public class MatchManager {
     public ArrayList<Match> getMatchesByGroup(Group group) throws SQLException {
         return DBM.getMatchesByGroup(group);
     }
+    
+    public ArrayList<Match> getMatchesByTeam(Team team) throws SQLException {
+        return DBM.getMatchesByTeam(team);
+    }
 
     public void updateScore(Match match, int homeScore, int awayScore) throws SQLException {
         match.setHomeGoals(homeScore);

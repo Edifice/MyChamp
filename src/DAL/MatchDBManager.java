@@ -2,6 +2,8 @@ package DAL;
 
 import BE.Group;
 import BE.Match;
+import BE.Team;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -64,7 +66,7 @@ public class MatchDBManager extends DBManager {
         Match match;
 
         PreparedStatement qAllMatches = con.prepareStatement("SELECT Match.*, t1.School as HomeTeamName, t2.School as GuestTeamName FROM Match INNER JOIN Team as t1 ON t1.ID = Match.HomeTeamID INNER JOIN Team as t2 ON t2.ID = Match.GuestTeamID WHERE Match.ID = ? ORDER BY Match.MatchRound ASC;");
-        
+
         qAllMatches.setInt(1, id);
         ResultSet allMatches = qAllMatches.executeQuery();
 
@@ -109,7 +111,6 @@ public class MatchDBManager extends DBManager {
 
         con.close();
         return matches;
-
     }
 
     public ArrayList<Match> getMatchesByGroup(Group g) throws SQLException {
@@ -134,7 +135,6 @@ public class MatchDBManager extends DBManager {
 
         con.close();
         return matches;
-
     }
 
     @Override
@@ -144,5 +144,41 @@ public class MatchDBManager extends DBManager {
         qData.executeUpdate();
 
         con.close();
+    }
+
+    public ArrayList<Match> getMatchesByTeam(Team t) throws SQLException {
+
+        Connection con = dS.getConnection();
+        ArrayList<Match> matches = new ArrayList<>();
+
+        PreparedStatement qAllMatches = con.prepareStatement(
+                "SELECT Match.*, t1.School as HomeTeamName, t2.School as GuestTeamName "
+                + "FROM Match "
+                + "INNER JOIN Team as t1 ON t1.ID = Match.HomeTeamID "
+                + "INNER JOIN Team as t2 ON t2.ID = Match.GuestTeamID "
+                + "WHERE t1.ID = ? OR t2.ID = ?"
+                /*+ "ORDER BY Match.MatchRound ASC "*/);
+        
+        qAllMatches.setInt(1, t.getID());
+        qAllMatches.setInt(2, t.getID());
+
+        ResultSet allMatches = qAllMatches.executeQuery();
+
+        while (allMatches.next()) {
+            matches.add(
+                    new Match(
+                    allMatches.getInt("ID"),
+                    allMatches.getInt("MatchRound"),
+                    allMatches.getInt("HomeTeamID"),
+                    allMatches.getInt("GuestTeamID"),
+                    allMatches.getInt("IsPlayed"),
+                    allMatches.getInt("HomeGoals"),
+                    allMatches.getInt("GuestGoals"),
+                    allMatches.getString("HomeTeamName"),
+                    allMatches.getString("GuestTeamName")));
+        }
+
+        con.close();
+        return matches;
     }
 }

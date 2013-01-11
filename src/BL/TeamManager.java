@@ -56,4 +56,8 @@ public class TeamManager {
     public ArrayList<Team> getTeamByPoints(Group group) throws SQLException {
         return DBM.getTeamByPoints(group);
     }
+
+    public ArrayList<ArrayList<Team>> getAllByGroup() throws SQLException {
+        return DBM.getAllByGroup();
+    }
 }

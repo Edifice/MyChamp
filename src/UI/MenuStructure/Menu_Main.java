@@ -23,18 +23,13 @@ public class Menu_Main extends Menu {
             }
         }));
 
-        this.addItem(new MenuItem("View results", "v", new Callable<Menu_Match>() {
+        this.addItem(new MenuItem("View results", "v", new Callable<Menu_View>() {
             @Override
-            public Menu_Match call() throws Exception {
-                return new Menu_Match();
+            public Menu_View call() throws Exception {
+                return new Menu_View();
             }
         }));
 
         this.start();
-    }
-    
-    @Override
-    protected void addItem(MenuItem item) {
-        this.items.add(item);
     }
 }
