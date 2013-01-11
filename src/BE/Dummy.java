@@ -3,7 +3,7 @@ package BE;
 public class Dummy implements Comparable<Dummy> {
 
     private Team team;
-    private int totalGoals, rank;
+    private int number;
     
     public Dummy() {
         
@@ -11,22 +11,18 @@ public class Dummy implements Comparable<Dummy> {
     
     public Dummy(Team team, int totalGoals) {
         this.team = team;
-        this.totalGoals = totalGoals;
+        this.number = totalGoals;
     }
     
-    public Dummy(Team team, int totalGoals, int rank) {
-        this.team = team;
-        this.totalGoals = totalGoals;
-        this.rank = rank;
-    }
+    
 
     @Override
     public int compareTo(Dummy t) {
-        if (this.totalGoals < t.totalGoals) {
-            t.team.ranking = this.team.ranking;
+        if (this.number < t.number) {
+            
             return +1;
-        } else if (this.totalGoals > t.totalGoals) {
-            this.team.ranking = t.team.ranking;
+        } else if (this.number > t.number) {
+            
             return -1;
         } else {
             return 0;

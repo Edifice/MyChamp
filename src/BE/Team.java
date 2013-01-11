@@ -2,8 +2,8 @@ package BE;
 
 public class Team {
 
-    private int ID, groupID, points;
-    public int ranking;
+    private int ID, groupID, points, goalDeficit, totalGoals;
+    
     private String school, teamCaptain, email, groupName;
 
     public Team() {
@@ -130,16 +130,32 @@ public class Team {
     }
 
     /**
-     * @return the ranking
+     * @return the goalDeficit
      */
-    public int getRanking() {
-        return ranking;
+    public int getGoalDeficit() {
+        return goalDeficit;
     }
 
     /**
-     * @param ranking the ranking to set
+     * @param goalDeficit the goalDeficit to set
      */
-    public void setRanking(int ranking) {
-        this.ranking = ranking;
+    public void setGoalDeficit(int goalDeficit) {
+        this.goalDeficit = goalDeficit;
     }
+
+    /**
+     * @return the totalGoals
+     */
+    public int getTotalGoals() {
+        return totalGoals;
+    }
+
+    /**
+     * @param totalGoals the totalGoals to set
+     */
+    public void setTotalGoals(int totalGoals) {
+        this.totalGoals = totalGoals;
+    }
+
+    
 }
