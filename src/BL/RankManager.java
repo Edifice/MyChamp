@@ -31,7 +31,7 @@ public class RankManager {
         pointsTie();
         if (tiedTeams.size() > 0) {
             getRankingByGoalDeficit();
-            tiedTeams.clear();
+            
             goalsDefTie();
             if (tiedTeams.size() > 0) {
                 getRankingByTotalGoals();
@@ -153,17 +153,17 @@ public class RankManager {
     private void goalsDefTie() {
         boolean indexFound = false;
         index = -1;
-        for (int i = 0; i < finalRankings.size() - 1; i++) {
-            if (finalRankings.get(i).getGoalDeficit() == finalRankings.get(i + 1).getGoalDeficit()) {
+        for (int i = 0; i < tiedTeams.size() - 1; i++) {
+            if (tiedTeams.get(i).getGoalDeficit() == tiedTeams.get(i + 1).getGoalDeficit()) {
                 if (!indexFound) {
                     index = i;
                     indexFound = true;
                 }
 
-                if (!tiedTeams.contains(finalRankings.get(i))) {
-                    tiedTeams.add(finalRankings.get(i));
-                }
-                tiedTeams.add(finalRankings.get(i + 1));
+//                if (!tiedTeams.contains(finalRankings.get(i))) {
+//                    tiedTeams.add(finalRankings.get(i));
+//                }
+//                tiedTeams.add(finalRankings.get(i + 1));
             }
         }
         for (Team team : tiedTeams) {
