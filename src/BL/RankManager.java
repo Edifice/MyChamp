@@ -34,7 +34,7 @@ public class RankManager {
         if (tiedTeams.size() > 1) {
             getRankingByGoalDeficit();
             goalsDefTie();
-            if (tiedTeams.size() > 1) {
+            if (tiedTeamsWithGoals.size() > 1) {
                 getRankingByTotalGoals();
             }
 
@@ -45,6 +45,7 @@ public class RankManager {
     public void clear() {
         finalRankings.clear();
         tiedTeams.clear();
+        tiedTeamsWithGoals.clear();
         index = -1;
     }
 
