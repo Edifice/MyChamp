@@ -26,6 +26,17 @@ public class Menu_Match extends Menu {
                 return new Menu_Match();
             }
         }));
+        
+        this.addItem(new MenuItem("Start Finals", "f", new Callable<Menu_Match>() {
+            @Override
+            public Menu_Match call() throws Exception {
+                if (Menu.getInputBoolean("Are you sure?")) {
+                    mm.startFinals();
+                    Menu.Message("Finals started!");
+                };
+                return new Menu_Match();
+            }
+        }));
 
         this.addItem(new MenuItem("List all", "l", new Callable<Menu_Match>() {
             @Override
@@ -52,7 +63,11 @@ public class Menu_Match extends Menu {
                 }
                 int home = Menu.getInputInt(match.getHomeTeamName() + "'s goals");
                 int guest = Menu.getInputInt(match.getGuestTeamName() + "'s goals");
-
+                
+                if (id < 0) {
+                    return new Menu_Match();
+                }
+                
                 try {
                     mm.updateScore(match, home, guest);
                     Menu.Message("Scores updated!");

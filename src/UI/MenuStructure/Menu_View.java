@@ -1,6 +1,5 @@
 package UI.MenuStructure;
 
-import BE.Group;
 import BE.Match;
 import BE.Team;
 import BL.GroupManager;
@@ -36,6 +35,10 @@ public class Menu_View extends Menu {
             @Override
             public Menu_View call() throws Exception {
                 int teamID = Menu.getInputInt("Team ID");
+                if(teamID < 1){
+                    Menu.Message("Undo");
+                    return new Menu_View();
+                }
                 Team team;
 
                 try {
@@ -60,41 +63,17 @@ public class Menu_View extends Menu {
                 return new Menu_View();
             }
         }));
-        
-//        this.addItem(new MenuItem("Group table2", "2", new Callable<Menu_View>() {
-//            @Override
-//            public Menu_View call() throws Exception {
-//                int group = Menu.getInputInt("Group ID");
-//                
-//                ArrayList<ArrayList<Team>> a = new ArrayList<>();
-//                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
-//                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
-//                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
-//                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
-//                
-//                ArrayList<String> b = new ArrayList<>();
-//                b.add("TEST");
-//                b.add("TEST");
-//                b.add("TEST");
-//                b.add("TEST");
-//                
-//                Table_project.GroupTable(a, b);
-//                return new Menu_View();
-//            }
-//        }));
 
-        this.addItem(new MenuItem("Team schedule", "t", new Callable<Menu_View>() {
+        this.addItem(new MenuItem("Finals", "f", new Callable<Menu_View>() {
             @Override
             public Menu_View call() throws Exception {
-                Menu.Message("Team schedule");
-                return new Menu_View();
-            }
-        }));
-
-        this.addItem(new MenuItem("Final schedule", "f", new Callable<Menu_View>() {
-            @Override
-            public Menu_View call() throws Exception {
-                Menu.Message("Final schedule");
+                Menu.Message("Finals");
+                
+                
+                rm.constructFinalRankings(gm.getGroupById(1));
+                
+                
+                
                 return new Menu_View();
             }
         }));

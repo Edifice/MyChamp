@@ -169,8 +169,8 @@ public class Menu {
     public static int getInputInt(String label) {
         Scanner in = new Scanner(System.in);
         String userInput;
-        int ret = 0;
-        System.out.print(" │ " + label + " > ");
+        int ret = -1;
+        System.out.print(" │ " + label + " (Undo: X < 0) > ");
         try {
             userInput = in.nextLine();
         } catch (Error e) {
@@ -178,14 +178,19 @@ public class Menu {
         }
 
         if (userInput.equals("") || userInput.isEmpty()) {
-            return 0;
+            return -1;
         }
 
         try {
             ret = Integer.parseInt(userInput);
         } catch (NumberFormatException e) {
-            throw e;
+            Message("You entered a wrong number!");
+            ret = -1;
         }
+        if(ret < 0) {
+            return -1;
+        }
+        
         return ret;
     }
 

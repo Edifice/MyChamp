@@ -40,12 +40,13 @@ public class Menu_Team extends Menu {
         this.addItem(new MenuItem("Update team", "u", new Callable<Menu_Team>() {
             @Override
             public Menu_Team call() throws Exception {
-                Team update = null;
+                Team update;
                 try {
                     int in = Menu.getInputInt("Team ID to update");
-                    if (in > 0) {
-                        update = tm.getById(in);
+                    if (in <= 0) {
+                        return new Menu_Team();
                     }
+                    update = tm.getById(in);
                 } catch (SQLException e) {
                     Menu.Message("Wrong ID!");
                     return new Menu_Team();
@@ -57,16 +58,16 @@ public class Menu_Team extends Menu {
                 }
 
                 Menu.Message("What data would you like to change?");
-                Menu.Message("0: Back");
                 Menu.Message("1: School name");
                 Menu.Message("2: Team Captain");
                 Menu.Message("3: E-mail address");
                 int submenu;
                 do {
                     submenu = Menu.getInputInt("Please choose from above");
-                } while (!(submenu > -1 && submenu < 4));
+                } while (submenu > 3);
 
-                if (submenu == 0) {
+                if (submenu < 1) {
+                    Menu.Message("Undo");
                     return new Menu_Team();
                 }
 
@@ -91,6 +92,10 @@ public class Menu_Team extends Menu {
             @Override
             public Menu_Team call() throws Exception {
                 int remove = Menu.getInputInt("Team ID to remove");
+                if(remove < 1){
+                    Menu.Message("Undo");
+                    return new Menu_Team();
+                }
                 try {
                     tm.getById(remove);
                 } catch (SQLException e) {

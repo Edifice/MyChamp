@@ -4,6 +4,9 @@ public class Match {
 
     private int ID, round, homeTeamID, guestTeamID, isPlayed, homeGoals, guestGoals;
     private String homeTeamName, guestTeamName;
+    
+    public Match(){
+    }
 
     public Match(int round, int homeTeamID, int guestTeamID) {
         this.round = round;

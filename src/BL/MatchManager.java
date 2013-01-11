@@ -162,4 +162,18 @@ public class MatchManager {
                 (match.getHomeGoals() > match.getGuestGoals() ? 3 : 0) :
                 (match.getHomeGoals() > match.getGuestGoals() ? 0 : 3);
     }
+
+    public void startFinals() throws SQLException {
+       /*
+        * match 1 -> rm.constructFinalRankings(gm.getGroupById(1)).get(0)    &&    rm.constructFinalRankings(gm.getGroupById(2)).get(1)
+        */
+        
+        GroupManager gm = new GroupManager();
+        RankManager rm = new RankManager();
+        
+        Match add = new Match();
+        add.setHomeTeamID(rm.constructFinalRankings(gm.getGroupById(1)).get(0).getID());
+        add.setGuestTeamID(rm.constructFinalRankings(gm.getGroupById(2)).get(1).getID());
+        
+    }
 }
