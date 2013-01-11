@@ -2,6 +2,7 @@ package DAL;
 
 import BE.Group;
 import BE.Match;
+import BE.Team;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -108,12 +109,12 @@ public class MatchDBManager extends DBManager {
 
     }
 
-    public ArrayList<Match> getMatchesByGroup(Group g) throws SQLException {
+    public ArrayList<Match> getMatchesByGroup(Group group) throws SQLException {
         Connection con = dS.getConnection();
         ArrayList<Match> matches = new ArrayList<>();
 
         PreparedStatement qAllMatches = con.prepareStatement("SELECT Match.* FROM Match INNER JOIN Team ON Match.HomeTeamID = Team.ID WHERE Team.GroupID = ?");
-        qAllMatches.setInt(1, g.getID());
+        qAllMatches.setInt(1, group.getID());
         ResultSet allMatches = qAllMatches.executeQuery();
 
         while (allMatches.next()) {

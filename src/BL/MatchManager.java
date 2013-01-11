@@ -14,6 +14,8 @@ public class MatchManager {
     private MatchDBManager DBM;
     private TeamDBManager TM;
     private GroupManager GM;
+    private final int VALUE_WIN = 3;
+    private final int VALUE_TIE = 1;
 
     public MatchManager() throws SQLException {
         DBM = new MatchDBManager();
@@ -73,6 +75,7 @@ public class MatchManager {
         match.setGuestGoals(awayScore);
         match.setIsPlayed(1);
         DBM.updateScore(match);
+        assignPoints(match);
     }
     
     public void assignPoints(Match match) throws SQLException {
@@ -82,10 +85,10 @@ public class MatchManager {
             homeTeam.setPoints(3);
             TM.assignPoints(homeTeam);
         } else if (match.getHomeGoals() < match.getGuestGoals()) {
-            guestTeam.setPoints(3);
+            guestTeam.setPoints(VALUE_WIN);
             TM.assignPoints(guestTeam);
         } else if (match.getHomeGoals() == match.getGuestGoals()) {
-            homeTeam.setPoints(1);
+            homeTeam.setPoints(VALUE_TIE);
             guestTeam.setPoints(1);
             TM.assignPoints(homeTeam);
             TM.assignPoints(guestTeam);

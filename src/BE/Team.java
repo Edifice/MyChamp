@@ -3,6 +3,7 @@ package BE;
 public class Team {
 
     private int ID, groupID, points;
+    public int ranking;
     private String school, teamCaptain, email, groupName;
 
     public Team() {
@@ -128,5 +129,19 @@ public class Team {
     @Override
     public String toString() {
         return getID() + ". " + getSchool() + " | Team captain: " + getTeamCaptain();
+    }
+
+    /**
+     * @return the ranking
+     */
+    public int getRanking() {
+        return ranking;
+    }
+
+    /**
+     * @param ranking the ranking to set
+     */
+    public void setRanking(int ranking) {
+        this.ranking = ranking;
     }
 }
