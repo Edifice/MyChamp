@@ -167,7 +167,7 @@ public abstract class Menu {
         Scanner in = new Scanner(System.in);
         String userInput;
         int ret = 0;
-        System.out.print(" │ " + label + " (Undo: 0) > ");
+        System.out.print(" │ " + label + " > ");
         try {
             userInput = in.nextLine();
         } catch (Error e) {
