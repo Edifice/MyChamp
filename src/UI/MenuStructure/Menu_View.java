@@ -1,9 +1,11 @@
 package UI.MenuStructure;
 
+import BE.Group;
 import BE.Match;
 import BE.Team;
 import BL.GroupManager;
 import BL.MatchManager;
+import BL.RankManager;
 import BL.TeamManager;
 import UI.Menu;
 import UI.MenuItem;
@@ -17,6 +19,7 @@ public class Menu_View extends Menu {
     TeamManager tm = new TeamManager();
     GroupManager gm = new GroupManager();
     MatchManager mm = new MatchManager();
+    RankManager rm = new RankManager();
 
     public Menu_View() throws Exception {
         super("Manage");
@@ -58,14 +61,24 @@ public class Menu_View extends Menu {
             }
         }));
         
-        this.addItem(new MenuItem("Group table", "g", new Callable<Menu_View>() {
+        this.addItem(new MenuItem("Group table2", "2", new Callable<Menu_View>() {
             @Override
             public Menu_View call() throws Exception {
                 int group = Menu.getInputInt("Group ID");
                 
                 ArrayList<ArrayList<Team>> a = new ArrayList<>();
+                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
+                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
+                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
+                a.add(rm.constructFinalRankings(gm.getGroupById(1)));
                 
-                Table_project.GroupTable(null, null);
+                ArrayList<String> b = new ArrayList<>();
+                b.add("TEST");
+                b.add("TEST");
+                b.add("TEST");
+                b.add("TEST");
+                
+                Table_project.GroupTable(a, b);
                 return new Menu_View();
             }
         }));
