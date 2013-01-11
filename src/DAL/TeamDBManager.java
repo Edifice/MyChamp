@@ -92,7 +92,6 @@ public class TeamDBManager extends DBManager {
                     allTeams.getString("TeamCaptain"),
                     allTeams.getString("Email"),
                     allTeams.getInt("GroupID"),
-                    allTeams.getInt("Points"),
                     allTeams.getNString("GroupName")));
         }
 
@@ -117,8 +116,7 @@ public class TeamDBManager extends DBManager {
                     allTeams.getString("School"),
                     allTeams.getString("TeamCaptain"),
                     allTeams.getString("Email"),
-                    allTeams.getInt("GroupID"),
-                    allTeams.getInt("Points")));
+                    allTeams.getInt("GroupID")));
 
         }
 
@@ -148,7 +146,6 @@ public class TeamDBManager extends DBManager {
                 team.getString("TeamCaptain"),
                 team.getString("Email"),
                 team.getInt("GroupID"),
-                team.getInt("Points"),
                 team.getString("GroupName"));
 
         con.close();
@@ -221,7 +218,6 @@ public class TeamDBManager extends DBManager {
                     allTeams.getString("TeamCaptain"),
                     allTeams.getString("Email"),
                     allTeams.getInt("GroupID"),
-                    allTeams.getInt("Points"),
                     allTeams.getString("GroupName")));
         }
 
@@ -255,7 +251,6 @@ public class TeamDBManager extends DBManager {
                     allTeams.getString("TeamCaptain"),
                     allTeams.getString("Email"),
                     allTeams.getInt("GroupID"),
-                    allTeams.getInt("Points"),
                     allTeams.getString("GroupName")));
         }
 
@@ -283,16 +278,23 @@ public class TeamDBManager extends DBManager {
                     allTeams.getString("TeamCaptain"),
                     allTeams.getString("Email"),
                     allTeams.getInt("GroupID"),
-                    allTeams.getInt("Points"),
                     allTeams.getString("GroupName"));
-            switch(team.getGroupID()){
-                case 1: groupA.add(team); break;
-                case 2: groupB.add(team); break;
-                case 3: groupC.add(team); break;
-                case 4: groupD.add(team); break;
+            switch (team.getGroupID()) {
+                case 1:
+                    groupA.add(team);
+                    break;
+                case 2:
+                    groupB.add(team);
+                    break;
+                case 3:
+                    groupC.add(team);
+                    break;
+                case 4:
+                    groupD.add(team);
+                    break;
             }
         }
-        
+
         teams.add(groupA);
         teams.add(groupB);
         teams.add(groupC);

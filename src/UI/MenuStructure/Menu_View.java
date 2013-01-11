@@ -50,10 +50,22 @@ public class Menu_View extends Menu {
             }
         }));
 
-        this.addItem(new MenuItem("Group schedule", "g", new Callable<Menu_View>() {
+        this.addItem(new MenuItem("Group table", "g", new Callable<Menu_View>() {
             @Override
             public Menu_View call() throws Exception {
                 Table_project.GroupTable(tm.getAllByGroup(), gm.getGroupNames());
+                return new Menu_View();
+            }
+        }));
+        
+        this.addItem(new MenuItem("Group table", "g", new Callable<Menu_View>() {
+            @Override
+            public Menu_View call() throws Exception {
+                int group = Menu.getInputInt("Group ID");
+                
+                ArrayList<ArrayList<Team>> a = new ArrayList<>();
+                
+                Table_project.GroupTable(null, null);
                 return new Menu_View();
             }
         }));

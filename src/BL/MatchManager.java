@@ -150,4 +150,16 @@ public class MatchManager {
             Collections.rotate(teams, 1);
         }
     }
+    
+    public int getPointsForTeamAtMatch(Team team, Match match){
+        if(match.getIsPlayed() != 1){
+            return 0;
+        }
+        if(match.getHomeGoals() == match.getGuestGoals()) {
+            return 1;
+        }
+        return match.getHomeTeamID() == team.getID() ?
+                (match.getHomeGoals() > match.getGuestGoals() ? 3 : 0) :
+                (match.getHomeGoals() > match.getGuestGoals() ? 0 : 3);
+    }
 }

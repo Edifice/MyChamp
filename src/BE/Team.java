@@ -9,20 +9,18 @@ public class Team {
     public Team() {
     }
     
-    public Team(int ID, String school, String teamCaptain, String email, int groupID, int points, String groupName) {
+    public Team(int ID, String school, String teamCaptain, String email, int groupID, String groupName) {
         this.ID = ID;
         this.school = school;
         this.teamCaptain = teamCaptain;
         this.email = email;
         this.groupID = groupID;
-        this.points = points;
         this.groupName = groupName;
 
     }
 
-    public Team(int ID, String school, String teamCaptain, String email, int groupID, int points) {
+    public Team(int ID, String school, String teamCaptain, String email, int groupID) {
         this.groupID = groupID;
-        this.points = points;
         this.school = school;
         this.teamCaptain = teamCaptain;
         this.email = email;
