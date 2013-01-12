@@ -197,7 +197,7 @@ public class MatchDBManager extends DBManager {
 
     }
 
-    public boolean readyToFinals() throws SQLException {
+    public boolean isAllPlayed() throws SQLException {
         Connection con = dS.getConnection();
 
         boolean allPlayed;
@@ -208,7 +208,11 @@ public class MatchDBManager extends DBManager {
         allPlayed = allMatches.getInt("Res") == 0;
 
         con.close();
-        return maxRoundNumber() == 6 && allPlayed;
+        return allPlayed;
+    }
+
+    public boolean readyToFinals() throws SQLException {
+        return maxRoundNumber() == 6 && isAllPlayed();
     }
 
     public Match getNextFinalMatch() throws SQLException {

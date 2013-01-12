@@ -45,18 +45,18 @@ public class Table_project extends Table {
     public static void fromMatches(ArrayList<Match> data) {
         String[][] tableData = new String[data.size()][7];
 
-        int[] tableLayout = {4, 4, 15, 15, 10, 10, 10};
-        String[] tableHeader = {"ID", "round", "Home Team", "Guest Team", "Played?", "Home Goals", "Guest Goals"};
+        int[] tableLayout = {4, 4, 20, 10, 10, 20, 6};
+        String[] tableHeader = {"ID", "round", "Home Team", "Home Goals", "Guest Goals", "Guest Team", "Played?"};
 
         for (int i = 0; i < data.size(); i++) {
             Match match = data.get(i);
             tableData[i][0] = Integer.toString(match.getID());
             tableData[i][1] = Integer.toString(match.getRound());
             tableData[i][2] = match.getHomeTeamName();
-            tableData[i][3] = match.getGuestTeamName();
-            tableData[i][4] = match.getIsPlayed() == 1 ? "yes" : "no";
-            tableData[i][5] = Integer.toString(match.getHomeGoals());
-            tableData[i][6] = Integer.toString(match.getGuestGoals());
+            tableData[i][3] = match.getIsPlayed() == 1 ? Integer.toString(match.getHomeGoals()) : "-";
+            tableData[i][4] = match.getIsPlayed() == 1 ? Integer.toString(match.getGuestGoals()) : "-";
+            tableData[i][5] = match.getGuestTeamName();
+            tableData[i][6] = match.getIsPlayed() == 1 ? "yes" : "no";
 
         }
         Table.draw(tableHeader, tableLayout, tableData);
@@ -71,7 +71,7 @@ public class Table_project extends Table {
         int groupmax = Math.max(Math.max(A.size(), B.size()), Math.max(C.size(), D.size()));
         String[][] tableData = new String[groupmax][4];
 
-        int[] tableLayout = {20, 20, 20, 20};
+        int[] tableLayout = {26, 26, 26, 26};
         String[] tableHeader = {groupNames.get(0), groupNames.get(1), groupNames.get(2), groupNames.get(3)};
 
         for (int i = 0; i < A.size(); i++) {

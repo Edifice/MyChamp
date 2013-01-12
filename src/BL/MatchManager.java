@@ -44,9 +44,11 @@ public class MatchManager {
         }
     }
 
-    public void endTournament() throws SQLException {
-        TM = new TeamDBManager();
-        TM.removeAll();
+    public void endTournament(boolean deleteTeams) throws SQLException {
+        if (deleteTeams) {
+            TM = new TeamDBManager();
+            TM.removeAll();
+        }
         DBM.removeAll();
     }
 
@@ -87,11 +89,15 @@ public class MatchManager {
         match.setIsPlayed(1);
         DBM.updateScore(match);
         assignPoints(match);
+
+        if (readyToFinals() || (DBM.maxRoundNumber() > 6 && DBM.maxRoundNumber() < 9 && DBM.isAllPlayed())) {
+            startFinals();
+        }
     }
 
     public void assignPoints(Match match) throws SQLException {
         TM = new TeamDBManager();
-        
+
         Team homeTeam = TM.getById(match.getHomeTeamID());
         Team guestTeam = TM.getById(match.getGuestTeamID());
         if (match.getHomeGoals() > match.getGuestGoals()) {
@@ -191,10 +197,6 @@ public class MatchManager {
 
     public Match getNextFinalMatch() throws SQLException {
         Match match = DBM.getNextFinalMatch();
-        if(match == null && DBM.maxRoundNumber() < 9){
-            startFinals();
-            match = DBM.getNextFinalMatch();
-        }
         return match;
     }
 
@@ -215,7 +217,7 @@ public class MatchManager {
     private void startQuarterFinals() throws SQLException {
         GM = new GroupManager();
         RM = new RankManager();
-        
+
         Match add = new Match();
         add.setHomeTeamID(RM.constructFinalRankings(GM.getGroupById(1)).get(0).getID());
         add.setGuestTeamID(RM.constructFinalRankings(GM.getGroupById(2)).get(1).getID());
@@ -246,14 +248,14 @@ public class MatchManager {
         Match add = new Match();
         ArrayList<Match> matches = DBM.getLast4Match();
 
-        add.setHomeTeamID(matches.get(0).getGuestGoals() > matches.get(0).getHomeGoals() ? matches.get(0).getGuestTeamID() : matches.get(0).getHomeTeamID());
-        add.setGuestTeamID(matches.get(1).getGuestGoals() > matches.get(1).getHomeGoals() ? matches.get(1).getGuestTeamID() : matches.get(1).getHomeTeamID());
+        add.setGuestTeamID(matches.get(3).getGuestGoals() > matches.get(3).getHomeGoals() ? matches.get(3).getGuestTeamID() : matches.get(3).getHomeTeamID());
+        add.setHomeTeamID(matches.get(2).getGuestGoals() > matches.get(2).getHomeGoals() ? matches.get(2).getGuestTeamID() : matches.get(2).getHomeTeamID());
         add.setRound(8);
         addMatch(add);
 
         add = new Match();
-        add.setHomeTeamID(matches.get(2).getGuestGoals() > matches.get(2).getHomeGoals() ? matches.get(2).getGuestTeamID() : matches.get(2).getHomeTeamID());
-        add.setGuestTeamID(matches.get(3).getGuestGoals() > matches.get(3).getHomeGoals() ? matches.get(3).getGuestTeamID() : matches.get(3).getHomeTeamID());
+        add.setGuestTeamID(matches.get(1).getGuestGoals() > matches.get(1).getHomeGoals() ? matches.get(1).getGuestTeamID() : matches.get(1).getHomeTeamID());
+        add.setHomeTeamID(matches.get(0).getGuestGoals() > matches.get(0).getHomeGoals() ? matches.get(0).getGuestTeamID() : matches.get(0).getHomeTeamID());
         add.setRound(8);
         addMatch(add);
 
@@ -263,8 +265,8 @@ public class MatchManager {
         Match add = new Match();
         ArrayList<Match> matches = DBM.getLast4Match();
 
-        add.setHomeTeamID(matches.get(2).getGuestGoals() > matches.get(2).getHomeGoals() ? matches.get(2).getGuestTeamID() : matches.get(2).getHomeTeamID());
-        add.setGuestTeamID(matches.get(3).getGuestGoals() > matches.get(3).getHomeGoals() ? matches.get(3).getGuestTeamID() : matches.get(3).getHomeTeamID());
+        add.setGuestTeamID(matches.get(1).getGuestGoals() > matches.get(1).getHomeGoals() ? matches.get(1).getGuestTeamID() : matches.get(1).getHomeTeamID());
+        add.setHomeTeamID(matches.get(0).getGuestGoals() > matches.get(0).getHomeGoals() ? matches.get(0).getGuestTeamID() : matches.get(0).getHomeTeamID());
         add.setRound(9);
         addMatch(add);
 
