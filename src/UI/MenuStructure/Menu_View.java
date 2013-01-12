@@ -1,5 +1,6 @@
 package UI.MenuStructure;
 
+import BE.Group;
 import BE.Match;
 import BE.Team;
 import BL.GroupManager;
@@ -35,7 +36,7 @@ public class Menu_View extends Menu {
             @Override
             public Menu_View call() throws Exception {
                 int teamID = Menu.getInputInt("Team ID");
-                if(teamID < 1){
+                if (teamID < 1) {
                     Menu.Message("Undo");
                     return new Menu_View();
                 }
@@ -67,10 +68,16 @@ public class Menu_View extends Menu {
         this.addItem(new MenuItem("Finals", "f", new Callable<Menu_View>() {
             @Override
             public Menu_View call() throws Exception {
-                Menu.Message("Finals");
+                ArrayList<ArrayList<Team>> teams = new ArrayList<>();
+                ArrayList<String> groupNames = new ArrayList<>();
                 
-                //rm.constructFinalRankings(gm.getGroupById(1));
+                for (int i = 1; i <= 4; i++) {
+                    Group group = gm.getGroupById(i);
+                    teams.add(rm.constructFinalRankings(group));
+                    groupNames.add(group.getGroupName());
+                }
                 
+                Table_project.GroupTable(teams, groupNames);
                 return new Menu_View();
             }
         }));

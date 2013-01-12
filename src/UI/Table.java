@@ -81,7 +81,7 @@ public class Table {
      */
     protected static String formatToLength(String base, int length) {
         if (base == null) {
-            throw new NullPointerException();
+            base = " - ";
         }
 
         String ret = "";

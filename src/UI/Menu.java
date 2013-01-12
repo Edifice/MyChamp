@@ -67,11 +67,11 @@ public class Menu {
             lineLength += lengthOfHeader(i);
         }
 
-        if (lineLength > 20 && parent != null) {
+        if (lineLength > 20 ) {
             System.out.println(" │");
             System.out.println(" │");
             System.out.println(" ├───── ── ── ── ── ─ ─ ─ ─ - - - -");
-            System.out.println(" ├─» " + parent);
+            System.out.println(" ├─» " + (parent == null ? "Main Menu" : parent));
         }
         System.out.print(" ├┬");
         for (MenuItem i : items) {
