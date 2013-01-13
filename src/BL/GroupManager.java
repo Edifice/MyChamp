@@ -14,6 +14,8 @@ public class GroupManager {
 
     public GroupManager() throws SQLException {
         DBM = new GroupDBManager();
+        TM = new TeamManager();
+
     }
 
     public ArrayList<Group> getAll() throws SQLException {
@@ -31,9 +33,13 @@ public class GroupManager {
     public void removeById(int iden) throws SQLException {
         DBM.removeById(iden);
     }
-    
+
     public Group getGroupById(int id) throws SQLException {
         return DBM.getGroupById(id);
+    }
+    
+    public ArrayList<String> getGroupNames() throws SQLException {
+        return DBM.getGroupNames();
     }
 
     /**
@@ -42,10 +48,10 @@ public class GroupManager {
      * assignToGroup method which takes in a team and a group id. All the groups
      * have at least 3, but maximum 4 teams.
      *
-     * @throws SQLException
+     * @throws SQLException Exception, because it deals with the database
+     * manager.
      */
     public void groupTeams() throws SQLException {
-        TM = new TeamManager();
         ArrayList<Team> allTeams = TM.getAll();
         Collections.shuffle(allTeams);
         int i = 1;
@@ -57,9 +63,5 @@ public class GroupManager {
                 i++;
             }
         }
-    }
-
-    public ArrayList<String> getGroupNames() throws SQLException {
-        return DBM.getGroupNames();
     }
 }

@@ -1,0 +1,185 @@
+package BL;
+
+import BE.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class RankManagerq {
+
+    private TeamManager TM;
+    private MatchManager MM;
+    private GroupManager GM;
+    private ArrayList<Team> finalRankings;
+    private ArrayList<Team> tiedTeams;
+    private ArrayList<Team> tiedTeamsWithGoals;
+    private int index;
+
+    public RankManager() throws SQLException {
+        TM = new TeamManager();
+        MM = new MatchManager();
+        GM = new GroupManager();
+        finalRankings = new ArrayList<>();
+        tiedTeams = new ArrayList<>();
+        tiedTeamsWithGoals = new ArrayList<>();
+    }
+
+    public ArrayList<Team> constructFinalRankings(Group group) throws SQLException {
+        clear();
+        getRankingByPoints(group);
+        pointsTie();
+        if (tiedTeams.size() > 1) {
+            getRankingByGoalDeficit();
+            goalsDefTie();
+            if (tiedTeamsWithGoals.size() > 1) {
+                getRankingByTotalGoals();
+            }
+
+        }
+        return finalRankings;
+    }
+
+    /**
+     * Ranks a group in a descending order by points.
+     *
+     * @param group in which group this ranking should be done.
+     * @return an ArrayList full of teams in the rank order.
+     * @throws SQLException Exception, because it deals with the database
+     * manager.
+     */
+    public void getRankingByPoints(Group group) throws SQLException {
+        this.finalRankings = TM.getTeamByPoints(group);
+    }
+
+    /**
+     * Checks if there's a tie in the current rankings after it was ordered by
+     * points. If there is then the teams are copied to the tiedTeams and
+     * removed from the finalRankings.
+     */
+    private void pointsTie() {
+        boolean indexFound = false;
+        index = -1;
+        for (int i = 0; i < finalRankings.size() - 1; i++) {
+            if (finalRankings.get(i).getPoints() == finalRankings.get(i + 1).getPoints()) {
+                if (!indexFound) {
+                    index = i;
+                    indexFound = true;
+                }
+
+                if (!tiedTeams.contains(finalRankings.get(i))) {
+                    tiedTeams.add(finalRankings.get(i));
+                }
+                tiedTeams.add(finalRankings.get(i + 1));
+            }
+        }
+        for (Team team : tiedTeams) {
+            finalRankings.remove(team);
+        }
+    }
+
+    /**
+     * 
+     * @param group
+     * @return
+     * @throws SQLException 
+     */
+    public ArrayList<Dummy> getTotalGoals(Group group) throws SQLException {
+        ArrayList<Match> matches = MM.getMatchesByGroup(group);
+        ArrayList<Dummy> teamsWithGoals = new ArrayList<>();
+        for (Team team : tiedTeamsWithGoals) {
+            int totalGoals = 0;
+            for (Match match : matches) {
+                if (team.getID() == match.getHomeTeamID()) {
+                    totalGoals += match.getHomeGoals();
+                } else if (team.getID() == match.getGuestTeamID()) {
+                    totalGoals += match.getGuestGoals();
+                }
+            }
+            team.setTotalGoals(totalGoals);
+            teamsWithGoals.add(new Dummy(team, totalGoals));
+        }
+        return teamsWithGoals;
+    }
+
+    public void getRankingByTotalGoals() throws SQLException {
+
+        ArrayList<Dummy> teamsWithGoals;
+
+        teamsWithGoals = getTotalGoals(GM.getGroupById(tiedTeamsWithGoals.get(0).getGroupID()));
+
+        Collections.sort(teamsWithGoals);
+
+        for (int i = 0; i < teamsWithGoals.size(); i++) {
+            finalRankings.add(index, teamsWithGoals.get(i).getTeam());
+            index++;
+        }
+    }
+
+    private void goalsDefTie() {
+        boolean indexFound = false;
+        index = -1;
+        for (int i = 0; i < tiedTeams.size() - 1; i++) {
+            if (tiedTeams.get(i).getGoalDeficit() == tiedTeams.get(i + 1).getGoalDeficit()) {
+                if (!indexFound) {
+                    index = i;
+                    indexFound = true;
+                }
+
+                if (!tiedTeamsWithGoals.contains(tiedTeams.get(i))) {
+                    tiedTeamsWithGoals.add(finalRankings.get(i));
+                }
+                tiedTeamsWithGoals.add(finalRankings.get(i + 1));
+            }
+
+        }
+        for (Team team : tiedTeamsWithGoals) {
+            finalRankings.remove(team);
+        }
+    }
+
+    public ArrayList<Dummy> getGoalDeficit(Group group) throws SQLException {
+        ArrayList<Match> matches = MM.getMatchesByGroup(group);
+        ArrayList<Dummy> teamsWithGoals = new ArrayList<>();
+
+        for (Team team : tiedTeams) {
+            int goalsScored = 0;
+            int goalsAgainst = 0;
+            int goalsDeficit = 0;
+            for (Match match : matches) {
+                if (team.getID() == match.getHomeTeamID()) {
+                    goalsScored += match.getHomeGoals();
+                    goalsAgainst += match.getGuestGoals();
+
+                } else if (team.getID() == match.getGuestTeamID()) {
+                    goalsAgainst += match.getHomeGoals();
+                    goalsScored += match.getGuestGoals();
+                }
+            }
+            goalsDeficit = goalsScored - goalsAgainst;
+            team.setGoalDeficit(goalsDeficit);
+            teamsWithGoals.add(new Dummy(team, goalsDeficit));
+        }
+        return teamsWithGoals;
+    }
+
+    public void getRankingByGoalDeficit() throws SQLException {
+
+        ArrayList<Dummy> teamsWithGoals;
+
+        teamsWithGoals = getGoalDeficit(GM.getGroupById(tiedTeams.get(0).getGroupID()));
+
+        Collections.sort(teamsWithGoals);
+
+        for (int i = 0; i < teamsWithGoals.size(); i++) {
+            finalRankings.add(index, teamsWithGoals.get(i).getTeam());
+            index++;
+        }
+    }
+
+    public void clear() {
+        finalRankings.clear();
+        tiedTeams.clear();
+        tiedTeamsWithGoals.clear();
+        index = -1;
+    }
+}

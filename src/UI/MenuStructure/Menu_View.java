@@ -73,7 +73,8 @@ public class Menu_View extends Menu {
                 
                 for (int i = 1; i <= 4; i++) {
                     Group group = gm.getGroupById(i);
-                    teams.add(rm.constructFinalRankings(group));
+                    ArrayList<Team> teamG = rm.constructFinalRankings(group);
+                    teams.add(teamG);
                     groupNames.add(group.getGroupName());
                 }
                 

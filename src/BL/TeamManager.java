@@ -1,9 +1,6 @@
 package BL;
 
-import BE.Dummy;
-import BE.Group;
-import BE.Match;
-import BE.Team;
+import BE.*;
 import DAL.TeamDBManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,8 +29,6 @@ public class TeamManager {
     public void addTeam(Team team) throws SQLException {
         DBM.addTeam(team);
     }
-
-    ;
     
     public void updateTeam(Team team) throws SQLException {
         DBM.updateTeam(team);

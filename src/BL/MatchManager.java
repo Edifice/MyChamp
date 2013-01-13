@@ -4,7 +4,6 @@ import BE.Group;
 import BE.Match;
 import BE.Team;
 import DAL.MatchDBManager;
-import DAL.TeamDBManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +12,7 @@ import java.util.Random;
 public class MatchManager {
 
     private MatchDBManager DBM;
-    private TeamDBManager TM;
+    private TeamManager TM;
     private GroupManager GM;
     private RankManager RM;
     private final int VALUE_WIN = 3;
@@ -21,6 +20,8 @@ public class MatchManager {
 
     public MatchManager() throws SQLException {
         DBM = new MatchDBManager();
+        TM = new TeamManager();
+        GM = new GroupManager();
     }
 
     public void addMatch(Match match) throws SQLException {
@@ -33,10 +34,10 @@ public class MatchManager {
      * Gets all the teams inside a group and schedules the matched by calling
      * for the groupTeams() and generateMatchesByGroup(group) methods.
      *
-     * @throws SQLException
+     * @throws SQLException Exception, because it deals with the database
+     * manager.
      */
     public void startTournament() throws SQLException {
-        GM = new GroupManager();
         GM.groupTeams();
         ArrayList<Group> groups = GM.getAll();
         for (Group group : groups) {
@@ -44,9 +45,20 @@ public class MatchManager {
         }
     }
 
+    /**
+     * End the tournament.
+     *
+     * Deletes all the teams, depending the boolean parameter that is passed to
+     * this method, and the matches from the database. Cleans up everything for
+     * the next tournament.
+     *
+     * @param deleteTeams In case of true the teams are deleted from the
+     * database, in case of false they're not.
+     * @throws SQLException Exception, because it deals with the database
+     * manager.
+     */
     public void endTournament(boolean deleteTeams) throws SQLException {
         if (deleteTeams) {
-            TM = new TeamDBManager();
             TM.removeAll();
         }
         DBM.removeAll();
@@ -60,7 +72,8 @@ public class MatchManager {
      * @param round the round of the game
      * @param homeTeam the home team
      * @param guestTeam the guest team
-     * @throws SQLException
+     * @throws SQLException Exception, because it deals with the database
+     * manager.
      */
     public void createNewMatch(int round, Team homeTeam, Team guestTeam) throws SQLException {
         Match newMatch = new Match(round, homeTeam.getID(), guestTeam.getID());
@@ -83,6 +96,13 @@ public class MatchManager {
         return DBM.getMatchesByTeam(team);
     }
 
+    /**
+     *
+     * @param match
+     * @param homeScore
+     * @param awayScore
+     * @throws SQLException
+     */
     public void updateScore(Match match, int homeScore, int awayScore) throws SQLException {
         match.setHomeGoals(homeScore);
         match.setGuestGoals(awayScore);
@@ -95,9 +115,12 @@ public class MatchManager {
         }
     }
 
+    /**
+     *
+     * @param match
+     * @throws SQLException
+     */
     public void assignPoints(Match match) throws SQLException {
-        TM = new TeamDBManager();
-
         Team homeTeam = TM.getById(match.getHomeTeamID());
         Team guestTeam = TM.getById(match.getGuestTeamID());
         if (match.getHomeGoals() > match.getGuestGoals()) {
@@ -129,11 +152,11 @@ public class MatchManager {
      * algorithm please look for the source.
      *
      * @param group the group where the matches are generated
-     * @throws SQLException
+     * @throws SQLException Exception, because it deals with the database
+     * manager.
      * @see http://en.wikipedia.org/wiki/Round-robin_tournament
      */
     public void generateMatchesByGroup(Group group) throws SQLException {
-        TM = new TeamDBManager();
         ArrayList<Team> teams = TM.getTeamsByGroup(group);
 
         //Adds the dummy team.
@@ -142,11 +165,14 @@ public class MatchManager {
             teams.add(dummy);
         }
 
+        //Calculates the rounds.
         int rounds = teams.size() - 1;
 
+        //Fixes team at position 0 and then removes it from the list.
         Team fixed = teams.get(0);
         teams.remove(0);
 
+        //Saves the remaining teams in separate instances and creates the matches.
         for (int i = 1; i <= rounds; i++) {
             Team second = teams.get(0);
             Team third = teams.get(1);
@@ -162,10 +188,17 @@ public class MatchManager {
                 createNewMatch(i + rounds, fourth, third);
             }
 
+            //Rotates the list for the next round.
             Collections.rotate(teams, 1);
         }
     }
 
+    /**
+     *
+     * @param team
+     * @param match
+     * @return
+     */
     public int getPointsForTeamAtMatch(Team team, Match match) {
         if (match.getIsPlayed() != 1) {
             return 0;
@@ -178,14 +211,26 @@ public class MatchManager {
                 : (match.getHomeGoals() > match.getGuestGoals() ? 0 : 3);
     }
 
+    /**
+     *
+     * @return @throws SQLException
+     */
     public boolean isFinals() throws SQLException {
         return DBM.maxRoundNumber() > 6 || readyToFinals();
     }
 
+    /**
+     *
+     * @return @throws SQLException
+     */
     public boolean readyToFinals() throws SQLException {
         return DBM.readyToFinals();
     }
 
+    /**
+     *
+     * @throws SQLException
+     */
     public void setRandom() throws SQLException {
         Random r = new Random();
         for (Match match : DBM.getAll()) {
@@ -195,11 +240,19 @@ public class MatchManager {
         }
     }
 
+    /**
+     *
+     * @return @throws SQLException
+     */
     public Match getNextFinalMatch() throws SQLException {
         Match match = DBM.getNextFinalMatch();
         return match;
     }
 
+    /**
+     *
+     * @throws SQLException
+     */
     public void startFinals() throws SQLException {
         switch (DBM.maxRoundNumber()) {
             case 6:
@@ -214,8 +267,12 @@ public class MatchManager {
         }
     }
 
+    /**
+     *
+     * @throws SQLException
+     */
     private void startQuarterFinals() throws SQLException {
-        GM = new GroupManager();
+        //If I move this to the constructor it breaks the menu.
         RM = new RankManager();
 
         Match add = new Match();
@@ -244,6 +301,10 @@ public class MatchManager {
 
     }
 
+    /**
+     *
+     * @throws SQLException
+     */
     private void startSemiFinals() throws SQLException {
         Match add = new Match();
         ArrayList<Match> matches = DBM.getLast4Match();
@@ -261,6 +322,10 @@ public class MatchManager {
 
     }
 
+    /**
+     *
+     * @throws SQLException
+     */
     private void startFinal() throws SQLException {
         Match add = new Match();
         ArrayList<Match> matches = DBM.getLast4Match();

@@ -3,10 +3,17 @@ package BE;
 public class Team {
 
     private int ID, groupID, points, goalDeficit, totalGoals;
-    
     private String school, teamCaptain, email, groupName;
 
     public Team() {
+    }
+
+    public Team(int ID, String school, String teamCaptain, String email, int groupID) {
+        this.groupID = groupID;
+        this.school = school;
+        this.teamCaptain = teamCaptain;
+        this.email = email;
+        this.ID = ID;
     }
     
     public Team(int ID, String school, String teamCaptain, String email, int groupID, String groupName) {
@@ -16,15 +23,6 @@ public class Team {
         this.email = email;
         this.groupID = groupID;
         this.groupName = groupName;
-
-    }
-
-    public Team(int ID, String school, String teamCaptain, String email, int groupID) {
-        this.groupID = groupID;
-        this.school = school;
-        this.teamCaptain = teamCaptain;
-        this.email = email;
-        this.ID = ID;
     }
 
     /**

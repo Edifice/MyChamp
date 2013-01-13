@@ -4,8 +4,8 @@ public class Match {
 
     private int ID, round, homeTeamID, guestTeamID, isPlayed, homeGoals, guestGoals;
     private String homeTeamName, guestTeamName;
-    
-    public Match(){
+
+    public Match() {
     }
 
     public Match(int round, int homeTeamID, int guestTeamID) {
@@ -178,6 +178,7 @@ public class Match {
      */
     @Override
     public String toString() {
-        return getID() + ". " + getHomeTeamID() + " - " + getGuestTeamID() + " | Score: " + getHomeGoals() + " - " + getGuestGoals() + " | ";
+        return getID() + ". " + getHomeTeamID() + " - " + getGuestTeamID() + " "
+                + "| Score: " + getHomeGoals() + " - " + getGuestGoals() + " | ";
     }
 }
