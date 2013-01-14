@@ -90,7 +90,7 @@ public class Menu_Team extends Menu {
             @Override
             public Menu_Team call() throws Exception {
                 int remove = Menu.getInputInt("Team ID to remove");
-                if(remove < 1){
+                if (remove < 1) {
                     Menu.Message("Undo");
                     return new Menu_Team();
                 }
@@ -105,6 +105,18 @@ public class Menu_Team extends Menu {
                     Menu.Message("Team removed from the database!");
                 }
 
+                return new Menu_Team();
+            }
+        }));
+
+        this.addItem(new MenuItem("Remove all teams", "x", new Callable<Menu_Team>() {
+            @Override
+            public Menu_Team call() throws Exception {
+                if (Menu.getInputBoolean("Do you want to delete all the teams?")) {
+                    tm.removeAll();
+                    Menu.Message("All the teams are removed!");
+                    return new Menu_Team();
+                }
                 return new Menu_Team();
             }
         }));
