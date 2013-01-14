@@ -95,6 +95,10 @@ public class MatchManager {
     public ArrayList<Match> getMatchesByTeam(Team team) throws SQLException {
         return DBM.getMatchesByTeam(team);
     }
+    
+    public ArrayList<Match> getMatchesByGroupPlayed(Group group) throws SQLException {
+        return DBM.getMatchesByGroupPlayed(group);
+    }
 
     /**
      *

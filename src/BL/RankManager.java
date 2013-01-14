@@ -28,8 +28,8 @@ public class RankManager {
     }
 
     public ArrayList<Team> constructFinalRankings(Group group) throws SQLException {
-        //clear();
         getRankingByPoints(group);
+
         pointsTie();
         if (tiedTeams.size() > 1) {
             getRankingByGoalDeficit();
@@ -49,20 +49,13 @@ public class RankManager {
                 }
             }
 
-
+            tiedTeamsWithGoals.clear();
         }
         return finalRankings;
     }
-
-    public void clear() {
-        finalRankings.clear();
-        tiedTeams.clear();
-        tiedTeamsWithGoals.clear();
-        index = -1;
-    }
-
+    
     public ArrayList<Dummy> getGoalDeficit(Group group) throws SQLException {
-        ArrayList<Match> matches = MM.getMatchesByGroup(group);
+        ArrayList<Match> matches = MM.getMatchesByGroupPlayed(group);
         ArrayList<Dummy> teamsWithGoals = new ArrayList<>();
 
         for (Team team : tiedTeams) {
@@ -99,11 +92,8 @@ public class RankManager {
         }
     }
 
-    {
-    }
-
     public ArrayList<Dummy> getTotalGoals(Group group) throws SQLException {
-        ArrayList<Match> matches = MM.getMatchesByGroup(group);
+        ArrayList<Match> matches = MM.getMatchesByGroupPlayed(group);
         ArrayList<Dummy> teamsWithGoals = new ArrayList<>();
         for (Team team : tiedTeamsWithGoals) {
             int totalGoals = 0;
@@ -142,9 +132,6 @@ public class RankManager {
      */
     public void getRankingByPoints(Group group) throws SQLException {
         this.finalRankings = TM.getTeamByPoints(group);
-//        for (int i = 0; i < finalRankings.size(); i++) {
-//            finalRankings.get(i).setRanking(i + 1);
-//        }
     }
 
     private void pointsTie() {
@@ -184,11 +171,10 @@ public class RankManager {
             tiedTeams.remove(team);
         }
 
-        for (int i = 0; i < tiedTeams.size() - 1; i++) {
-            if (!finalRankings.contains(tiedTeams.get(i))) {
-                finalRankings.add(index, tiedTeams.get(i));
+        for (Team team : tiedTeams) {
+            if (!finalRankings.contains(team)) {
+                finalRankings.add(index, team);
             }
-            finalRankings.add(index + 1, tiedTeams.get(i + 1));
         }
         tiedTeams.clear();
     }

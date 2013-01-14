@@ -138,6 +138,32 @@ public class MatchDBManager extends DBManager {
 
     }
 
+        public ArrayList<Match> getMatchesByGroupPlayed(Group group) throws SQLException {
+        Connection con = dS.getConnection();
+        ArrayList<Match> matches = new ArrayList<>();
+
+        PreparedStatement qAllMatches = con.prepareStatement("SELECT Match.* FROM Match INNER JOIN Team ON Match.HomeTeamID = Team.ID WHERE Team.GroupID = ? AND Match.IsPlayed = 1");
+        qAllMatches.setInt(1, group.getID());
+        ResultSet allMatches = qAllMatches.executeQuery();
+
+        while (allMatches.next()) {
+            matches.add(
+                    new Match(
+                    allMatches.getInt("ID"),
+                    allMatches.getInt("MatchRound"),
+                    allMatches.getInt("HomeTeamID"),
+                    allMatches.getInt("GuestTeamID"),
+                    allMatches.getInt("IsPlayed"),
+                    allMatches.getInt("HomeGoals"),
+                    allMatches.getInt("GuestGoals")));
+        }
+
+        con.close();
+        return matches;
+
+    }
+
+    
     public ArrayList<Match> getMatchesByTeam(Team t) throws SQLException {
 
         Connection con = dS.getConnection();
