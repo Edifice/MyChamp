@@ -6,7 +6,6 @@ import BL.TeamManager;
 import UI.Menu;
 import UI.MenuItem;
 import UI.Table_project;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
@@ -89,7 +88,7 @@ public class Menu_Match extends Menu {
                         try {
                             mm.updateScore(match, home, guest);
                             Menu.Message("Scores updated!");
-                        } catch (SQLException e) {
+                        } catch (Exception e) {
                             Menu.Message("Scores NOT updated!");
                             Menu.Message("SQL Error: " + e.getLocalizedMessage());
                         }
@@ -123,7 +122,7 @@ public class Menu_Match extends Menu {
                         try {
                             mm.updateScore(match, home, guest);
                             Menu.Message("Scores updated!");
-                        } catch (SQLException e) {
+                        } catch (Exception e) {
                             Menu.Message("Scores NOT updated!");
                             Menu.Message("SQL Error: " + e.getLocalizedMessage());
                         }
