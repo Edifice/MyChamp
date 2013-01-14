@@ -2,13 +2,18 @@ package DAL;
 
 import BE.Group;
 import BE.Team;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * This class extends DBManager, and takes care of all the handling of the Team
+ * table in the database.
+ *
+ * @author Martin
+ */
 public class TeamDBManager extends DBManager {
 
     public TeamDBManager() throws SQLException {
@@ -25,9 +30,8 @@ public class TeamDBManager extends DBManager {
      */
     public void addTeam(Team team) throws SQLException {
         Connection con = dS.getConnection();
+
         PreparedStatement qTeam = con.prepareStatement("INSERT INTO Team VALUES (?, ?, ?, ?, ?)");
-
-
         qTeam.setString(1, team.getSchool());
         qTeam.setString(2, team.getTeamCaptain());
         qTeam.setString(3, team.getEmail());
@@ -56,7 +60,6 @@ public class TeamDBManager extends DBManager {
         qTeam.setString(1, team.getSchool());
         qTeam.setString(2, team.getTeamCaptain());
         qTeam.setString(3, team.getEmail());
-
         qTeam.setInt(4, team.getID());
 
         qTeam.executeUpdate();
@@ -64,9 +67,17 @@ public class TeamDBManager extends DBManager {
         con.close();
     }
 
+    /**
+     * This method is an abstract method; It removes a Team from the database,
+     * matching the id.
+     *
+     * @param iden is the id.
+     * @throws SQLException
+     */
     @Override
     public void removeById(int id) throws SQLException {
         Connection con = dS.getConnection();
+
         PreparedStatement qTeam = con.prepareStatement("DELETE FROM Team WHERE ID = ?");
         qTeam.setInt(1, id);
 
@@ -75,13 +86,19 @@ public class TeamDBManager extends DBManager {
         con.close();
     }
 
-    ;
+    /**
+     * This method gets all teams from the database, with the belonging name of
+     * the group they are in.
+     *
+     * @return an ArrayList of Team containing the group names.
+     * @throws SQLException
+     */
     public ArrayList<Team> getAllWithGroupNames() throws SQLException {
         Connection con = dS.getConnection();
+
         ArrayList<Team> teams = new ArrayList<>();
 
         PreparedStatement qAllTeams = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team LEFT JOIN Groups ON Team.GroupID = Groups.ID ORDER BY Groups.ID ASC, Team.School ASC");
-
         ResultSet allTeams = qAllTeams.executeQuery();
 
         while (allTeams.next()) {
@@ -94,19 +111,23 @@ public class TeamDBManager extends DBManager {
                     allTeams.getInt("GroupID"),
                     allTeams.getNString("GroupName")));
         }
-
         con.close();
         return teams;
-
     }
 
+    /**
+     * This method is an abstract method; It gets all the teams from the
+     * database, and adds them to an ArrayList.
+     *
+     * @return the ArrayList containing all the matches.
+     * @throws SQLException
+     */
     @Override
     public ArrayList<Team> getAll() throws SQLException {
         Connection con = dS.getConnection();
         ArrayList<Team> teams = new ArrayList<>();
 
-        PreparedStatement qAllTeams = con.prepareStatement("SELECT * FROM Team");
-
+        PreparedStatement qAllTeams = con.prepareStatement("SELECT * FROM Team ORDER BY Team.ID ASC");
         ResultSet allTeams = qAllTeams.executeQuery();
 
         while (allTeams.next()) {
@@ -117,12 +138,9 @@ public class TeamDBManager extends DBManager {
                     allTeams.getString("TeamCaptain"),
                     allTeams.getString("Email"),
                     allTeams.getInt("GroupID")));
-
         }
-
         con.close();
         return teams;
-
     }
 
     /**
@@ -149,10 +167,7 @@ public class TeamDBManager extends DBManager {
                 team.getString("GroupName"));
 
         con.close();
-
         return newTeam;
-
-
     }
 
     /**
@@ -220,11 +235,16 @@ public class TeamDBManager extends DBManager {
                     allTeams.getInt("GroupID"),
                     allTeams.getString("GroupName")));
         }
-
         con.close();
         return teams;
     }
 
+    /**
+     * This method is an abstract method; It removes all teams from the
+     * database, and resets the Identity to 0;
+     *
+     * @throws SQLException
+     */
     @Override
     public void removeAll() throws SQLException {
         Connection con = dS.getConnection();
@@ -233,31 +253,13 @@ public class TeamDBManager extends DBManager {
 
         con.close();
     }
-
-    public ArrayList<Team> getTeamByPoints(Group group) throws SQLException {
-        Connection con = dS.getConnection();
-        ArrayList<Team> teams = new ArrayList<>();
-
-        PreparedStatement qAllTeams = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team INNER JOIN Groups ON Team.GroupID = Groups.ID WHERE Team.GroupID = ? ORDER BY Team.Points DESC");
-        qAllTeams.setInt(1, group.getID());
-
-        ResultSet allTeams = qAllTeams.executeQuery();
-
-        while (allTeams.next()) {
-            teams.add(
-                    new Team(
-                    allTeams.getInt("ID"),
-                    allTeams.getString("School"),
-                    allTeams.getString("TeamCaptain"),
-                    allTeams.getString("Email"),
-                    allTeams.getInt("GroupID"),
-                    allTeams.getString("GroupName")));
-        }
-
-        con.close();
-        return teams;
-    }
-
+    
+    /**
+     * This method gets all teams, sorted into all groups.
+     * 
+     * @return an ArrayList containing an ArrayList of all teams. 
+     * @throws SQLException 
+     */
     public ArrayList<ArrayList<Team>> getAllByGroup() throws SQLException {
         Connection con = dS.getConnection();
         ArrayList<ArrayList<Team>> teams = new ArrayList<>();
@@ -303,7 +305,11 @@ public class TeamDBManager extends DBManager {
         con.close();
         return teams;
     }
-
+    /**
+     * THIS METHOD IS FOR DEBUGGING, AND EXAMINATION OF THE PROGRAM:
+     * Adds 16 teams to the database. 
+     * @throws SQLException 
+     */
     public void generateDefaultTeams() throws SQLException {
         Connection con = dS.getConnection();
 
