@@ -56,8 +56,7 @@ public class Menu_Match extends Menu {
             this.addItem(new MenuItem("List all", "l", new Callable<Menu_Match>() {
                 @Override
                 public Menu_Match call() throws Exception {
-                    ArrayList<Match> data = mm.getAll();
-                    Table_project.fromMatches(data);
+                    Table_project.fromMatches(mm.getAll());
                     return new Menu_Match();
                 }
             }));

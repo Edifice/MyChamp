@@ -140,7 +140,7 @@ public class MatchManager {
         try {
             return DBM.getAll();
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -170,7 +170,7 @@ public class MatchManager {
         try {
             return DBM.getMatchesByTeam(team);
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 

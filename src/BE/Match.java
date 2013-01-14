@@ -3,7 +3,7 @@ package BE;
 public class Match {
 
     private int ID, round, homeTeamID, guestTeamID, isPlayed, homeGoals, guestGoals;
-    private String homeTeamName, guestTeamName;
+    private String homeTeamName, guestTeamName, groupName;
 
     public Match() {
     }
@@ -169,6 +169,21 @@ public class Match {
     public void setGuestTeamName(String guestTeamName) {
         this.guestTeamName = guestTeamName;
     }
+
+    /**
+     * @return the groupName
+     */
+    public String getGroupName() {
+        return groupName;
+    }
+
+    /**
+     * @param groupName the groupName to set
+     */
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+    
 
     /**
      * Prints out the entity in a nicer way.

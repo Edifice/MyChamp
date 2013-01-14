@@ -43,10 +43,10 @@ public class Table_project extends Table {
     }
 
     public static void fromMatches(ArrayList<Match> data) {
-        String[][] tableData = new String[data.size()][7];
+        String[][] tableData = new String[data.size()][8];
 
-        int[] tableLayout = {4, 4, 20, 10, 10, 20, 6};
-        String[] tableHeader = {"ID", "Round", "Home Team", "Home Goals", "Guest Goals", "Guest Team", "Played?"};
+        int[] tableLayout = {4, 4, 20, 10, 10, 20, 6, 6};
+        String[] tableHeader = {"ID", "Round", "Home Team", "Home Goals", "Guest Goals", "Guest Team", "Played?", "Group"};
 
         for (int i = 0; i < data.size(); i++) {
             Match match = data.get(i);
@@ -57,6 +57,7 @@ public class Table_project extends Table {
             tableData[i][4] = match.getIsPlayed() == 1 ? Integer.toString(match.getGuestGoals()) : "-";
             tableData[i][5] = match.getGuestTeamName();
             tableData[i][6] = match.getIsPlayed() == 1 ? "yes" : "no";
+            tableData[i][7] = match.getGroupName();
 
         }
         Table.draw(tableHeader, tableLayout, tableData);

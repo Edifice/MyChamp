@@ -48,8 +48,7 @@ public class Menu_View extends Menu {
                     return new Menu_View();
                 }
 
-                ArrayList<Match> data = mm.getMatchesByTeam(team);
-                Table_project.fromMatches(data);
+                Table_project.fromMatches(mm.getMatchesByTeam(team));
 
                 return new Menu_View();
             }
