@@ -17,12 +17,10 @@ import java.util.Collections;
 public class TeamManager {
 
     private TeamDBManager DBM;
-    private MatchManager MM;
 
     public TeamManager() throws Exception {
         try {
             DBM = new TeamDBManager();
-            MM = new MatchManager();
         } catch (SQLException ex) {
             throw new Exception("Couldn't access the database due to a database error");
         }
@@ -260,6 +258,8 @@ public class TeamManager {
      */
     private int calculatePoints(Team team) throws Exception {
         try {
+            //Bug: If you move this to the contructor the menu breaks.
+            MatchManager MM = new MatchManager();
             ArrayList<Match> matches = MM.getMatchesByTeam(team);
             int ret = 0;
 
