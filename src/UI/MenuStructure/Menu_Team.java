@@ -18,7 +18,7 @@ public class Menu_Team extends Menu {
         this.addItem(new MenuItem("List all", "l", new Callable<Menu_Team>() {
             @Override
             public Menu_Team call() throws Exception {
-                Table_project.fromTeams(tm.getAllWithGroupNames());
+                Table_project.fromTeams(tm.getAll());
                 return new Menu_Team();
             }
         }));
