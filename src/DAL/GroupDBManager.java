@@ -7,12 +7,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * This class extends DBManager, and takes care of all the handling of the Group
+ * table in the database.
+ *
+ * @author Martin
+ */
 public class GroupDBManager extends DBManager {
 
     public GroupDBManager() throws SQLException {
         super();
     }
 
+    /**
+     * This method adds a group entity's values into the Group table of the
+     * database. Be aware that the groups ID is auto-generated.
+     *
+     * @param group is the group entity.
+     * @throws SQLException
+     */
     public void addGroup(Group group) throws SQLException {
         Connection con = dS.getConnection();
         PreparedStatement qGroup = con.prepareStatement("INSERT INTO Groups VALUES (?)");
@@ -23,6 +36,14 @@ public class GroupDBManager extends DBManager {
         con.close();
     }
 
+    /**
+     * This method updates an existing group in the Group table of the database,
+     * with the new entity's values. Be aware that the groups ID is
+     * auto-generated.
+     *
+     * @param group is the group entity
+     * @throws SQLException
+     */
     public void updateGroup(Group group) throws SQLException {
         Connection con = dS.getConnection();
 
@@ -37,6 +58,13 @@ public class GroupDBManager extends DBManager {
         con.close();
     }
 
+    /**
+     * This method is an abstract method; It removes a group from the database,
+     * matching the id.
+     *
+     * @param iden is the id.
+     * @throws SQLException
+     */
     @Override
     public void removeById(int iden) throws SQLException {
         Connection con = dS.getConnection();
@@ -48,6 +76,13 @@ public class GroupDBManager extends DBManager {
         con.close();
     }
 
+    /**
+     * This method is an abstract method; It gets all the groups from the
+     * database, and adds them to an ArrayList.
+     *
+     * @return the ArrayList containing all the teams.
+     * @throws SQLException
+     */
     @Override
     public ArrayList getAll() throws SQLException {
         Connection con = dS.getConnection();
@@ -69,6 +104,13 @@ public class GroupDBManager extends DBManager {
         return groups;
     }
 
+    /**
+     * This method gets a specific group from the database, that matches the id
+     *
+     * @param id is the id
+     * @return a Group entity.
+     * @throws SQLException
+     */
     public Group getGroupById(int id) throws SQLException {
         Connection con = dS.getConnection();
         ArrayList<Group> groups = new ArrayList<>();
@@ -85,6 +127,12 @@ public class GroupDBManager extends DBManager {
         return group;
     }
 
+    /**
+     * This method is an abstract method; It removes all groups from the
+     * database, and resets the Identity to 0;
+     *
+     * @throws SQLException
+     */
     @Override
     public void removeAll() throws SQLException {
         Connection con = dS.getConnection();
@@ -94,6 +142,12 @@ public class GroupDBManager extends DBManager {
         con.close();
     }
 
+    /**
+     * This method get the group names of the groups in the database.
+     *
+     * @return an ArrayList containing the names of the groups.
+     * @throws SQLException
+     */
     public ArrayList<String> getGroupNames() throws SQLException {
         Connection con = dS.getConnection();
         ArrayList<String> ret = new ArrayList<>();

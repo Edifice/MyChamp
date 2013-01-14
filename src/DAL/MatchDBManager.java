@@ -9,12 +9,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * This class extends DBManager, and takes care of all the handling of the Match
+ * table in the database.
+ *
+ * @author Martin
+ */
 public class MatchDBManager extends DBManager {
+    
+    private final int maxGroupRounds = 6;
 
     public MatchDBManager() throws SQLException {
-        super();
+
+        super(); // Gets the connection to the database
     }
 
+    /**
+     * This method adds a Match entity's values into the Group table of the
+     * database. Be aware that the match ID is auto-generated.
+     *
+     * @param match
+     * @throws SQLException
+     */
     public void addMatch(Match match) throws SQLException {
         Connection con = dS.getConnection();
         PreparedStatement qMatch = con.prepareStatement("INSERT INTO Match VALUES (?, ?, ?, ?, ?, ?)");
@@ -32,6 +48,14 @@ public class MatchDBManager extends DBManager {
         con.close();
     }
 
+    /**
+     * This method updates an existing match in the Match table of the database,
+     * with the new entity's values. Be aware that the match ID is
+     * auto-generated.
+     *
+     * @param match
+     * @throws SQLException s
+     */
     public void updateScore(Match match) throws SQLException {
         Connection con = dS.getConnection();
 
@@ -49,6 +73,13 @@ public class MatchDBManager extends DBManager {
         con.close();
     }
 
+    /**
+     * This method is an abstract method; It removes a match from the database,
+     * matching the id.
+     *
+     * @param iden is the id.
+     * @throws SQLException
+     */
     @Override
     public void removeById(int iden) throws SQLException {
         Connection con = dS.getConnection();
@@ -60,6 +91,13 @@ public class MatchDBManager extends DBManager {
         con.close();
     }
 
+    /**
+     * This method gets a specific Match from the database, that matches the id
+     *
+     * @param id is the id
+     * @return a Match entity.
+     * @throws SQLException
+     */
     public Match getMatchById(int id) throws SQLException {
         Connection con = dS.getConnection();
         Match match;
@@ -86,6 +124,13 @@ public class MatchDBManager extends DBManager {
 
     }
 
+    /**
+     * This method is an abstract method; It gets all the matches from the
+     * database, and adds them to an ArrayList.
+     *
+     * @return the ArrayList containing all the matches.
+     * @throws SQLException
+     */
     @Override
     public ArrayList<Match> getAll() throws SQLException {
         Connection con = dS.getConnection();
@@ -113,6 +158,14 @@ public class MatchDBManager extends DBManager {
 
     }
 
+    /**
+     * This method gets all the matches, where either home or guest team,
+     * matches the group id; So it gets all the matches within one group.
+     *
+     * @param group is the group entity, containing the group ID.
+     * @return an ArrayList of all matches within one group.
+     * @throws SQLException
+     */
     public ArrayList<Match> getMatchesByGroup(Group group) throws SQLException {
         Connection con = dS.getConnection();
         ArrayList<Match> matches = new ArrayList<>();
@@ -138,7 +191,16 @@ public class MatchDBManager extends DBManager {
 
     }
 
-        public ArrayList<Match> getMatchesByGroupPlayed(Group group) throws SQLException {
+    /**
+     * This method gets all the matches, where either home or guest team,
+     * matches the group id, and where the match has been played; So it gets all
+     * the matches within one group, that has been played;
+     *
+     * @param group is the group entity, containing the group ID.
+     * @return an ArrayList of all matches within one group.
+     * @throws SQLException
+     */
+    public ArrayList<Match> getMatchesByGroupPlayed(Group group) throws SQLException {
         Connection con = dS.getConnection();
         ArrayList<Match> matches = new ArrayList<>();
 
@@ -163,7 +225,14 @@ public class MatchDBManager extends DBManager {
 
     }
 
-    
+    /**
+     * Gets all matches where either the home or guest team id matches the given
+     * id.
+     *
+     * @param t is the team entity, containing the given id.
+     * @return
+     * @throws SQLException
+     */
     public ArrayList<Match> getMatchesByTeam(Team t) throws SQLException {
 
         Connection con = dS.getConnection();
@@ -199,6 +268,12 @@ public class MatchDBManager extends DBManager {
         return matches;
     }
 
+    /**
+     * This method is an abstract method; It removes all groups from the
+     * database, and resets the Identity to 0;
+     *
+     * @throws SQLException
+     */
     @Override
     public void removeAll() throws SQLException {
         Connection con = dS.getConnection();
@@ -208,6 +283,12 @@ public class MatchDBManager extends DBManager {
         con.close();
     }
 
+    /**
+     * This method calculates the total amount of rounds.
+     *
+     * @return an Integer containing the total number of rounds.
+     * @throws SQLException
+     */
     public int maxRoundNumber() throws SQLException {
         Connection con = dS.getConnection();
 
@@ -223,6 +304,12 @@ public class MatchDBManager extends DBManager {
 
     }
 
+    /**
+     * This method makes a check, to see if all matches has been played.
+     *
+     * @return true if matches are played, false if not.
+     * @throws SQLException
+     */
     public boolean isAllPlayed() throws SQLException {
         Connection con = dS.getConnection();
 
@@ -236,18 +323,24 @@ public class MatchDBManager extends DBManager {
         con.close();
         return allPlayed;
     }
-
+    // REMOVE THIS PLEASE!!!!
     public boolean readyToFinals() throws SQLException {
         return maxRoundNumber() == 6 && isAllPlayed();
     }
-
+    
+    /**
+     * This method gets the next match for the finals.
+     * @return a match for the finals. 
+     * @throws SQLException 
+     */
     public Match getNextFinalMatch() throws SQLException {
         Connection con = dS.getConnection();
 
-        PreparedStatement qAllMatches = con.prepareStatement("SELECT TOP 1 Match.*, t1.School as HomeTeamName, t2.School as GuestTeamName FROM Match INNER JOIN Team as t1 ON t1.ID = Match.HomeTeamID INNER JOIN Team as t2 ON t2.ID = Match.GuestTeamID WHERE MatchRound > 6 AND isPlayed = 0");
+        PreparedStatement qAllMatches = con.prepareStatement("SELECT TOP 1 Match.*, t1.School as HomeTeamName, t2.School as GuestTeamName FROM Match INNER JOIN Team as t1 ON t1.ID = Match.HomeTeamID INNER JOIN Team as t2 ON t2.ID = Match.GuestTeamID WHERE MatchRound > ? AND isPlayed = 0");
+        qAllMatches.setInt(1, maxGroupRounds);
         ResultSet allMatches = qAllMatches.executeQuery();
         Match ret = null;
-        if (!!allMatches.next()) {
+        if (! !allMatches.next()) {
             ret = new Match(
                     allMatches.getInt("ID"),
                     allMatches.getInt("MatchRound"),
@@ -264,7 +357,11 @@ public class MatchDBManager extends DBManager {
 
         return ret;
     }
-
+    /**
+     * This method gets the last four matches to be played. 
+     * @return an ArrayList containing the matches. 
+     * @throws SQLException 
+     */
     public ArrayList<Match> getLast4Match() throws SQLException {
         Connection con = dS.getConnection();
         ArrayList<Match> matches = new ArrayList<>();
