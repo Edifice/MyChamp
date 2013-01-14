@@ -57,18 +57,10 @@ public class Menu_View extends Menu {
             }
         }));
 
-        this.addItem(new MenuItem("Group table", "g", new Callable<Menu_View>() {
+        this.addItem(new MenuItem("Group standings", "g", new Callable<Menu_View>() {
             @Override
             public Menu_View call() throws Exception {
-                Table_project.GroupTable(tm.getAllByGroup(), gm.getGroupNames());
-                return new Menu_View();
-            }
-        }));
-
-        this.addItem(new MenuItem("Finals", "f", new Callable<Menu_View>() {
-            @Override
-            public Menu_View call() throws Exception {
-                ArrayList<ArrayList<Team>> teams = new ArrayList<>();
+                 ArrayList<ArrayList<Team>> teams = new ArrayList<>();
                 ArrayList<String> groupNames = new ArrayList<>();
                 
                 for (int i = 1; i <= 4; i++) {
