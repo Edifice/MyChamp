@@ -46,7 +46,7 @@ public class Table_project extends Table {
         String[][] tableData = new String[data.size()][7];
 
         int[] tableLayout = {4, 4, 20, 10, 10, 20, 6};
-        String[] tableHeader = {"ID", "round", "Home Team", "Home Goals", "Guest Goals", "Guest Team", "Played?"};
+        String[] tableHeader = {"ID", "Round", "Home Team", "Home Goals", "Guest Goals", "Guest Team", "Played?"};
 
         for (int i = 0; i < data.size(); i++) {
             Match match = data.get(i);
