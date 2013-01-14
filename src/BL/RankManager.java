@@ -18,108 +18,130 @@ public class RankManager {
     private ArrayList<Team> tiedTeamsWithGoals;
     private int index;
 
-    public RankManager() throws SQLException {
-        TM = new TeamManager();
-        MM = new MatchManager();
-        GM = new GroupManager();
-        finalRankings = new ArrayList<>();
-        tiedTeams = new ArrayList<>();
-        tiedTeamsWithGoals = new ArrayList<>();
+    public RankManager() throws Exception {
+        try {
+            TM = new TeamManager();
+            MM = new MatchManager();
+            GM = new GroupManager();
+            finalRankings = new ArrayList<>();
+            tiedTeams = new ArrayList<>();
+            tiedTeamsWithGoals = new ArrayList<>();
+        } catch (SQLException ex) {
+            throw new Exception("Couldn't access the database due to a database error");
+        }
     }
 
-    public ArrayList<Team> constructFinalRankings(Group group) throws SQLException {
-        getRankingByPoints(group);
+    public ArrayList<Team> constructFinalRankings(Group group) throws Exception {
+        try {
+            getRankingByPoints(group);
 
-        pointsTie();
-        if (tiedTeams.size() > 1) {
-            getRankingByGoalDeficit();
-            goalsDefTie();
-            if (tiedTeamsWithGoals.size() > 1) {
-                getRankingByTotalGoals();
-                int localIndex = index;
-                for (int i = 0; i < tiedTeamsWithGoals.size(); i++) {
-                    finalRankings.add(localIndex, tiedTeamsWithGoals.get(i));
-                    localIndex++;
+            pointsTie();
+            if (tiedTeams.size() > 1) {
+                getRankingByGoalDeficit();
+                goalsDefTie();
+                if (tiedTeamsWithGoals.size() > 1) {
+                    getRankingByTotalGoals();
+                    int localIndex = index;
+                    for (int i = 0; i < tiedTeamsWithGoals.size(); i++) {
+                        finalRankings.add(localIndex, tiedTeamsWithGoals.get(i));
+                        localIndex++;
+                    }
+                } else {
+                    int localIndex = index;
+                    for (int i = 0; i < tiedTeams.size(); i++) {
+                        finalRankings.add(localIndex, tiedTeams.get(i));
+                        localIndex++;
+                    }
                 }
-            } else {
-                int localIndex = index;
-                for (int i = 0; i < tiedTeams.size(); i++) {
-                    finalRankings.add(localIndex, tiedTeams.get(i));
-                    localIndex++;
-                }
+
+                tiedTeamsWithGoals.clear();
             }
+            return finalRankings;
+        } catch (SQLException ex) {
+            throw new Exception("Couldn't access the database due to a database error");
+        }
+    }
 
+    public ArrayList<Dummy> getGoalDeficit(Group group) throws Exception {
+        try {
+            ArrayList<Match> matches = MM.getMatchesByGroupPlayed(group);
+            ArrayList<Dummy> teamsWithGoals = new ArrayList<>();
+
+            for (Team team : tiedTeams) {
+                int goalsScored = 0;
+                int goalsAgainst = 0;
+                int goalsDeficit = 0;
+                for (Match match : matches) {
+                    if (team.getID() == match.getHomeTeamID()) {
+                        goalsScored += match.getHomeGoals();
+                        goalsAgainst += match.getGuestGoals();
+
+                    } else if (team.getID() == match.getGuestTeamID()) {
+                        goalsAgainst += match.getHomeGoals();
+                        goalsScored += match.getGuestGoals();
+                    }
+                }
+                goalsDeficit = goalsScored - goalsAgainst;
+                team.setGoalDeficit(goalsDeficit);
+                teamsWithGoals.add(new Dummy(team, goalsDeficit));
+            }
+            return teamsWithGoals;
+        } catch (SQLException ex) {
+            throw new Exception("Couldn't access the database due to a database error");
+        }
+    }
+
+    public void getRankingByGoalDeficit() throws Exception {
+        try {
+            ArrayList<Dummy> teamsWithGoals;
+
+            teamsWithGoals = getGoalDeficit(GM.getGroupById(tiedTeams.get(0).getGroupID()));
+
+            Collections.sort(teamsWithGoals);
+            tiedTeams.clear();
+            for (int i = 0; i < teamsWithGoals.size(); i++) {
+                tiedTeams.add(teamsWithGoals.get(i).getTeam());
+            }
+        } catch (SQLException ex) {
+            throw new Exception("Couldn't access the database due to a database error");
+        }
+    }
+
+    public ArrayList<Dummy> getTotalGoals(Group group) throws Exception {
+        try {
+            ArrayList<Match> matches = MM.getMatchesByGroupPlayed(group);
+            ArrayList<Dummy> teamsWithGoals = new ArrayList<>();
+            for (Team team : tiedTeamsWithGoals) {
+                int totalGoals = 0;
+                for (Match match : matches) {
+                    if (team.getID() == match.getHomeTeamID()) {
+                        totalGoals += match.getHomeGoals();
+                    } else if (team.getID() == match.getGuestTeamID()) {
+                        totalGoals += match.getGuestGoals();
+                    }
+                }
+                team.setTotalGoals(totalGoals);
+                teamsWithGoals.add(new Dummy(team, totalGoals));
+            }
+            return teamsWithGoals;
+        } catch (SQLException ex) {
+            throw new Exception("Couldn't access the database due to a database error");
+        }
+    }
+
+    public void getRankingByTotalGoals() throws Exception {
+        try {
+            ArrayList<Dummy> teamsWithGoals = new ArrayList<>();
+
+            teamsWithGoals = getTotalGoals(GM.getGroupById(tiedTeamsWithGoals.get(0).getGroupID()));
+
+            Collections.sort(teamsWithGoals);
             tiedTeamsWithGoals.clear();
-        }
-        return finalRankings;
-    }
-    
-    public ArrayList<Dummy> getGoalDeficit(Group group) throws SQLException {
-        ArrayList<Match> matches = MM.getMatchesByGroupPlayed(group);
-        ArrayList<Dummy> teamsWithGoals = new ArrayList<>();
-
-        for (Team team : tiedTeams) {
-            int goalsScored = 0;
-            int goalsAgainst = 0;
-            int goalsDeficit = 0;
-            for (Match match : matches) {
-                if (team.getID() == match.getHomeTeamID()) {
-                    goalsScored += match.getHomeGoals();
-                    goalsAgainst += match.getGuestGoals();
-
-                } else if (team.getID() == match.getGuestTeamID()) {
-                    goalsAgainst += match.getHomeGoals();
-                    goalsScored += match.getGuestGoals();
-                }
+            for (int i = 0; i < teamsWithGoals.size(); i++) {
+                tiedTeamsWithGoals.add(teamsWithGoals.get(i).getTeam());
             }
-            goalsDeficit = goalsScored - goalsAgainst;
-            team.setGoalDeficit(goalsDeficit);
-            teamsWithGoals.add(new Dummy(team, goalsDeficit));
-        }
-        return teamsWithGoals;
-    }
-
-    public void getRankingByGoalDeficit() throws SQLException {
-
-        ArrayList<Dummy> teamsWithGoals;
-
-        teamsWithGoals = getGoalDeficit(GM.getGroupById(tiedTeams.get(0).getGroupID()));
-
-        Collections.sort(teamsWithGoals);
-        tiedTeams.clear();
-        for (int i = 0; i < teamsWithGoals.size(); i++) {
-            tiedTeams.add(teamsWithGoals.get(i).getTeam());
-        }
-    }
-
-    public ArrayList<Dummy> getTotalGoals(Group group) throws SQLException {
-        ArrayList<Match> matches = MM.getMatchesByGroupPlayed(group);
-        ArrayList<Dummy> teamsWithGoals = new ArrayList<>();
-        for (Team team : tiedTeamsWithGoals) {
-            int totalGoals = 0;
-            for (Match match : matches) {
-                if (team.getID() == match.getHomeTeamID()) {
-                    totalGoals += match.getHomeGoals();
-                } else if (team.getID() == match.getGuestTeamID()) {
-                    totalGoals += match.getGuestGoals();
-                }
-            }
-            team.setTotalGoals(totalGoals);
-            teamsWithGoals.add(new Dummy(team, totalGoals));
-        }
-        return teamsWithGoals;
-    }
-
-    public void getRankingByTotalGoals() throws SQLException {
-
-        ArrayList<Dummy> teamsWithGoals = new ArrayList<>();
-
-        teamsWithGoals = getTotalGoals(GM.getGroupById(tiedTeamsWithGoals.get(0).getGroupID()));
-
-        Collections.sort(teamsWithGoals);
-        tiedTeamsWithGoals.clear();
-        for (int i = 0; i < teamsWithGoals.size(); i++) {
-            tiedTeamsWithGoals.add(teamsWithGoals.get(i).getTeam());
+        } catch (SQLException ex) {
+            throw new Exception("Couldn't access the database due to a database error");
         }
     }
 
@@ -130,8 +152,12 @@ public class RankManager {
      * @return an ArrayList full of teams in the rank order.
      * @throws SQLException
      */
-    public void getRankingByPoints(Group group) throws SQLException {
-        this.finalRankings = TM.getTeamByPoints(group);
+    public void getRankingByPoints(Group group) throws Exception {
+        try {
+            this.finalRankings = TM.getTeamByPoints(group);
+        } catch (SQLException ex) {
+            throw new Exception("Couldn't access the database due to a database error");
+        }
     }
 
     private void pointsTie() {
