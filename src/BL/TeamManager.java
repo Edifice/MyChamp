@@ -268,7 +268,7 @@ public class TeamManager {
             }
             return ret;
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error"); 
+            throw new Exception("Couldn't access the database due to a database error");
         }
     }
 }
