@@ -342,14 +342,15 @@ public class MatchManager {
     }
 
     /**
-     * Ready for the Finals. //
+     * Ready for the Finals.
      *
-     * @return true in case of ****, false in case of
-     *** @throws Exception because it deals with the database.
+     * @return true in case of it is the last round in the group stage and all
+     * matches are played, false in case of it is not.
+     * @throws Exception because it deals with the database.
      */
     public boolean readyToFinals() throws Exception {
         try {
-            return DBM.readyToFinals();
+            return DBM.maxRoundNumber() == MAX_GROUP_ROUND && DBM.isAllPlayed();
         } catch (SQLException ex) {
             throw new Exception("Couldn't access the database due to a database error");
         }
@@ -375,8 +376,7 @@ public class MatchManager {
     }
 
     /**
-     * Gets the next match in the knock-out stage.
-     * //
+     * Gets the next match in the knock-out stage. //
      *
      * @return
      * @throws Exception because it deals with the database.

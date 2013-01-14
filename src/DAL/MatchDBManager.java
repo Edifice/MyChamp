@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class MatchDBManager extends DBManager {
     
-    private final int maxGroupRounds = 6;
+    private final int MAX_GROUP_ROUND = 6;
 
     public MatchDBManager() throws SQLException {
 
@@ -25,7 +25,7 @@ public class MatchDBManager extends DBManager {
     }
 
     /**
-     * This method adds a Match entity's values into the Group table of the
+     * This method adds a Match entity's values into the Match table of the
      * database. Be aware that the match ID is auto-generated.
      *
      * @param match
@@ -269,7 +269,7 @@ public class MatchDBManager extends DBManager {
     }
 
     /**
-     * This method is an abstract method; It removes all groups from the
+     * This method is an abstract method; It removes all matches from the
      * database, and resets the Identity to 0;
      *
      * @throws SQLException
@@ -323,11 +323,7 @@ public class MatchDBManager extends DBManager {
         con.close();
         return allPlayed;
     }
-    // REMOVE THIS PLEASE!!!!
-    public boolean readyToFinals() throws SQLException {
-        return maxRoundNumber() == 6 && isAllPlayed();
-    }
-    
+
     /**
      * This method gets the next match for the finals.
      * @return a match for the finals. 
@@ -337,7 +333,7 @@ public class MatchDBManager extends DBManager {
         Connection con = dS.getConnection();
 
         PreparedStatement qAllMatches = con.prepareStatement("SELECT TOP 1 Match.*, t1.School as HomeTeamName, t2.School as GuestTeamName FROM Match INNER JOIN Team as t1 ON t1.ID = Match.HomeTeamID INNER JOIN Team as t2 ON t2.ID = Match.GuestTeamID WHERE MatchRound > ? AND isPlayed = 0");
-        qAllMatches.setInt(1, maxGroupRounds);
+        qAllMatches.setInt(1, MAX_GROUP_ROUND);
         ResultSet allMatches = qAllMatches.executeQuery();
         Match ret = null;
         if (! !allMatches.next()) {
