@@ -16,6 +16,13 @@ public abstract class DBManager {
 
     protected Connection con;
     protected SQLServerDataSource dS;
+    
+    //The data needed to establish the connection to the database
+    private final String userName = "java";
+    private final String password = "java";
+    private final String serverName = "localhost";
+    private final String databaseName = "MyChamp";
+    private final String instanceName = "SQLEXPRESS";
 
     /**
      * Creates the connection to the database
@@ -24,11 +31,11 @@ public abstract class DBManager {
      */
     public DBManager() throws SQLException {
         dS = new SQLServerDataSource();
-        dS.setUser("java");
-        dS.setPassword("java");
-        dS.setServerName("localhost");
-        dS.setDatabaseName("MyChamp");
-        dS.setInstanceName("SQLEXPRESS");
+        dS.setUser(userName);
+        dS.setPassword(password);
+        dS.setServerName(serverName);
+        dS.setDatabaseName(databaseName);
+        dS.setInstanceName(instanceName);
         con = dS.getConnection();
         con.close();
     }
