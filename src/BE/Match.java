@@ -183,7 +183,6 @@ public class Match {
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
-    
 
     /**
      * Prints out the entity in a nicer way.

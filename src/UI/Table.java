@@ -1,12 +1,10 @@
 package UI;
 
-import java.util.ArrayList;
-
 /**
  * This Class can be used to draw data tables. Every methods are static, so you
  * don't have to create an instance of this Class.
  *
- * @author Dani
+ * @author Daniel
  */
 public class Table {
 

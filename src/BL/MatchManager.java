@@ -35,7 +35,7 @@ public class MatchManager {
             TM = new TeamManager();
             GM = new GroupManager();
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -50,7 +50,7 @@ public class MatchManager {
         try {
             DBM.addMatch(match);
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -70,7 +70,7 @@ public class MatchManager {
                 generateMatchesByGroup(group);
             }
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -92,7 +92,7 @@ public class MatchManager {
             }
             DBM.removeAll();
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -111,7 +111,7 @@ public class MatchManager {
             Match newMatch = new Match(round, homeTeam.getID(), guestTeam.getID());
             DBM.addMatch(newMatch);
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -126,7 +126,7 @@ public class MatchManager {
         try {
             return DBM.getMatchById(id);
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -155,7 +155,7 @@ public class MatchManager {
         try {
             return DBM.getMatchesByGroup(group);
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -185,7 +185,7 @@ public class MatchManager {
         try {
             return DBM.getMatchesByGroupPlayed(group);
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -210,7 +210,7 @@ public class MatchManager {
                 startFinals();
             }
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -240,7 +240,7 @@ public class MatchManager {
                 TM.assignPoints(guestTeam);
             }
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -299,7 +299,7 @@ public class MatchManager {
                 Collections.rotate(teams, 1);
             }
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -337,7 +337,7 @@ public class MatchManager {
         try {
             return DBM.maxRoundNumber() > MAX_GROUP_ROUND || readyToFinals();
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -352,7 +352,7 @@ public class MatchManager {
         try {
             return DBM.maxRoundNumber() == MAX_GROUP_ROUND && DBM.isAllPlayed();
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -371,7 +371,7 @@ public class MatchManager {
                 }
             }
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -386,7 +386,7 @@ public class MatchManager {
             Match match = DBM.getNextFinalMatch();
             return match;
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -411,7 +411,7 @@ public class MatchManager {
                     break;
             }
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -423,7 +423,6 @@ public class MatchManager {
      * @throws Exception because it deals with the database.
      */
     private void startQuarterFinals() throws Exception {
-        //BUG: If I move this to the constructor it breaks the menu.
         RM = new RankManager();
         try {
             Match add = new Match();
@@ -450,7 +449,7 @@ public class MatchManager {
             add.setRound(7);
             addMatch(add);
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -477,7 +476,7 @@ public class MatchManager {
             add.setRound(8);
             addMatch(add);
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -497,7 +496,7 @@ public class MatchManager {
             add.setRound(9);
             addMatch(add);
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 }

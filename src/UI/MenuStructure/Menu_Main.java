@@ -1,7 +1,7 @@
 package UI.MenuStructure;
 
+import BE.MenuItem;
 import UI.Menu;
-import UI.MenuItem;
 import java.util.concurrent.Callable;
 
 public class Menu_Main extends Menu {

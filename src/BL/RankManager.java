@@ -27,7 +27,7 @@ public class RankManager {
             tiedTeams = new ArrayList<>();
             tiedTeamsWithGoals = new ArrayList<>();
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -72,7 +72,7 @@ public class RankManager {
             }
             return finalRankings;
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -86,7 +86,7 @@ public class RankManager {
         try {
             this.finalRankings = TM.getTeamByPoints(group);
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -138,7 +138,7 @@ public class RankManager {
             for (Team team : tiedTeams) {
                 int goalsScored = 0;
                 int goalsAgainst = 0;
-                int goalsDeficit = 0;
+                int goalsDeficit;
                 for (Match match : matches) {
                     if (team.getID() == match.getHomeTeamID()) {
                         goalsScored += match.getHomeGoals();
@@ -155,7 +155,7 @@ public class RankManager {
             }
             return teamsWithGoals;
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -182,7 +182,7 @@ public class RankManager {
                 tiedTeams.add(teamsWithGoals.get(i).getTeam());
             }
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -242,7 +242,7 @@ public class RankManager {
             }
             return teamsWithGoals;
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -267,7 +267,7 @@ public class RankManager {
                 tiedTeamsWithGoals.add(teamsWithGoals.get(i).getTeam());
             }
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 }

@@ -1,12 +1,11 @@
 package UI.MenuStructure;
 
 import BE.Match;
+import BE.MenuItem;
 import BL.MatchManager;
 import BL.TeamManager;
 import UI.Menu;
-import UI.MenuItem;
-import UI.Table_project;
-import java.util.ArrayList;
+import UI.Table_Project;
 import java.util.concurrent.Callable;
 
 public class Menu_Match extends Menu {
@@ -34,7 +33,7 @@ public class Menu_Match extends Menu {
                     if (Menu.getInputBoolean("Are you sure?")) {
                         mm.startTournament();
                         Menu.Message("Tournament started!");
-                    };
+                    }
                     return new Menu_Match();
                 }
             }));
@@ -56,7 +55,7 @@ public class Menu_Match extends Menu {
             this.addItem(new MenuItem("List all", "l", new Callable<Menu_Match>() {
                 @Override
                 public Menu_Match call() throws Exception {
-                    Table_project.fromMatches(mm.getAll());
+                    Table_Project.fromMatches(mm.getAll());
                     return new Menu_Match();
                 }
             }));
@@ -70,7 +69,7 @@ public class Menu_Match extends Menu {
                         if (id < 0) {
                             return new Menu_Match();
                         }
-                        Match match = null;
+                        Match match;
                         try {
                             match = mm.getMatchById(id);
                         } catch (Exception e) {
@@ -137,7 +136,7 @@ public class Menu_Match extends Menu {
                     if (Menu.getInputBoolean("Are you sure? This will delete all of the match data!")) {
                         mm.endTournament(Menu.getInputBoolean("Do you want to delete all the teams?"));
                         Menu.Message("Tournament ended!");
-                    };
+                    }
                     return new Menu_Match();
                 }
             }));
@@ -147,7 +146,7 @@ public class Menu_Match extends Menu {
                 public Menu_Match call() throws Exception {
                     if (Menu.getInputBoolean("Are you sure?")) {
                         mm.setRandom();
-                    };
+                    }
                     return new Menu_Match();
                 }
             }));

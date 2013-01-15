@@ -2,7 +2,6 @@ package DAL;
 
 import BE.Group;
 import BE.Team;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +28,7 @@ public class TeamDBManager extends DBManager {
      * @throws SQLException
      */
     public void addTeam(Team team) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
 
         PreparedStatement qTeam = con.prepareStatement("INSERT INTO Team VALUES (?, ?, ?, ?, ?)");
         qTeam.setString(1, team.getSchool());
@@ -53,7 +52,7 @@ public class TeamDBManager extends DBManager {
      * @throws SQLException
      */
     public void updateTeam(Team team) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
 
         PreparedStatement qTeam = con.prepareStatement("UPDATE Team SET  School = ?, TeamCaptain = ?, Email = ? WHERE ID = ?");
 
@@ -76,7 +75,7 @@ public class TeamDBManager extends DBManager {
      */
     @Override
     public void removeById(int id) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
 
         PreparedStatement qTeam = con.prepareStatement("DELETE FROM Team WHERE ID = ?");
         qTeam.setInt(1, id);
@@ -94,7 +93,7 @@ public class TeamDBManager extends DBManager {
      * @throws SQLException
      */
     public ArrayList<Team> getAllWithGroupNames() throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
 
         ArrayList<Team> teams = new ArrayList<>();
 
@@ -124,7 +123,7 @@ public class TeamDBManager extends DBManager {
      */
     @Override
     public ArrayList<Team> getAll() throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         ArrayList<Team> teams = new ArrayList<>();
 
         PreparedStatement qAllTeams = con.prepareStatement("SELECT * FROM Team ORDER BY Team.ID ASC");
@@ -153,7 +152,7 @@ public class TeamDBManager extends DBManager {
      * @throws SQLException
      */
     public Team getById(int id) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         PreparedStatement qTeam = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team LEFT JOIN Groups ON Team.GroupID = Groups.ID WHERE Team.ID = ?");
         qTeam.setInt(1, id);
         ResultSet team = qTeam.executeQuery();
@@ -177,7 +176,7 @@ public class TeamDBManager extends DBManager {
      * @throws SQLException
      */
     public void assignToGroup(Team team, int groupId) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
 
         PreparedStatement qTeam = con.prepareStatement("UPDATE Team SET GroupID = ? WHERE ID = ?");
 
@@ -196,7 +195,7 @@ public class TeamDBManager extends DBManager {
      * @throws SQLException
      */
     public void assignPoints(Team team) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
 
         PreparedStatement qTeam = con.prepareStatement("UPDATE Team SET Points = ? WHERE ID = ?");
 
@@ -217,7 +216,7 @@ public class TeamDBManager extends DBManager {
      * @throws SQLException
      */
     public ArrayList<Team> getTeamsByGroup(Group group) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         ArrayList<Team> teams = new ArrayList<>();
 
         PreparedStatement qAllTeams = con.prepareStatement("SELECT Team.*, Groups.GroupName FROM Team INNER JOIN Groups ON Team.GroupID = Groups.ID WHERE Team.GroupID = ?");
@@ -247,21 +246,21 @@ public class TeamDBManager extends DBManager {
      */
     @Override
     public void removeAll() throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         PreparedStatement qData = con.prepareStatement("DELETE FROM Team; DBCC CHECKIDENT (Team, RESEED, 0)");
         qData.executeUpdate();
 
         con.close();
     }
-    
+
     /**
      * This method gets all teams, sorted into all groups.
-     * 
-     * @return an ArrayList containing an ArrayList of all teams. 
-     * @throws SQLException 
+     *
+     * @return an ArrayList containing an ArrayList of all teams.
+     * @throws SQLException
      */
     public ArrayList<ArrayList<Team>> getAllByGroup() throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         ArrayList<ArrayList<Team>> teams = new ArrayList<>();
 
         ArrayList<Team> groupA = new ArrayList<>();
@@ -305,13 +304,15 @@ public class TeamDBManager extends DBManager {
         con.close();
         return teams;
     }
+
     /**
-     * THIS METHOD IS FOR DEBUGGING, AND EXAMINATION OF THE PROGRAM:
-     * Adds 16 teams to the database. 
-     * @throws SQLException 
+     * THIS METHOD IS FOR DEBUGGING, AND EXAMINATION OF THE PROGRAM: Adds 16
+     * teams to the database.
+     *
+     * @throws SQLException
      */
     public void generateDefaultTeams() throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
 
         PreparedStatement qTeam = con.prepareStatement("INSERT INTO Team (School,TeamCaptain,Email,GroupID) VALUES"
                 + "('Bakkeskolen', 'Test Jensen', 'jens@example.com', NULL),"

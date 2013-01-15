@@ -1,9 +1,10 @@
 package BE;
 
 public class Group {
+
     private int ID;
     private String groupName;
-    
+
     public Group(int ID, String groupName) {
         this.ID = ID;
         this.groupName = groupName;
@@ -36,7 +37,7 @@ public class Group {
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
-    
+
     /**
      * Prints out the entity in a nicer way.
      *
@@ -46,6 +47,4 @@ public class Group {
     public String toString() {
         return getID() + " - " + getGroupName();
     }
-    
-    
 }

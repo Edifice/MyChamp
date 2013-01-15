@@ -1,7 +1,7 @@
 package UI;
 
+import BE.MenuItem;
 import UI.MenuStructure.Menu_Main;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
@@ -16,7 +16,7 @@ public class Menu {
 
     protected ArrayList<MenuItem> items;
     private String parent;
-    
+
     protected void addItem(MenuItem item) {
         this.items.add(item);
     }
@@ -29,7 +29,7 @@ public class Menu {
      * @param parent If it's a submenu, we want to write the parent
      * @throws Exception
      */
-    public Menu(/*ArrayList<MenuItem> items,*/ String parent) {
+    public Menu(String parent) {
         ArrayList<MenuItem> list = new ArrayList<>();
         if (parent == null) {
             list.add(new MenuItem("Quit", "q", new Callable<Menu>() {
@@ -51,12 +51,11 @@ public class Menu {
         this.items = list;
         this.parent = parent;
     }
-    
-    public void start() throws Exception{
+
+    public void start() throws Exception {
         draw();
         listen();
     }
-    
 
     /**
      * Draws the header of the menu
@@ -67,7 +66,7 @@ public class Menu {
             lineLength += lengthOfHeader(i);
         }
 
-        if (lineLength > 20 ) {
+        if (lineLength > 20) {
             System.out.println(" │");
             System.out.println(" │");
             System.out.println(" ├───── ── ── ── ── ─ ─ ─ ─ - - - -");
@@ -169,7 +168,7 @@ public class Menu {
     public static int getInputInt(String label) {
         Scanner in = new Scanner(System.in);
         String userInput;
-        int ret = -1;
+        int ret;
         System.out.print(" │ " + label + " (Undo: X < 0) > ");
         try {
             userInput = in.nextLine();
@@ -187,15 +186,16 @@ public class Menu {
             Message("You entered a wrong number!");
             ret = -1;
         }
-        if(ret < 0) {
+        if (ret < 0) {
             return -1;
         }
-        
+
         return ret;
     }
 
     /**
-     * Waits for the user to input a boolean value (1/0, true/false, t/f, yes/no, y/n)
+     * Waits for the user to input a boolean value (1/0, true/false, t/f,
+     * yes/no, y/n)
      *
      * @param label Message to the user before the he/she inputs something.
      * @return Returns what the user wrote.
@@ -210,30 +210,15 @@ public class Menu {
             throw e;
         }
 
-        if( userInput.equalsIgnoreCase("1") ||
-            userInput.equalsIgnoreCase("true") ||
-            userInput.equalsIgnoreCase("t") ||
-            userInput.equalsIgnoreCase("yes") ||
-            userInput.equalsIgnoreCase("y")){
+        if (userInput.equalsIgnoreCase("1")
+                || userInput.equalsIgnoreCase("true")
+                || userInput.equalsIgnoreCase("t")
+                || userInput.equalsIgnoreCase("yes")
+                || userInput.equalsIgnoreCase("y")) {
             return true;
-        } else
-        /*if( userInput.equalsIgnoreCase("0") ||
-            userInput.equalsIgnoreCase("false") ||
-            userInput.equalsIgnoreCase("f") ||
-            userInput.equalsIgnoreCase("no") ||
-            userInput.equalsIgnoreCase("n")){
-            return false;
-        }*/
-        return false;
-    }
+        }
 
-    /**
-     * We call this method if we want to wait for an Enter from the user
-     */
-    public static void waitForEnter() {
-        Scanner in = new Scanner(System.in);
-        System.out.print(" │");
-        in.nextLine();
+        return false;
     }
 
     /**
@@ -243,23 +228,5 @@ public class Menu {
      */
     public static void Message(String message) {
         System.out.println(" │ " + message + "...");
-    }
-
-    /**
-     * Calls the Message method with the parameter and then waits for an Enter.
-     *
-     * @param message
-     */
-    public static void waitWithMessage(String message) {
-        Message(message + ", press return to continue");
-        waitForEnter();
-    }
-    
-    public static void Catch(Exception e){
-        Menu.Message("Error: " + e.getLocalizedMessage());
-    }
-    
-    public static void Catch(SQLException e){
-        Menu.Message("SQL Error: " + e.getLocalizedMessage());
     }
 }

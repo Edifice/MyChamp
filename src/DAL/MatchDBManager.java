@@ -3,7 +3,6 @@ package DAL;
 import BE.Group;
 import BE.Match;
 import BE.Team;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +31,7 @@ public class MatchDBManager extends DBManager {
      * @throws SQLException
      */
     public void addMatch(Match match) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         PreparedStatement qMatch = con.prepareStatement("INSERT INTO Match VALUES (?, ?, ?, ?, ?, ?)");
 
 
@@ -57,7 +56,7 @@ public class MatchDBManager extends DBManager {
      * @throws SQLException s
      */
     public void updateScore(Match match) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
 
         PreparedStatement qTeam = con.prepareStatement("UPDATE Match SET  HomeGoals = ?, GuestGoals = ?, IsPlayed = ? WHERE ID = ?");
 
@@ -82,7 +81,7 @@ public class MatchDBManager extends DBManager {
      */
     @Override
     public void removeById(int iden) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         PreparedStatement qMatch = con.prepareStatement("DELETE FROM Match WHERE ID = ?");
         qMatch.setInt(1, iden);
 
@@ -99,7 +98,7 @@ public class MatchDBManager extends DBManager {
      * @throws SQLException
      */
     public Match getMatchById(int id) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         Match match;
 
         PreparedStatement qAllMatches = con.prepareStatement("SELECT Match.*, t1.School as HomeTeamName, t2.School as GuestTeamName FROM Match INNER JOIN Team as t1 ON t1.ID = Match.HomeTeamID INNER JOIN Team as t2 ON t2.ID = Match.GuestTeamID WHERE Match.ID = ? ORDER BY Match.MatchRound ASC;");
@@ -133,7 +132,7 @@ public class MatchDBManager extends DBManager {
      */
     @Override
     public ArrayList<Match> getAll() throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         ArrayList<Match> matches = new ArrayList<>();
 
         PreparedStatement qAllMatches = con.prepareStatement(
@@ -174,7 +173,7 @@ public class MatchDBManager extends DBManager {
      * @throws SQLException
      */
     public ArrayList<Match> getMatchesByGroup(Group group) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         ArrayList<Match> matches = new ArrayList<>();
 
         PreparedStatement qAllMatches = con.prepareStatement("SELECT Match.* FROM Match INNER JOIN Team ON Match.HomeTeamID = Team.ID WHERE Team.GroupID = ?");
@@ -208,7 +207,7 @@ public class MatchDBManager extends DBManager {
      * @throws SQLException
      */
     public ArrayList<Match> getMatchesByGroupPlayed(Group group) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         ArrayList<Match> matches = new ArrayList<>();
 
         PreparedStatement qAllMatches = con.prepareStatement("SELECT Match.* FROM Match INNER JOIN Team ON Match.HomeTeamID = Team.ID WHERE Team.GroupID = ? AND Match.IsPlayed = 1");
@@ -242,7 +241,7 @@ public class MatchDBManager extends DBManager {
      */
     public ArrayList<Match> getMatchesByTeam(Team t) throws SQLException {
 
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         ArrayList<Match> matches = new ArrayList<>();
 
         PreparedStatement qAllMatches = con.prepareStatement(
@@ -250,7 +249,7 @@ public class MatchDBManager extends DBManager {
                 + "FROM Match m "
                 + "INNER JOIN Team as t1 ON t1.ID = m.HomeTeamID "
                 + "INNER JOIN Team as t2 ON t2.ID = m.GuestTeamID "
-                + "INNER JOIN Groups as g ON g.ID = t2.GroupID OR g.ID = t1.GroupID "
+                + "INNER JOIN Groups as g ON g.ID = t1.GroupID "
                 + "WHERE t1.ID = ? OR t2.ID = ? "
                 + "ORDER BY m.MatchRound");
 
@@ -259,24 +258,20 @@ public class MatchDBManager extends DBManager {
 
         ResultSet allMatches = qAllMatches.executeQuery();
 
-        int lastRound = 0;
-
         while (allMatches.next()) {
-            if (lastRound != allMatches.getInt("MatchRound")) {
-                Match m = new Match(
-                        allMatches.getInt("ID"),
-                        allMatches.getInt("MatchRound"),
-                        allMatches.getInt("HomeTeamID"),
-                        allMatches.getInt("GuestTeamID"),
-                        allMatches.getInt("IsPlayed"),
-                        allMatches.getInt("HomeGoals"),
-                        allMatches.getInt("GuestGoals"),
-                        allMatches.getString("HomeTeamName"),
-                        allMatches.getString("GuestTeamName"));
-                m.setGroupName(allMatches.getString("GroupName"));
-                matches.add(m);
-            }
-            lastRound = allMatches.getInt("MatchRound");
+            Match m = new Match(
+                    allMatches.getInt("ID"),
+                    allMatches.getInt("MatchRound"),
+                    allMatches.getInt("HomeTeamID"),
+                    allMatches.getInt("GuestTeamID"),
+                    allMatches.getInt("IsPlayed"),
+                    allMatches.getInt("HomeGoals"),
+                    allMatches.getInt("GuestGoals"),
+                    allMatches.getString("HomeTeamName"),
+                    allMatches.getString("GuestTeamName"));
+            m.setGroupName(allMatches.getString("GroupName"));
+            matches.add(m);
+
         }
 
         con.close();
@@ -291,7 +286,7 @@ public class MatchDBManager extends DBManager {
      */
     @Override
     public void removeAll() throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         PreparedStatement qData = con.prepareStatement("DELETE FROM Match; DBCC CHECKIDENT (Match, RESEED, 0)");
         qData.executeUpdate();
 
@@ -305,7 +300,7 @@ public class MatchDBManager extends DBManager {
      * @throws SQLException
      */
     public int maxRoundNumber() throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
 
         PreparedStatement qAllMatches = con.prepareStatement("SELECT MAX(MatchRound) as MaxRound FROM Match");
         ResultSet allMatches = qAllMatches.executeQuery();
@@ -326,7 +321,7 @@ public class MatchDBManager extends DBManager {
      * @throws SQLException
      */
     public boolean isAllPlayed() throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
 
         boolean allPlayed;
 
@@ -346,7 +341,7 @@ public class MatchDBManager extends DBManager {
      * @throws SQLException
      */
     public Match getNextFinalMatch() throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
 
         PreparedStatement qAllMatches = con.prepareStatement("SELECT TOP 1 Match.*, t1.School as HomeTeamName, t2.School as GuestTeamName FROM Match INNER JOIN Team as t1 ON t1.ID = Match.HomeTeamID INNER JOIN Team as t2 ON t2.ID = Match.GuestTeamID WHERE MatchRound > ? AND isPlayed = 0");
         qAllMatches.setInt(1, MAX_GROUP_ROUND);
@@ -377,7 +372,7 @@ public class MatchDBManager extends DBManager {
      * @throws SQLException
      */
     public ArrayList<Match> getLast4Match() throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         ArrayList<Match> matches = new ArrayList<>();
 
         //PreparedStatement qAllMatches = con.prepareStatement("SELECT TOP 4 * FROM Match ORDER BY ID DESC");
