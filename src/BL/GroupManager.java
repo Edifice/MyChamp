@@ -25,7 +25,7 @@ public class GroupManager {
             DBM = new GroupDBManager();
             TM = new TeamManager();
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -39,7 +39,7 @@ public class GroupManager {
         try {
             return DBM.getAll();
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
 
     }
@@ -54,7 +54,7 @@ public class GroupManager {
         try {
             DBM.addGroup(group);
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -68,7 +68,7 @@ public class GroupManager {
         try {
             DBM.updateGroup(group);
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -82,7 +82,7 @@ public class GroupManager {
         try {
             DBM.removeById(iden);
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -97,7 +97,7 @@ public class GroupManager {
         try {
             return DBM.getGroupById(id);
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -113,7 +113,7 @@ public class GroupManager {
         try {
             return DBM.getGroupNames();
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 
@@ -139,7 +139,7 @@ public class GroupManager {
                 }
             }
         } catch (SQLException ex) {
-            throw new Exception("Couldn't access the database due to a database error");
+            throw new Exception("Couldn't access the database due to a database error: " + ex.getLocalizedMessage());
         }
     }
 }

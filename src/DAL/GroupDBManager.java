@@ -1,7 +1,6 @@
 package DAL;
 
 import BE.Group;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,7 +26,7 @@ public class GroupDBManager extends DBManager {
      * @throws SQLException
      */
     public void addGroup(Group group) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         PreparedStatement qGroup = con.prepareStatement("INSERT INTO Groups VALUES (?)");
 
         qGroup.setString(1, group.getGroupName());
@@ -45,7 +44,7 @@ public class GroupDBManager extends DBManager {
      * @throws SQLException
      */
     public void updateGroup(Group group) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
 
         PreparedStatement qGroup = con.prepareStatement("UPDATE Groups SET GroupName = ? WHERE ID = ?");
 
@@ -67,7 +66,7 @@ public class GroupDBManager extends DBManager {
      */
     @Override
     public void removeById(int iden) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         PreparedStatement qTeam = con.prepareStatement("DELETE FROM Groups WHERE ID = ?");
         qTeam.setInt(1, iden);
 
@@ -85,7 +84,7 @@ public class GroupDBManager extends DBManager {
      */
     @Override
     public ArrayList getAll() throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         ArrayList<Group> groups = new ArrayList<>();
 
         PreparedStatement qAllGroups = con.prepareStatement("SELECT * FROM Groups");
@@ -112,7 +111,7 @@ public class GroupDBManager extends DBManager {
      * @throws SQLException
      */
     public Group getGroupById(int id) throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         ArrayList<Group> groups = new ArrayList<>();
 
         PreparedStatement qAllGroups = con.prepareStatement("SELECT * FROM Groups WHERE ID = ?");
@@ -135,7 +134,7 @@ public class GroupDBManager extends DBManager {
      */
     @Override
     public void removeAll() throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         PreparedStatement qData = con.prepareStatement("DELETE FROM Groups; DBCC CHECKIDENT (Groups, RESEED, 0)");
         qData.executeUpdate();
 
@@ -149,7 +148,7 @@ public class GroupDBManager extends DBManager {
      * @throws SQLException
      */
     public ArrayList<String> getGroupNames() throws SQLException {
-        Connection con = dS.getConnection();
+        con = dS.getConnection();
         ArrayList<String> ret = new ArrayList<>();
 
         PreparedStatement qAllGroups = con.prepareStatement("SELECT GroupName FROM Groups ORDER BY ID");

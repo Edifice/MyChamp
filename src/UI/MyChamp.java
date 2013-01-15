@@ -3,6 +3,7 @@ package UI;
 import UI.MenuStructure.Menu_Main;
 
 public class MyChamp {
+
     public static void main(String[] args) throws Exception {
         System.out.println(" ┌──── ── ── ─ ─ - -");
         System.out.println(" │ Welcome to MyChamp");
@@ -13,5 +14,4 @@ public class MyChamp {
         System.out.println(" │ See you later!");
         System.out.println(" └── ── ─ -");
     }
-    
 }

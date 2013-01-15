@@ -4,8 +4,19 @@ import BE.Match;
 import BE.Team;
 import java.util.ArrayList;
 
-public class Table_project extends Table {
+/**
+ * Table helper class.
+ * This class is made to help to use the Table class.
+ * And we don't have to duplicate what this methods does.
+ * @author Daniel
+ */
 
+public class Table_Project extends Table {
+
+    /**
+     * Helper method to call the Table.draw() with an ArrayList of Teams
+     * @param data 
+     */
     public static void fromTeams(ArrayList<Team> data) {
         String[][] tableData = new String[data.size()][4];
 
@@ -23,6 +34,10 @@ public class Table_project extends Table {
         Table.draw(tableHeader, tableLayout, tableData);
     }
 
+    /**
+     * Helper method to call the Table.draw() with an ArrayList of Teams and shows the group names too.
+     * @param data 
+     */
     public static void fromTeamsWithGroups(ArrayList<Team> data) {
         String[][] tableData = new String[data.size()][6];
 
@@ -42,26 +57,35 @@ public class Table_project extends Table {
         Table.draw(tableHeader, tableLayout, tableData);
     }
 
+    /**
+     * Helper method to call the Table.draw() with an ArrayList of Matches
+     * @param data 
+     */
     public static void fromMatches(ArrayList<Match> data) {
-        String[][] tableData = new String[data.size()][7];
+        String[][] tableData = new String[data.size()][8];
 
-        int[] tableLayout = {4, 4, 20, 10, 10, 20, 6};
-        String[] tableHeader = {"ID", "Round", "Home Team", "Home Goals", "Guest Goals", "Guest Team", "Played?"};
+        int[] tableLayout = {4, 6, 4, 20, 10, 10, 20, 6};
+        String[] tableHeader = {"ID", "Group", "Round", "Home Team", "Home Goals", "Guest Goals", "Guest Team", "Played?"};
 
         for (int i = 0; i < data.size(); i++) {
             Match match = data.get(i);
             tableData[i][0] = Integer.toString(match.getID());
-            tableData[i][1] = Integer.toString(match.getRound());
-            tableData[i][2] = match.getHomeTeamName();
-            tableData[i][3] = match.getIsPlayed() == 1 ? Integer.toString(match.getHomeGoals()) : "-";
-            tableData[i][4] = match.getIsPlayed() == 1 ? Integer.toString(match.getGuestGoals()) : "-";
-            tableData[i][5] = match.getGuestTeamName();
-            tableData[i][6] = match.getIsPlayed() == 1 ? "yes" : "no";
+            tableData[i][1] = match.getGroupName();
+            tableData[i][2] = Integer.toString(match.getRound());
+            tableData[i][3] = match.getHomeTeamName();
+            tableData[i][4] = match.getIsPlayed() == 1 ? Integer.toString(match.getHomeGoals()) : "-";
+            tableData[i][5] = match.getIsPlayed() == 1 ? Integer.toString(match.getGuestGoals()) : "-";
+            tableData[i][6] = match.getGuestTeamName();
+            tableData[i][7] = match.getIsPlayed() == 1 ? "yes" : "no";
 
         }
         Table.draw(tableHeader, tableLayout, tableData);
     }
 
+    /**
+     * Helper method to call the Table.draw() with the groups table.
+     * @param data 
+     */
     public static void GroupTable(ArrayList<ArrayList<Team>> data, ArrayList<String> groupNames) {
         ArrayList<Team> A = data.get(0);
         ArrayList<Team> B = data.get(1);

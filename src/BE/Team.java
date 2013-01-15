@@ -15,7 +15,7 @@ public class Team {
         this.email = email;
         this.ID = ID;
     }
-    
+
     public Team(int ID, String school, String teamCaptain, String email, int groupID, String groupName) {
         this.ID = ID;
         this.school = school;
@@ -154,6 +154,4 @@ public class Team {
     public void setTotalGoals(int totalGoals) {
         this.totalGoals = totalGoals;
     }
-
-    
 }
