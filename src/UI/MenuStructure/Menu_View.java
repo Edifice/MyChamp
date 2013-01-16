@@ -8,7 +8,7 @@ import BL.MatchManager;
 import BL.RankManager;
 import BL.TeamManager;
 import UI.Menu;
-import UI.Table_Project;
+import UI.TableProject;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
@@ -25,7 +25,7 @@ public class Menu_View extends Menu {
         this.addItem(new MenuItem("All teams", "a", new Callable<Menu_View>() {
             @Override
             public Menu_View call() throws Exception {
-                Table_Project.fromTeamsWithGroups(tm.getAllWithGroupNames());
+                TableProject.fromTeamsWithGroups(tm.getAllWithGroupNames());
                 return new Menu_View();
             }
         }));
@@ -47,7 +47,7 @@ public class Menu_View extends Menu {
                     return new Menu_View();
                 }
 
-                Table_Project.fromMatches(mm.getMatchesByTeam(team));
+                TableProject.fromMatches(mm.getMatchesByTeam(team));
 
                 return new Menu_View();
             }
@@ -66,7 +66,7 @@ public class Menu_View extends Menu {
                     groupNames.add(group.getGroupName());
                 }
 
-                Table_Project.GroupTable(teams, groupNames);
+                TableProject.GroupTable(teams, groupNames);
                 return new Menu_View();
             }
         }));

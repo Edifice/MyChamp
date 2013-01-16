@@ -5,7 +5,7 @@ import BE.Team;
 import BL.MatchManager;
 import BL.TeamManager;
 import UI.Menu;
-import UI.Table_Project;
+import UI.TableProject;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
@@ -21,7 +21,7 @@ public class Menu_Team extends Menu {
         this.addItem(new MenuItem("List all", "l", new Callable<Menu_Team>() {
             @Override
             public Menu_Team call() throws Exception {
-                Table_Project.fromTeams(tm.getAll());
+                TableProject.fromTeams(tm.getAll());
                 return new Menu_Team();
             }
         }));

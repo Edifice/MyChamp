@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author Daniel
  */
 
-public class Table_Project extends Table {
+public class TableProject extends Table {
 
     /**
      * Helper method to call the Table.draw() with an ArrayList of Teams

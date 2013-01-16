@@ -5,7 +5,7 @@ import BE.MenuItem;
 import BL.MatchManager;
 import BL.TeamManager;
 import UI.Menu;
-import UI.Table_Project;
+import UI.TableProject;
 import java.util.concurrent.Callable;
 
 public class Menu_Match extends Menu {
@@ -55,7 +55,7 @@ public class Menu_Match extends Menu {
             this.addItem(new MenuItem("List all", "l", new Callable<Menu_Match>() {
                 @Override
                 public Menu_Match call() throws Exception {
-                    Table_Project.fromMatches(mm.getAll());
+                    TableProject.fromMatches(mm.getAll());
                     return new Menu_Match();
                 }
             }));
