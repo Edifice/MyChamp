@@ -130,7 +130,7 @@ public class RankManager {
      * @return ArrayList<Dummy> containing teams and their goal deficit.
      * @throws Exception because it deals with the database.
      */
-    public ArrayList<Dummy> getGoalDeficit(Group group) throws Exception {
+    private ArrayList<Dummy> getGoalDeficit(Group group) throws Exception {
         try {
             ArrayList<Match> matches = MM.getMatchesByGroupPlayed(group);
             ArrayList<Dummy> teamsWithGoals = new ArrayList<>();
@@ -169,7 +169,7 @@ public class RankManager {
      *
      * @throws Exception because it deals with the database.
      */
-    public void getRankingByGoalDeficit() throws Exception {
+    private void getRankingByGoalDeficit() throws Exception {
         try {
             // Dummy is a comparable entity.
             ArrayList<Dummy> teamsWithGoals = getGoalDeficit(GM.getGroupById(tiedTeams.get(0).getGroupID()));
@@ -224,7 +224,7 @@ public class RankManager {
      * @return ArrayList<Dummy> containing teams and their total goals scored.
      * @throws Exception because it deals with the database.
      */
-    public ArrayList<Dummy> getTotalGoals(Group group) throws Exception {
+    private ArrayList<Dummy> getTotalGoals(Group group) throws Exception {
         try {
             ArrayList<Match> matches = MM.getMatchesByGroupPlayed(group);
             ArrayList<Dummy> teamsWithGoals = new ArrayList<>();
@@ -256,7 +256,7 @@ public class RankManager {
      *
      * @throws Exception because it deals with the database.
      */
-    public void getRankingByTotalGoals() throws Exception {
+    private void getRankingByTotalGoals() throws Exception {
         try {
             ArrayList<Dummy> teamsWithGoals = getTotalGoals(GM.getGroupById(tiedTeamsWithGoals.get(0).getGroupID()));
 
